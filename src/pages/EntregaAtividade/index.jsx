@@ -65,11 +65,11 @@ export const EntregaAtividade = () => {
     }
 
     return (
-        <div className="container mt-5 bg-light rounded p-5">
+        <div className="container mt-5 bg-light rounded p-lg-5 p-sm-2">
             <h2 className="text-center">Entrega de atividade</h2>
             <p className="mb-5 text-center">Preencha os campos com atenção para assegurar a entrega da atividade</p>
 
-            <div className="border rounded p-5 shadow">
+            <div className="border rounded p-lg-5 p-sm-2 shadow">
                 <form onSubmit={handleSubmit}>
                     <div>
                         <label

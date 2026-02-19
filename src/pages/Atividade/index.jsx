@@ -67,7 +67,7 @@ export const Atividade = () => {
     }
 
     return (
-        <div className="container bg-light p-5">
+        <div className="container bg-light p-lg-5">
             {atividade?.nome ? <h2 className="my-5 text-center">{atividade?.nome}</h2> : <h2>Atividade sem nome</h2>}
 
             {atividade?.peso !== null || atividade?.peso !== "" &&

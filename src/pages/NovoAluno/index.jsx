@@ -71,11 +71,11 @@ export const NovoAluno = () => {
     }
 
     return (
-        <div className="container mt-5 bg-light p-5">
+        <div className="container mt-5 bg-light p-sm-2 p-5">
             <h2 className="text-center mb-0 ">Novo Aluno</h2>
             <p className="text-center mb-5 w-75 mx-auto">O aluno é criado por turma, então se acaso o mesmo aluno fizer parte de mais de uma turma o mesmo deverá ser criado novamente nas demais turmas</p>
             <form
-                className="border p-5 shadow"
+                className="border p-lg-5 p-sm-0 shadow"
                 onSubmit={handleSubmit}>
                 <div>
                     <label

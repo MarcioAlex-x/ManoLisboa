@@ -94,13 +94,13 @@ export const Aluno = () => {
 
 
     return (
-        <div className="container mt-5 bg-light p-5">
+        <div className="container mt-5 bg-light p-lg-5 p-sm-2">
             <h2 className="text-center mb-5">Dados do aluno</h2>
 
             <div className="row g-4 mb-5 d-flex">
                 <div className="col-12 col-md-6" >
                     <div className="border shadow rounded p-4" style={{height:'500px'}}>
-                        <div className="border p-5 rounded h-100">
+                        <div className="border p-lg-5 rounded h-100">
                             <h3>{aluno?.nome}</h3>
                             {aluno?.whatsApp &&
                                 <p className="m-0">{aluno?.whatsApp}

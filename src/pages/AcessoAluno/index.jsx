@@ -42,7 +42,16 @@ export const AcessoAluno = () => {
     }, [instituicaoId])
 
     return (
-        <div className="container mt-5 bg-light p-5 rounded">
+        <div className="container mt-5 bg-light p-lg-5 rounded">
+            <h1>
+                <img 
+                className="img-fluid w-75 d-block m-auto"
+                src="manolisboa.png" 
+                alt="Mano Lisboa" />
+            </h1>
+
+        <p className="fs-3 text-center my-5">Você está no portal do aluno Mano Lisboa, por aqui você vai receber e entregar as atividades propostas pelo seu professor.</p>
+
             <h2 className="text-center mb-5">Atividades</h2>
             <select
                 className="form-control mb-5"

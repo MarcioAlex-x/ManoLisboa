@@ -46,10 +46,10 @@ export const NovaTurma = () => {
 
     return (
         <div className="bg-dar">
-            <div className="container mt-4 bg-light p-5">
+            <div className="container mt-4 bg-light p-lg-5 p-sm-2">
                 <h2 className="text-center">Nova Turma</h2>
             
-                <form onSubmit={handleSubmit} className="mt-5 p-5 border rounded shadow">
+                <form onSubmit={handleSubmit} className="mt-5 p-lg-5 p-sm-0 border rounded shadow">
                     <div>
                         <label htmlFor="serie" className="form-label">Série ou Ano</label>
                         <input

@@ -42,7 +42,7 @@ export const Turma = () => {
     }, [id])
 
     return (
-        <div className="container mt-5 bg-light rounded p-5 min-vh-100">
+        <div className="container mt-5 bg-light rounded p-lg-5 p-sm-2 min-vh-100">
             <h2 className="text-center mb-5">{turma?.serie}º {turma?.turma} - {turma?.materia}</h2>
 
             <hr />

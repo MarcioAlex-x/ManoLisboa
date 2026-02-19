@@ -86,10 +86,12 @@ export const NovaAtividade = () => {
     }
 
     return (
-        <div className="container mt-5 bg-light p-5">
+        <div className="container mt-5 bg-light p-lg-5 p-sm-0">
             <h2 className="text-center">Nova Atividade</h2>
             <p className="text-center mb-5 ">Preencha apenas os campos necessários para a sua nova atividade</p>
-            <form onSubmit={handleSubmit}>
+            <form 
+            className="border p-lg-5 p-sm-2 rounded shadow"
+            onSubmit={handleSubmit}>
                 <div>
                     <label
                         className="form-label mt-4"
