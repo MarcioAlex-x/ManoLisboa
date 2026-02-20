@@ -32,7 +32,7 @@ export const AppRouter = createBrowserRouter([
                 path: 'login', element: <Login />
             },
             {
-                path: '/novo-usuario', element:
+                path: 'novo-usuario', element:
                     <ProtectedRoute>
                         <AdminRoute>
                             <Register />
@@ -40,73 +40,73 @@ export const AppRouter = createBrowserRouter([
                     </ProtectedRoute>
             },
             {
-                path: '/nova-atividade/:id', element:
+                path: 'nova-atividade/:id', element:
                     <ProtectedRoute>
                         <NovaAtividade />
                     </ProtectedRoute>
             },
             {
-                path: '/nova-turma', element:
+                path: 'nova-turma', element:
                     <ProtectedRoute>
                         <NovaTurma />
                     </ProtectedRoute>
             },
             {
-                path: '/atividades', element:
+                path: 'atividades', element:
                     <ProtectedRoute>
                         <Atividades />
                     </ProtectedRoute>
             },
             {
-                path: '/atividade/:id', element:
+                path: 'atividade/:id', element:
                     <ProtectedRoute>
                         <Atividade />
                     </ProtectedRoute>
             },
             {
-                path: '/turmas', element:
+                path: 'turmas', element:
                     <ProtectedRoute>
                         <Turmas />
                     </ProtectedRoute>
             },
             {
-                path: '/turma/:id', element:
+                path: 'turma/:id', element:
                     <ProtectedRoute>
                         <Turma />
                     </ProtectedRoute>
             },
             {
-                path: '/novo-aluno/:id', element:
+                path: 'novo-aluno/:id', element:
                 <ProtectedRoute>
                     <NovoAluno/>
                 </ProtectedRoute>
             },
             {
-                path: '/alunos', element:
+                path: 'alunos', element:
                 <ProtectedRoute>
                     <Alunos /> 
                 </ProtectedRoute>
             },
             {
-                path: '/aluno/:id', element:
+                path: 'aluno/:id', element:
                 <ProtectedRoute>
                     <Aluno />
                 </ProtectedRoute>
             },
             {
-                path: '/frequencia/:id', element:
+                path: 'frequencia/:id', element:
                 <ProtectedRoute>
                     <Frequencia />
                 </ProtectedRoute>
             },
             {
-                path:'/acesso-alunos', element: <AcessoAluno />
+                path:'acesso-alunos', element: <AcessoAluno />
             },
             {
-                path:'/entrega-atividade/:id', element: <EntregaAtividade />
+                path:'entrega-atividade/:id', element: <EntregaAtividade />
             },
             {
-                path: '/nova-instituicao', element:
+                path: 'nova-instituicao', element:
                 <ProtectedRoute>
                     <AdminRoute>
                         <NovaInstituicao />

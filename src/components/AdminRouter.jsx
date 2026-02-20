@@ -14,9 +14,15 @@ export const AdminRoute = ({ children }) => {
 
     }, [userData, navigate, loading])
 
-    if(loading) return <span className="loader"></span>
+    if (loading) {
+        return (
+            <div className="d-flex justify-content-center align-items-center vh-100">
+                <span className="loader"></span>
+            </div>
+        )
+    }
 
-    if(!userData) return null
+    if (!userData) return null
 
     return children
 }
