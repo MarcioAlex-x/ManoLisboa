@@ -20,16 +20,25 @@ export const NovaInstituicao = () => {
     }
 
     return (
-        <div>
-            <h2>Nova Instituição</h2>
-            <form onSubmit={handleSubmit}>
+        <div className="container p-0 p-lg-5 my-5">
+            <h2 className="my-5 text-center" >Nova Instituição</h2>
+            <form
+                className="py-5 px-2 p-lg-5 border shadow rounded"
+                onSubmit={handleSubmit}>
+                <label
+                    className="form-label"
+                    htmlFor="instituicao">Nova Instituição</label>
                 <input
+                    className="form-control mb-2"
                     type="text"
                     name="instituicao"
                     value={instituicao}
                     onChange={e => setInstituicao(e.target.value)} />
+                <input
+                className="btn btn-primary w-100" 
+                type="submit" 
+                value="Salvar" />
             </form>
-            <input type="submit" value="Salvar" />
         </div>
     )
 }

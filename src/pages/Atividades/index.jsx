@@ -27,7 +27,7 @@ export const Atividades = () => {
     }, [userData?.uid])
 
     return (
-        <div className='container bg-light p-5'>
+        <div className='container bg-light p-2 p-lg-5'>
             <h2 className='my-5 text-center'>Todas as Atividades</h2>
             <div className="row g-2">
                 {atividades.map(atividade => (

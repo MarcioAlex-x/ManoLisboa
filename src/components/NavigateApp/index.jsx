@@ -29,6 +29,10 @@ export const NavigateApp = () => {
                             <NavLink className='nav-link' to='/atividades'>Todas as Atividades</NavLink>
                             <NavLink className='nav-link' to='/turmas'>Todas as Turmas</NavLink>
                             <NavLink className='nav-link' to='/alunos'>Todos os alunos</NavLink>
+                            {userData.tipo === 'admin' && 
+                            <NavLink className='nav-link' to='/nova-instituicao'>Nova Instiuição</NavLink>}
+                            {userData.tipo === 'admin' && 
+                            <NavLink className='nav-link' to='/novo-usuario'></NavLink>}
                         </ul>
                         :
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">

@@ -40,9 +40,9 @@ export const Painel = () => {
     }, [userData?.uid])
 
     return (
-        <div className="container bg-light my-5 p-5 rounded" style={{ height: '100vh' }}>
+        <div className="container bg-light my-5 p-sm-0 p-lg-5 rounded" style={{ height: '100vh' }}>
             <h2 className="mb-5 text-center">Painel de {userData.nome}</h2>
-            <div className="border shadow p-4 rounded">
+            <div className="border shadow p-2 p-lg-4 rounded ">
                 <p className="m-0"> <AtSign size={16} color="#3867d6"/> {userData.email}</p>
                 {atividades.length == 0 ?
                     (<p className="m-0">Nenhuma atividade cadastrada.</p>)
@@ -76,7 +76,7 @@ export const Painel = () => {
                 <h2 className="mt-5 text-center mb-3">Atividades ativas</h2>
                 {atividades.map(atividade => (
                     new Date(atividade.dataEntrega).toLocaleDateString('pt-BR') > new Date().toLocaleDateString('pt-BR') &&
-                    <div className="border py-2 px-4 rounded shadow-sm mb-2 scale d-flex justify-content-between">
+                    <div className="border py-1 py-lg-2 px-lg-4 px-2 rounded shadow-sm mb-2 scale d-flex justify-content-between">
                         <p
                             className="m-0 "
                             key={atividade.id}>
@@ -94,7 +94,7 @@ export const Painel = () => {
                 <h2 className="mt-5 text-center mb-3">Atividades inativas</h2>
                 {atividades.map(atividade => (
                     new Date(atividade.dataEntrega).toLocaleDateString('pt-BR') < new Date().toLocaleDateString('pt-BR') &&
-                    <div className="border py-2 px-4 rounded shadow-sm mb-2 scale d-flex justify-content-between">
+                    <div className="border py-lg-2 py-1 px-lg-4 px-2 rounded shadow-sm mb-2 scale d-flex justify-content-between">
                         <p
                             className="m-0 "
                             key={atividade.id}>

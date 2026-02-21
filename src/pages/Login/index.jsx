@@ -39,7 +39,7 @@ export const Login = () => {
     return (
         <div className="container bg-light mt-5 rounded min-h-100 ">
             <form 
-            className="p-lg-5 p-sm-2 shadow rounded border"
+            className=" p-lg-5 p-2 shadow rounded border"
             onSubmit={handleSubmit}>
             <h2 className="text-center mb-3">Faça login para se conectar com as suas turmas</h2>
                 <div>

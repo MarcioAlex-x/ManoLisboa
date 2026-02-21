@@ -25,17 +25,17 @@ export const Alunos = () =>{
     },[userData])
 
     return(
-        <div className="container mt-5 bg-light p-5">
-            <h2 className="text-center mb-5">Todos os Alunos</h2>
+        <div className="container my-5 bg-light p-1 p-lg-5">
+            <h2 className="text-center my-5">Todos os Alunos</h2>
             {alunos.map(aluno=>(
                 <div 
                 key={aluno.id}
-                className="border my-2 py-2 px-4 shadow-sm rounded d-flex justify-content-between align-items-center scale">
+                className="border my-2 py-2 px-1 p-lg-x shadow-sm rounded d-flex justify-content-between align-items-center scale">
                     <p className="m-0">Nome: {aluno.nome}</p>
                     <p className="m-0">
                         <Link
                         className="nav-link" 
-                        to={`/aluno/${aluno.id}`}>Ver aluno<ArrowBigRightDash /></Link>
+                        to={`/aluno/${aluno.id}`}>Ver <ArrowBigRightDash /> </Link>
                         </p>
                 </div>
             ))}

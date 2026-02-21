@@ -76,7 +76,7 @@ export const AcessoAluno = () => {
                         return (
                             <div className="d-flex">
                                 <div
-                                className="border p-5 border shadow rounded col-12 col-md-6"
+                                className="border p-3 p-lg-5 border shadow rounded col-12 col-md-6"
                                 key={data.id}>
                                     <h3>{data.nome}</h3>
                                     {

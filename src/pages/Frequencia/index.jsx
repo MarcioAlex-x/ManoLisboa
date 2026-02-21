@@ -11,26 +11,26 @@ export const Frequencia = () => {
     const { id } = useParams()
     const { userData } = useContext(UserContext)
 
-    useEffect(()=>{
-        const fetchData = async () =>{
-            const alunosRef = query(collection(db, 'alunos'), where('turmaId','==',id), orderBy('nome','asc'))
+    useEffect(() => {
+        const fetchData = async () => {
+            const alunosRef = query(collection(db, 'alunos'), where('turmaId', '==', id), orderBy('nome', 'asc'))
             const alunosSnapshot = await getDocs(alunosRef)
-            const alunos = alunosSnapshot.docs.map(aluno=>(
-                {id:aluno.id,...aluno.data()}
+            const alunos = alunosSnapshot.docs.map(aluno => (
+                { id: aluno.id, ...aluno.data() }
             ))
             setAlunos(alunos)
 
             const inicial = {}
-            alunos.forEach(a=>inicial[a.id] = false)
+            alunos.forEach(a => inicial[a.id] = false)
             setPresencas(inicial)
         }
-        if(id) fetchData()
-    },[id])
+        if (id) fetchData()
+    }, [id])
 
-    const togglePresenca = (alunoId, checked) =>{
-        setPresencas(prev=>({
+    const togglePresenca = (alunoId, checked) => {
+        setPresencas(prev => ({
             ...prev,
-            [alunoId]:checked
+            [alunoId]: checked
         }))
     }
 
@@ -38,10 +38,10 @@ export const Frequencia = () => {
         e.preventDefault()
 
         const promessas = alunos.map(aluno =>
-            addDoc(collection(db,'frequencia'),{
+            addDoc(collection(db, 'frequencia'), {
                 turmaId: id,
                 alunoId: aluno.id,
-                professorId:userData.uid,
+                professorId: userData.uid,
                 presenca: presencas[aluno.id] || false,
                 data: serverTimestamp()
             })
@@ -52,22 +52,31 @@ export const Frequencia = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            {alunos.map(aluno=>(
-                <div key={aluno.id}>
-                    {aluno.nome}
+        <div className="container mt-lg-5 m-sm-0 bg-light min-h-100 p-sm-0 p-lg-5 rounded">
+            <h2 className="my-5 text-center">Frequência </h2>
+            <form
+                className="border rounded shadow p-5"
+                onSubmit={handleSubmit}>
+                {alunos.map(aluno => (
 
-                    <input
-                        type="checkbox"
-                        checked={presencas[aluno.id] || false}
-                        onChange={e =>
-                            togglePresenca(aluno.id, e.target.checked)
-                        }
-                    />
-                </div>
-            ))}
-
-            <button type="submit">Salvar Frequência</button>
-        </form>
+                    <div
+                        className="border p-2 d-flex justify-content-between align-items-center mb-1 rounded"
+                        key={aluno.id}>
+                        {aluno.nome}
+                        <input
+                            className="border bg-danger"
+                            type="checkbox"
+                            checked={presencas[aluno.id] || false}
+                            onChange={e =>
+                                togglePresenca(aluno.id, e.target.checked)
+                            }
+                        />
+                    </div>
+                ))}
+                <button
+                    className="btn btn-primary btn-sm d-block w-100"
+                    type="submit">Salvar Frequência</button>
+            </form>
+        </div>
     )
 }

@@ -43,7 +43,7 @@ export const Register = () => {
                 tipo: 'professor',
                 instituicaoId
             })
-            
+
             alert("Usuário criado com sucesso.")
 
         } catch (err) {
@@ -56,10 +56,16 @@ export const Register = () => {
 
     if (loading) return <div><p>Salvando...</p></div>
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
+        <div className="container bg-light my-5 p-lg-5 p-0">
+            <form
+                className="py-lg-5 px-lg-5 py-5 px-2 border rounded shadow"
+                onSubmit={handleSubmit}>
                 <div>
+                    <label
+                        htmlFor="instituicao"
+                        className="form-label">Instituição</label>
                     <select
+                        className="form-control"
                         name="instituicao"
                         value={instituicaoId}
                         onChange={e => setInstituicaoId(e.target.value)}
@@ -75,8 +81,11 @@ export const Register = () => {
 
                 </div>
                 <div>
-                    <label htmlFor="nome">Nome</label>
+                    <label
+                        className="form-label"
+                        htmlFor="nome">Nome</label>
                     <input
+                        className="form-control"
                         type="text"
                         placeholder="Informe o nome..."
                         name="nome"
@@ -84,8 +93,11 @@ export const Register = () => {
                         onChange={e => setNome(e.target.value)} />
                 </div>
                 <div>
-                    <label htmlFor="email">E-mail</label>
+                    <label
+                        className="form-label"
+                        htmlFor="email">E-mail</label>
                     <input
+                        className="form-control"
                         type="email"
                         placeholder="Informe o e-mail..."
                         name="email"
@@ -93,15 +105,21 @@ export const Register = () => {
                         onChange={e => setEmail(e.target.value)} />
                 </div>
                 <div>
-                    <label htmlFor="email">Senha</label>
+                    <label
+                        className="form-label"
+                        htmlFor="email">Senha</label>
                     <input
+                        className="form-control"
                         type="password"
                         placeholder="Informe a senha..."
                         name="senha"
                         value={senha}
                         onChange={e => setSenha(e.target.value)} />
                 </div>
-                <input type="submit" value="Salvar" />
+                <input
+                    className="btn btn-primary w-100 mt-3"
+                    type="submit"
+                    value="Salvar" />
             </form>
         </div>
     )
