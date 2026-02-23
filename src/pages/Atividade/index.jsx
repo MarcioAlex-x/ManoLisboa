@@ -1,14 +1,16 @@
 import { deleteDoc, doc, getDoc } from "firebase/firestore"
-import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useContext, useEffect, useState } from "react"
+import { useNavigate, useParams, Link } from "react-router-dom"
 import { db } from "../../firebaseConfig"
 import Linkify from 'linkify-react'
-import { Link } from "lucide-react"
+import { Link2 } from "lucide-react"
 import Swal from "sweetalert2"
+import { UserContext } from '../../contexts/UserContext'
 
 export const Atividade = () => {
     const [atividade, setAtividade] = useState(null)
     const { id } = useParams()
+    const { userData } = useContext(UserContext)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -97,13 +99,20 @@ export const Atividade = () => {
 
             {atividade?.link &&
                 <div>
-                    <p><b className="fs-5">Link do material: </b><a target="_blank" noopener noreferer href={atividade?.link}><Link /></a></p>
+                    <p>
+                        <b className="fs-5">Link do material: </b>
+                        <a target="_blank" noopener noreferer href={atividade?.link}><Link2 /></a>
+                    </p>
                     <hr />
                 </div>
             }
 
-            <p><b className="fs-5">Token: </b> {atividade?.token}</p>
-            <hr />
+            {userData &&
+                <div>
+                    <p><b className="fs-5">Token: </b> {atividade?.token}</p>
+                    <hr />
+                </div>
+            }
             {atividade?.dataEntrega &&
                 <p><b>Data de entrega: </b>
                     {new Date(atividade?.dataEntrega).toLocaleDateString('pt-BR')}
@@ -111,10 +120,15 @@ export const Atividade = () => {
             }
             <br />
 
+            {userData ?
+                <button
+                    className="btn btn-danger d-block w-100 fw-bold"
+                    onClick={handleDelete} >Excluir</button>
+                :
+                <Link to={`/entrega-atividade/${atividade?.id}`}
+                    className="btn btn-success d-block w-100 fw-bold">Entregar</Link>
+            }
 
-            <button
-                className="btn btn-danger d-block w-100 fw-bold"
-                onClick={handleDelete} >Excluir</button>
         </div>
     )
 }

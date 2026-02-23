@@ -94,8 +94,12 @@ export const AcessoAluno = () => {
                                             {data.orientacoes}
                                         </p>
                                     }
-                                    {data.dataEntrega && <p> <b className="fs-5">Entrgar até: </b> {new Date(data.dataEntrega).toLocaleDateString('pt-BR')}</p>}
-                                    <Link className="btn btn-primary btn-sm" to={`/entrega-atividade/${data.id}`}>Entregar</Link>
+                                    {data.dataEntrega && <p> <b className="fs-5">Entregar até: </b> {new Date(data.dataEntrega).toLocaleDateString('pt-BR')}</p>}
+                                    {/* <Link className="btn btn-primary btn-sm" to={`/entrega-atividade/${data.id}`}>Entregar</Link> */}
+
+                                    <Link
+                                    className="btn btn-primary w-100"
+                                    to={`/atividade/${data.id}`}>Acessar</Link>
                                 </div>
                             </div>
                         )

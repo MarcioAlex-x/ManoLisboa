@@ -59,9 +59,7 @@ export const AppRouter = createBrowserRouter([
             },
             {
                 path: 'atividade/:id', element:
-                    <ProtectedRoute>
                         <Atividade />
-                    </ProtectedRoute>
             },
             {
                 path: 'turmas', element:
