@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
-import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore'
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom"
+import { collection, deleteDoc, doc, getDoc, getDocs, query, where } from 'firebase/firestore'
 import { db } from '../../firebaseConfig'
 import { UserContext } from "../../contexts/UserContext"
 import { Phone } from "lucide-react"
 import Chart from "chart.js/auto"
+import Swal from "sweetalert2"
 
 export const Aluno = () => {
 
@@ -13,6 +14,7 @@ export const Aluno = () => {
     const [frequencia, setFrequencia] = useState([])
 
     const { id } = useParams()
+    const { navigate } = useNavigate()
     const { userData } = useContext(UserContext)
 
     useEffect(() => {
@@ -56,6 +58,31 @@ export const Aluno = () => {
 
     }, [id, userData.uid])
 
+    const handleDelete = async () =>{
+        try {
+            await deleteDoc(doc(db,'alunos',aluno?.id))
+            Swal.fire({
+                title:'Sucesso',
+                icon:'success',
+                text:'Aluno apagado com sucesso',
+                showConfirmButton:false,
+                timer:1500,
+                timerProgressBar:1500
+            })
+            navigate('/alunos')
+        } catch (err) {
+            console.error(err.message)
+            Swal.fire({
+                title:'Erro',
+                icon:'error',
+                text:'Houve um erro ao tentar apagar o aluno',
+                showConfirmButton:false,
+                timer:1500,
+                timerProgressBar:1500
+            })
+        }
+    }
+
     const faltas = frequencia.filter(f => !f.presenca).length
     const presencas = frequencia.filter(f => f.presenca).length
 
@@ -94,7 +121,7 @@ export const Aluno = () => {
 
 
     return (
-        <div className="container mt-5 bg-light p-lg-5 p-2">
+        <div className="container mt-5 bg-light p-lg-5 p-2 rounded">
             <h2 className="text-center my-5">Dados do Aluno</h2>
 
             <div className="row g-4 mb-5 d-flex">
@@ -114,6 +141,13 @@ export const Aluno = () => {
                             <p className="m-0">Turma: {turma?.serie} {turma?.turma} {turma?.materia}</p>
                             <p className="m-0">Total de faltas: {frequencia.filter(f => !f.presenca).length}</p>
                             <p className="m-0">Total de presenças: {frequencia.filter(f => f.presenca).length}</p>
+                            
+                                <button
+                                onClick={handleDelete}
+                                className="btn btn-danger btn-sm m-1">Excluir</button>
+                                <Link
+                                to={`/atualizar-aluno/${id}`}
+                                className="btn btn-success btn-sm m-1">Editar</Link>
                         </div>
                     </div>
                 </div>
@@ -126,8 +160,6 @@ export const Aluno = () => {
                     </div>
                 </div>
             </div>
-
-            <h3 className="text-center">Atividades Entregues</h3>
         </div>
     )
 }

@@ -18,6 +18,9 @@ import { Frequencia } from "../pages/Frequencia";
 import { AcessoAluno } from "../pages/AcessoAluno";
 import { EntregaAtividade } from "../pages/EntregaAtividade";
 import { NovaInstituicao } from "../pages/NovaInstituicao";
+import { AtualizarTurma } from "../pages/AtualizarTurma";
+import { AtualizarAluno } from "../pages/AtualizarAluno";
+import { AtualizarAtividade } from "../pages/AtualizarAtividade";
 
 export const AppRouter = createBrowserRouter([
     {
@@ -109,6 +112,24 @@ export const AppRouter = createBrowserRouter([
                     <AdminRoute>
                         <NovaInstituicao />
                     </AdminRoute>
+                </ProtectedRoute>
+            },
+            {
+                path: 'atualizar-turma/:id', element:
+                <ProtectedRoute>
+                    <AtualizarTurma />
+                </ProtectedRoute>
+            },
+            {
+                path: 'atualizar-aluno/:id', element:
+                <ProtectedRoute>
+                    <AtualizarAluno />
+                </ProtectedRoute>
+            },
+            {
+                path: 'atualizar-atividade/:id', element:
+                <ProtectedRoute>
+                    <AtualizarAtividade />
                 </ProtectedRoute>
             }
         ]
