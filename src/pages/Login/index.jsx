@@ -14,18 +14,30 @@ export const Login = () => {
 
     const handleNovaSenha = () => {
         sendPasswordResetEmail(auth, email)
-        if (email) {
+
+        if (!email) {
+            Swal.fire({
+                icon:'warning',
+                title:'E-mail não encontrado',
+                text:'Informe ou verifique o e-mail informado. Verifique também nos spams',
+                showConfirmButton:true
+            })
+
+            return
+        }
+        try {
             Swal.fire({
                 icon: 'success',
                 title:'E-mail enviado',
-                text:`Um link foi enviado ao seu e-mail ${email}.`,
+                text:`Um link foi enviado ao seu e-mail ${email}`,
                 showConfirmButton:true
             })
-        }else{
+        } catch (err) {
+            console.error(err.message)
             Swal.fire({
-                icon:'error',
-                title:'E-mail não encontrado',
-                text:'Informe ou verifique o e-mail informado. Verifique também nos spams',
+                icon: 'error',
+                title:'Erro',
+                text:`Aconteceu um erro ao tentar enviar um e-mail de atualização de senha`,
                 showConfirmButton:true
             })
         }
