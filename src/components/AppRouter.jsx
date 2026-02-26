@@ -21,15 +21,14 @@ import { NovaInstituicao } from "../pages/NovaInstituicao";
 import { AtualizarTurma } from "../pages/AtualizarTurma";
 import { AtualizarAluno } from "../pages/AtualizarAluno";
 import { AtualizarAtividade } from "../pages/AtualizarAtividade";
+import { Usuario } from "../pages/Usuario";
 
 export const AppRouter = createBrowserRouter([
     {
         path: '/', element: <App />, children: [
             {
                 index: true, element:
-                    <ProtectedRoute>
-                        <Painel />
-                    </ProtectedRoute>
+                        <AcessoAluno />
             },
             {
                 path: 'login', element: <Login />
@@ -46,6 +45,12 @@ export const AppRouter = createBrowserRouter([
                 path: 'nova-atividade/:id', element:
                     <ProtectedRoute>
                         <NovaAtividade />
+                    </ProtectedRoute>
+            },
+            {
+                path: 'painel', element:
+                    <ProtectedRoute>
+                        <Painel />
                     </ProtectedRoute>
             },
             {
@@ -130,6 +135,12 @@ export const AppRouter = createBrowserRouter([
                 path: 'atualizar-atividade/:id', element:
                 <ProtectedRoute>
                     <AtualizarAtividade />
+                </ProtectedRoute>
+            },
+            {
+                path: 'usuario/:id', element:
+                <ProtectedRoute>
+                    <Usuario />
                 </ProtectedRoute>
             }
         ]

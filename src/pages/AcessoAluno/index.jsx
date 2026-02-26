@@ -9,6 +9,7 @@ export const AcessoAluno = () => {
     const [atividades, setAtividades] = useState([])
     const [instituicoes, setInstituicoes] = useState([])
     const [instituicaoId, setInstituicaoId] = useState('')
+    const [turmas, setTurmas] = useState([])
 
     useEffect(() => {
         const fetchInstituicoes = async () => {
@@ -30,12 +31,26 @@ export const AcessoAluno = () => {
     }, [])
 
     useEffect(() => {
+        const fetchTumas = async () => {
+            const turmasRef = collection(db, 'turmas')
+            const turmasSnapshot = await getDocs(turmasRef)
+            const turmasData = turmasSnapshot.docs.map(doc => (
+                { id: doc.id, ...doc.data() }
+            ))
+            setTurmas(turmasData)
+        }
+        fetchTumas()
+    }, [instituicaoId])
+
+
+    useEffect(() => {
         const fetchAtividades = async () => {
             const atividadesRef = query(collection(db, 'atividades'), where('instituicaoId', '==', instituicaoId))
             const atividadesSnapshot = await getDocs(atividadesRef)
             const atividadesData = atividadesSnapshot.docs.map(doc => (
                 { id: doc.id, ...doc.data() }
             ))
+
             setAtividades(atividadesData)
         }
         fetchAtividades()
@@ -44,13 +59,13 @@ export const AcessoAluno = () => {
     return (
         <div className="container mt-5 bg-light p-lg-5 rounded">
             <h1>
-                <img 
-                className="img-fluid w-75 d-block m-auto"
-                src="manolisboa.png" 
-                alt="Mano Lisboa" />
+                <img
+                    className="img-fluid w-75 d-block m-auto"
+                    src="manolisboa.png"
+                    alt="Mano Lisboa" />
             </h1>
 
-        <p className="fs-3 text-center my-5">Você está no portal do aluno Mano Lisboa, por aqui você vai receber e entregar as atividades propostas pelo seu professor.</p>
+            <p className="fs-3 text-center my-5">Você está no portal do aluno Mano Lisboa, por aqui você vai receber e entregar as atividades propostas pelo seu professor.</p>
 
             <h2 className="text-center mb-5">Atividades</h2>
             <select
@@ -68,17 +83,22 @@ export const AcessoAluno = () => {
 
             <div className=" row g-4">
                 {atividades.map(data => {
+
+                    const turma = turmas.find(t => t.id === data.turmaId)
+
                     const hoje = new Date()
                     hoje.setHours(0, 0, 0, 0)
                     const entrega = new Date(data.dataEntrega)
                     entrega.setHours(0, 0, 0, 0)
+
                     if (entrega.getTime() >= hoje.getTime()) {
                         return (
                             <div className="d-flex">
                                 <div
-                                className="border p-3 p-lg-5 border shadow rounded col-12 col-md-6"
-                                key={data.id}>
-                                    <h3>{data.nome}</h3>
+                                    className="border p-3 p-lg-5 border shadow rounded col-12 col-md-6"
+                                    key={data.id}>
+                                    <h3 className="mb-0">{data.nome}</h3>
+                                    <p className="h5 text-secondary">{turma?.serie}º {turma?.turma}</p>
                                     {
                                         data.conteudo &&
                                         <p style={{ whiteSpace: 'pre-wrap' }} >
@@ -98,8 +118,8 @@ export const AcessoAluno = () => {
                                     {/* <Link className="btn btn-primary btn-sm" to={`/entrega-atividade/${data.id}`}>Entregar</Link> */}
 
                                     <Link
-                                    className="btn btn-primary w-100"
-                                    to={`/atividade/${data.id}`}>Acessar</Link>
+                                        className="btn btn-primary w-100"
+                                        to={`/atividade/${data.id}`}>Acessar</Link>
                                 </div>
                             </div>
                         )

@@ -60,7 +60,7 @@ export const Aluno = () => {
 
     const handleDelete = async () =>{
         try {
-            await deleteDoc(doc(db,'alunos',aluno?.id))
+            await deleteDoc(doc(db,'alunos',id))
             Swal.fire({
                 title:'Sucesso',
                 icon:'success',

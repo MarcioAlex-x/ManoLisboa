@@ -10,6 +10,7 @@ export const Painel = () => {
     const { userData } = useContext(UserContext)
     const [atividades, setAtividades] = useState([])
     const [turmas, setTurmas] = useState([])
+    const [usuarios, setUsuarios] = useState([])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -28,9 +29,15 @@ export const Painel = () => {
                     id: turmas.id, ...turmas.data()
                 }))
 
+                const usuariosRef = await getDocs(collection(db, 'usuarios'))
+                const usuariosSnapshot = usuariosRef.docs.map(doc => (
+                    { id: doc.id, ...doc.data() }
+                ))
 
+                setUsuarios(usuariosSnapshot)
                 setAtividades(atividades)
                 setTurmas(turmas)
+                
             } catch (err) {
                 console.error(err.message)
             }
@@ -43,16 +50,16 @@ export const Painel = () => {
         <div className="container bg-light my-5 p-sm-0 p-lg-5 rounded" style={{ height: '100vh' }}>
             <h2 className="mb-5 text-center">Painel de {userData.nome}</h2>
             <div className="border shadow p-2 p-lg-4 rounded ">
-                <p className="m-0"> <AtSign size={16} color="#3867d6"/> {userData.email}</p>
+                <p className="m-0"> <AtSign size={16} color="#3867d6" /> {userData.email}</p>
                 {atividades.length == 0 ?
                     (<p className="m-0">Nenhuma atividade cadastrada.</p>)
                     :
                     (
                         (
                             atividades.length < 2 ?
-                                (  <p className="m-0"><FilePenLine size={16} color="#8854d0"/> {atividades.length} atividade cadastrada.</p>)
+                                (<p className="m-0"><FilePenLine size={16} color="#8854d0" /> {atividades.length} atividade cadastrada.</p>)
                                 :
-                                (<p className="m-0"><FilePenLine size={16} color="#8854d0"/> {atividades.length} atividades cadastradas.</p>)
+                                (<p className="m-0"><FilePenLine size={16} color="#8854d0" /> {atividades.length} atividades cadastradas.</p>)
                         )
                     )
                 }
@@ -64,9 +71,9 @@ export const Painel = () => {
                     (
                         (
                             turmas.length < 2 ?
-                                (<p className="m-0"> <Users size={16} color="#20bf6b"/> {turmas.length} turma cadastrada.</p>)
+                                (<p className="m-0"> <Users size={16} color="#20bf6b" /> {turmas.length} turma cadastrada.</p>)
                                 :
-                                (<p className="m-0"> <Users size={16} color="#20bf6b"/> {turmas.length} turmas cadastradas.</p>)
+                                (<p className="m-0"> <Users size={16} color="#20bf6b" /> {turmas.length} turmas cadastradas.</p>)
                         )
                     )
                 }
@@ -107,6 +114,36 @@ export const Painel = () => {
                     </div>
                 ))}
             </div>
+            {
+                userData.tipo == 'admin' &&
+                <div className="my-5">
+                    <h2 className="text-center mt-5">Dados do Administrador</h2>
+                    <p><b>Usuários cadastrados:</b> {usuarios.length}</p>
+                    <table className="table border shadow">
+                        <thead>
+                            <tr>
+                                <th >Nome</th>
+                                <th>Tipo</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {usuarios.map(usuario => (
+                                <tr key={usuario.id}>
+                                    <td>{usuario.nome}</td>
+                                    <td>{usuario.tipo}</td>
+                                    <td>
+                                        <Link
+                                        to={`usuario/${usuario.id}`}
+                                        className="nav-link">Acessar</Link>
+                                    </td>
+                                </tr>
+                            ))
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
 
 
         </div>
