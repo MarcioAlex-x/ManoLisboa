@@ -134,7 +134,7 @@ export const Painel = () => {
                                     <td>{usuario.tipo}</td>
                                     <td>
                                         <Link
-                                        to={`usuario/${usuario.id}`}
+                                        to={`/usuario/${usuario.id}`}
                                         className="nav-link">Acessar</Link>
                                     </td>
                                 </tr>
