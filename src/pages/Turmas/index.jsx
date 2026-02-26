@@ -26,7 +26,7 @@ export const Turmas = () => {
         console.log(turmas)
     }, [userData])
     return (
-        <div className="container bg-light min-vh-100 p-5 mt-5 rounded" >
+        <div className="container bg-light min-vh-100 p-0 p-lg-5 mt-5 rounded" >
             <h2 className="text-center mb-5">Todas as suas turmas</h2>
             <table className="table table-striped table-hover">
                 <thead>

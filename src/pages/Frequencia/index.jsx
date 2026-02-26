@@ -1,8 +1,10 @@
 import { addDoc, collection, getDocs, orderBy, query, serverTimestamp, where } from "firebase/firestore"
 import { useContext, useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { db } from "../../firebaseConfig"
 import { UserContext } from "../../contexts/UserContext"
+import Swal from "sweetalert2"
+import { Info } from "lucide-react"
 
 export const Frequencia = () => {
     const [presencas, setPresencas] = useState({})
@@ -10,6 +12,7 @@ export const Frequencia = () => {
 
     const { id } = useParams()
     const { userData } = useContext(UserContext)
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -48,12 +51,38 @@ export const Frequencia = () => {
         )
 
         await Promise.all(promessas)
-        alert('Frequência salva')
-    }
 
+        let confirm = await Swal.fire({
+            icon: 'question',
+            title: 'Deseja fazer a chamada da mesma turma outra vez?',
+            showConfirmButton: true,
+            showCancelButton: true
+        })
+
+        if (confirm.isConfirmed) {
+            Swal.fire({
+                icon: 'info',
+                title: 'Nova frequência',
+                text: 'Faça uma nova frequência com a turma para o dia de hoje',
+            })
+        }else{
+            Swal.fire({
+                icon: 'success',
+                title: 'Sucesso',
+                text: 'A frequência foi salva',
+                timer: 1500,
+                timerProgressBar: 1500
+            })
+            
+            navigate(`/turma/${id}`)
+        }
+
+    }
+//  min-h-100 
     return (
-        <div className="container mt-lg-5 m-sm-0 bg-light min-h-100 p-sm-0 p-lg-5 rounded">
+        <div className="container rounded p-0 p-lg-5 mt-5 bg-light">
             <h2 className="my-5 text-center">Frequência </h2>
+            <p className="text-center border border-warning rounded d-flex align-items-center justify-content-center text-warning"> <Info size={16} className="me-2"/> Marque o aluno para atribuir presença ao aluno e deixe desmarcado para atribuir falta.</p>
             <form
                 className="border rounded shadow p-5"
                 onSubmit={handleSubmit}>

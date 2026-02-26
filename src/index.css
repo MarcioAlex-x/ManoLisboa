@@ -15,10 +15,12 @@
 } */
 
 .loader {
-  width: 48px;
-  height: 48px;
-  display: inline-block;
-  position: relative;
+  width: 480px;
+  height: 480px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .loader::after,
@@ -30,8 +32,8 @@
   border-radius: 50%;
   border: 2px solid #ff3d00;
   position: absolute;
-  left: 0;
-  top: 0;
+  left: 50%;
+  top: 50%;
   animation: animloader 2s linear infinite;
 }
 

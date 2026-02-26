@@ -1,7 +1,8 @@
 import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { db } from "../../firebaseConfig"
+import { ArrowRight} from "lucide-react"
 
 export const Usuario = () => {
     const [usuario, setUsuario] = useState(null)
@@ -62,27 +63,41 @@ export const Usuario = () => {
             </div>
             <div className="border rounded p-4 mt-4 shadow ">
                 <h2>Turmas</h2>
-                {turmas.length > 0 ?
-                    turmas.map(turma => (
-                        <div className="d-flex flex-wrap">
-                            <p
-                                className="border rounded shadow p-3 m-2 "
-                                key={turma.id}>{turma.serie}º {turma.turma}</p>
-                        </div>
-                    )) :
-                    <p>Ainda não tem turmas cadastradas</p>
-                }
+                <div className="d-flex flex-wrap">
+                    {turmas.length > 0 ?
+                        turmas.map(turma => (
+                            <div
+                                key={turma.id}>
+                                <p className="border rounded shadow p-3 m-2 d-flex m-1 scale">{turma.serie}º {turma.turma}
+                                    <Link
+                                        className="nav-link ms-1"
+                                        to={`/turma/${turma.id}`}>
+                                        <ArrowRight size={16} />
+                                    </Link>
+                                </p>
+                            </div>
+                        )) :
+                        <p>Ainda não tem turmas cadastradas</p>
+                    }
+                </div>
 
                 <h2 className="mt-4">Alunos</h2>
-                {alunos.length > 0 ? alunos.map(aluno => (
-                    <div
-                        key={aluno.id}
-                        className="d-flex flex-wrap">
-                        <p className="p-2 border rounded shadow">{aluno.nome}</p>
-                    </div>
-                )) :
-                    <p>Ainda não tem alunos cadastrados</p>
-                }
+                <div className="d-flex flex-wrap">
+                    {alunos.length > 0 ? alunos.map(aluno => (
+                        <div
+                            key={aluno.id}>
+                            <p className="p-2 border rounded shadow d-flex m-1 scale">{aluno.nome}
+                                <Link
+                                    className="nav-link ms-1"
+                                    to={`/aluno/${aluno.id}`}>
+                                    <ArrowRight size={16} />
+                                </Link>
+                            </p>
+                        </div>
+                    )) :
+                        <p>Ainda não tem alunos cadastrados</p>
+                    }
+                </div>
             </div>
         </div>
     )

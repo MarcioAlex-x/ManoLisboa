@@ -32,7 +32,7 @@ export const NavigateApp = () => {
                             {userData.tipo === 'admin' && 
                             <NavLink className='nav-link' to='/nova-instituicao'>Nova Instiuição</NavLink>}
                             {userData.tipo === 'admin' && 
-                            <NavLink className='nav-link' to='/novo-usuario'></NavLink>}
+                            <NavLink className='nav-link' to='/novo-usuario'>Novo Usuário</NavLink>}
                         </ul>
                         :
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">

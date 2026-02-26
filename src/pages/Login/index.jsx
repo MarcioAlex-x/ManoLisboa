@@ -1,4 +1,4 @@
-import { signInWithEmailAndPassword } from "firebase/auth"
+import { sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth"
 import { useState } from "react"
 import { auth } from "../../firebaseConfig"
 import { useNavigate } from "react-router-dom"
@@ -11,6 +11,25 @@ export const Login = () => {
     const [verSenha, setVerSenha] = useState(false)
 
     const navigate = useNavigate()
+
+    const handleNovaSenha = () => {
+        sendPasswordResetEmail(auth, email)
+        if (email) {
+            Swal.fire({
+                icon: 'success',
+                title:'E-mail enviado',
+                text:`Um link foi enviado ao seu e-mail ${email}.`,
+                showConfirmButton:true
+            })
+        }else{
+            Swal.fire({
+                icon:'error',
+                title:'E-mail não encontrado',
+                text:'Informe ou verifique o e-mail informado. Verifique também nos spams',
+                showConfirmButton:true
+            })
+        }
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -72,9 +91,9 @@ export const Login = () => {
                         value={senha}
                         onChange={e => setSenha(e.target.value)} />
 
-                    <div 
-                    style={{position:'absolute', bottom: '8px', right:'16px', cursor:'pointer'}}
-                    onClick={handleChangePassword}>
+                    <div
+                        style={{ position: 'absolute', bottom: '8px', right: '16px', cursor: 'pointer' }}
+                        onClick={handleChangePassword}>
                         {
                             verSenha ?
                                 <Eye />
@@ -88,6 +107,11 @@ export const Login = () => {
                     type="submit"
                     value="Entrar" />
             </form>
+            <div className="text-center">
+                <p
+                    onClick={handleNovaSenha}
+                    className="mt-5">Esqueci minha senha</p>
+            </div>
         </div>
     )
 }
