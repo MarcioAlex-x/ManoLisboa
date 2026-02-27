@@ -9,6 +9,7 @@ import { Info } from "lucide-react"
 export const Frequencia = () => {
     const [presencas, setPresencas] = useState({})
     const [alunos, setAlunos] = useState([])
+    const [loading, setLoading] = useState(false)
 
     const { id } = useParams()
     const { userData } = useContext(UserContext)
@@ -39,6 +40,7 @@ export const Frequencia = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setLoading(true)
 
         const promessas = alunos.map(aluno =>
             addDoc(collection(db, 'frequencia'), {
@@ -51,12 +53,15 @@ export const Frequencia = () => {
         )
 
         await Promise.all(promessas)
+        setLoading(false)
 
         let confirm = await Swal.fire({
             icon: 'question',
             title: 'Deseja fazer a chamada da mesma turma outra vez?',
             showConfirmButton: true,
-            showCancelButton: true
+            confirmButtonText:'Fazer outra chamada',
+            showCancelButton: true,
+            cancelButtonText:'Não fazer outra chamada'
         })
 
         if (confirm.isConfirmed) {
@@ -81,15 +86,21 @@ export const Frequencia = () => {
 //  min-h-100 
     return (
         <div className="container rounded p-0 p-lg-5 mt-5 bg-light">
-            <h2 className="my-5 text-center">Frequência </h2>
-            <p className="text-center border border-warning rounded d-flex align-items-center justify-content-center text-warning"> <Info size={16} className="me-2"/> Marque o aluno para atribuir presença ao aluno e deixe desmarcado para atribuir falta.</p>
+            <h2 className="my-4 text-center">Frequência </h2>
+            <div className="border border-warning rounded d-flex align-items-center justify-content-center mb-2">
+                {/* <Info size={16} className="me-2"/> */}
+                <p className="text-center  text-warning my-1 fw-bold ">  Marque adireita para atribuir presença ou deixe desmarcado para atribuir falta.
+                <br />
+                Após salvar a frequência a ação não poderá ser desfeita.</p>
+            </div>
+
             <form
                 className="border rounded shadow p-5"
                 onSubmit={handleSubmit}>
                 {alunos.map(aluno => (
 
                     <div
-                        className="border p-2 d-flex justify-content-between align-items-center mb-1 rounded"
+                        className="border p-2 d-flex justify-content-between align-items-center mb-1 rounded distack"
                         key={aluno.id}>
                         {aluno.nome}
                         <input
@@ -102,9 +113,16 @@ export const Frequencia = () => {
                         />
                     </div>
                 ))}
+                {!loading ? 
                 <button
                     className="btn btn-primary btn-sm d-block w-100"
+                    type="submit">Salvar Frequência</button> 
+                    :
+                    <button
+                    className="btn btn-primary btn-sm d-block w-100"
+                    disabled data-bs-toggle="button"
                     type="submit">Salvar Frequência</button>
+                }
             </form>
         </div>
     )

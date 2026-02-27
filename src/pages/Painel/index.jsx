@@ -80,7 +80,8 @@ export const Painel = () => {
             </div>
 
             <div>
-                <h2 className="mt-5 text-center mb-3">Atividades ativas</h2>
+                <h2 className="mt-5 text-center mb-0">Atividades ativas</h2>
+                <p className="text-center mb-4">As atividades ativas são aquelas que a data de entrega ainda <i>não expiraram</i></p>
                 {atividades.map(atividade => (
                     new Date(atividade.dataEntrega).toLocaleDateString('pt-BR') > new Date().toLocaleDateString('pt-BR') &&
                     <div className="border py-1 py-lg-2 px-lg-4 px-2 rounded shadow-sm mb-2 scale d-flex justify-content-between">
@@ -98,7 +99,11 @@ export const Painel = () => {
             </div>
             <div>
 
-                <h2 className="mt-5 text-center mb-3">Atividades inativas</h2>
+                <h2 className="mt-5 text-center mb-0">Atividades inativas</h2>
+                 <p className="text-center mb-4">As atividades inativas são aquelas que a data de entrega <i>já expiraram</i>
+                    <br />
+                    Você também pode apagar caso queira manter a área limpa acessando a atividade e clicando no botão <span className="border bg-danger rounded px-4 py-2 text-light shadow">apagar</span>
+                 </p>
                 {atividades.map(atividade => (
                     new Date(atividade.dataEntrega).toLocaleDateString('pt-BR') < new Date().toLocaleDateString('pt-BR') &&
                     <div className="border py-lg-2 py-1 px-lg-4 px-2 rounded shadow-sm mb-2 scale d-flex justify-content-between">

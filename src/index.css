@@ -7,6 +7,15 @@
   z-index: 1;
 }
 
+.distack{
+  transition: .2s;
+}
+
+.distack:hover {
+  background-color: #26de81;
+  font-weight: bold;
+}
+
 /* .loader-wrapper {
   min-height: 100vh;
   display: flex;

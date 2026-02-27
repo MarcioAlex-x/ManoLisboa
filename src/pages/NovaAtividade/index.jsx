@@ -25,6 +25,7 @@ export const NovaAtividade = () => {
     const [dataEntrega, setDataEntraga] = useState('')
     const [arquivo, setArquivo] = useState(null)
     const [token, setToken] = useState(() => gerarToken())
+    const [loading, setLoading] = useState(false)
 
     const { userData } = useContext(UserContext)
     const { id } = useParams()
@@ -33,7 +34,7 @@ export const NovaAtividade = () => {
         e.preventDefault()
 
         try {
-
+            setLoading(true)
             let arquivoUrl = null
 
             if (arquivo) {
@@ -82,6 +83,8 @@ export const NovaAtividade = () => {
                 timerProgressBar:1500
             })
             console.error(err.message)
+        }finally{
+            setLoading(false)
         }
     }
 
@@ -186,10 +189,18 @@ export const NovaAtividade = () => {
                         onChange={e => setArquivo(e.target.files[0])} />
                 </div>
 
-                <input
+                {!loading ? <input
                     className="btn btn-primary d-block w-100 mt-4"
                     type="submit"
+                    value="Enviar" /> :
+                    <input
+                    className="btn btn-primary d-block w-100 mt-4"
+                    disabled
+                    data-bs-toggle="button"
+                    type="submit"
                     value="Enviar" />
+                    
+                }
             </form>
         </div>
     )

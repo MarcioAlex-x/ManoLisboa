@@ -27,8 +27,12 @@ export const Atividades = () => {
     }, [userData?.uid])
 
     return (
-        <div className='container bg-light p-2 p-lg-5'>
-            <h2 className='my-5 text-center'>Todas as Atividades</h2>
+        <div className='container bg-light p-2 p-lg-5 my-5'>
+            <h2 className='mt-5 mb-0 text-center'>Todas as Atividades</h2>
+            <p className='text-center mb-5'>Aqui são listadas todas as atividades cadastradas independete da turma
+                <br />
+                Para acessar as atividades por turma acesse <b>Todas as Tumas</b> e escolha a turma desejada
+            </p>
             <div className="row g-2">
                 {atividades.map(atividade => (
                     <div

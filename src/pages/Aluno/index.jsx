@@ -20,11 +20,13 @@ export const Aluno = () => {
     const [consultaPeriodo, setConsultaPeriodo] = useState('')
     const [notasPeriodo, setNotasPeriodo] = useState([])
     const [totalNotasPeriodo, setTotalNotasPeriodo] = useState(Number())
+    const [loading, setLoading] = useState(false)
 
     const { id } = useParams()
     const { navigate } = useNavigate()
     const { userData } = useContext(UserContext)
 
+    // informações sobre o aluno
     useEffect(() => {
 
         if (!id) return
@@ -69,6 +71,7 @@ export const Aluno = () => {
     const faltas = frequencia.filter(f => !f.presenca).length
     const presencas = frequencia.filter(f => f.presenca).length
 
+    // gráfico de presença
     useEffect(() => {
         if (!frequencia.length) return
         const ctx = document.querySelector('#freqChart')
@@ -102,6 +105,7 @@ export const Aluno = () => {
 
     const porcentagem = Math.round((presencas / (presencas + faltas)) * 100) || 0
 
+    // total de notas do aluno no card das informações
     useEffect(() => {
         const fetchNotasAluno = async () => {
             const notasRef = collection(db, 'alunos', id, 'notas')
@@ -114,6 +118,7 @@ export const Aluno = () => {
         fetchNotasAluno()
     }, [id])
 
+    // apagar aluno
     const handleDelete = async () => {
         try {
             await deleteDoc(doc(db, 'alunos', id))
@@ -139,10 +144,12 @@ export const Aluno = () => {
         }
     }
 
+    // atribuir nota
     const handleNota = async (e) => {
         e.preventDefault()
 
         try {
+            setLoading(true)
             const notasRef = collection(db, 'alunos', id, 'notas')
             await addDoc(notasRef, {
                 atividade,
@@ -179,11 +186,14 @@ export const Aluno = () => {
                 timerProgressBar: 1500
             })
             console.error(err.message)
+        } finally {
+            setLoading(false)
         }
 
     }
     const somaNotas = notas.reduce((total, n) => total + (n.nota || 0), 0)
 
+    // apaga a nota 
     const handleDeleteNota = async (notaId) => {
         try {
             const notaRef = doc(db, 'alunos', id, 'notas', notaId)
@@ -208,6 +218,7 @@ export const Aluno = () => {
         }
     }
 
+    // filtra nota por perioro
     const handleNotasPeriodo = (e) => {
         e.preventDefault()
 
@@ -290,6 +301,7 @@ export const Aluno = () => {
                         <p className=" m-1 p-2">Total: {totalNotasPeriodo}</p>
                     </div>
                 </div>
+
                 <div className="">
                     <div className=" border shadow rounded p-0 p-lg-5">
                         <h3 className="text-center mt-4 ">Atribua alguma nota a {aluno?.nome}</h3>
@@ -356,10 +368,16 @@ export const Aluno = () => {
                                     value={nota}
                                     onChange={e => setNota(e.target.value)} />
                             </div>
-                            <input
-                                className="btn btn-primary w-100 mt-3"
-                                type="submit"
-                                value="Enviar nota" />
+                            {!loading ?
+                                <input
+                                    className="btn btn-primary w-100 mt-3"
+                                    type="submit"
+                                    value="Enviar nota" /> :
+                                <input
+                                    className="btn btn-primary w-100 mt-3"
+                                    disabled data-bs-toggle="button"
+                                    type="submit"
+                                    value="Enviar nota" />}
                         </form>
                     </div>
                 </div>

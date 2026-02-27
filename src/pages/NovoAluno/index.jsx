@@ -14,6 +14,8 @@ export const NovoAluno = () => {
     const [whatsApp, setWhatsapp] = useState('')
     const [email, setEmail] = useState('')
     const { userData } = useContext(UserContext)
+    const [loading, setLoading] = useState(false)
+
     const { id } = useParams()
 
     useEffect(() => {
@@ -33,6 +35,7 @@ export const NovoAluno = () => {
 
 
     const handleSubmit = async (e) => {
+        setLoading(true)
         e.preventDefault()
         try {
             if (!id || !userData) return
@@ -67,6 +70,10 @@ export const NovoAluno = () => {
 
         } catch (err) {
             console.error(err.message)
+        } finally {
+            [
+                setLoading(false)
+            ]
         }
     }
 
@@ -114,10 +121,19 @@ export const NovoAluno = () => {
                         onChange={e => setEmail(e.target.value)} />
                 </div>
 
-                <input
-                    className="btn btn-primary d-block w-100 mt-4"
-                    type="submit"
-                    value="Salvar" />
+                {!loading ?
+                    <input
+                        className="btn btn-primary d-block w-100 mt-4"
+                        type="submit"
+                        value="Salvar" />
+                    :
+                    <input
+                        className="btn btn-primary d-block w-100 mt-4"
+                        disabled
+                        data-bs-toggle="button"
+                        type="submit"
+                        value="Salvar" />
+                }
 
             </form>
             <h2 className="mt-5 text-center">Alunos desta turma</h2>

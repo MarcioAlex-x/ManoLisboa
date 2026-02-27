@@ -8,25 +8,27 @@ export const NovaTurma = () => {
     const [serie, setSerie] = useState('')
     const [turma, setTurma] = useState('')
     const [materia, setMateria] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const { userData } = useContext(UserContext)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setLoading(true)
         try {
             await addDoc(collection(db, 'turmas'), {
                 serie,
                 turma,
                 materia,
-                professorId:userData.uid
+                professorId: userData.uid
             })
             Swal.fire({
-                title:'Sucesso',
-                text:'Turma criada com sucesso',
-                icon:'success',
-                showCancelButton:false,
-                timerProgressBar:1500,
-                timer:1500
+                title: 'Sucesso',
+                text: 'Turma criada com sucesso',
+                icon: 'success',
+                showCancelButton: false,
+                timerProgressBar: 1500,
+                timer: 1500
             })
             setSerie('')
             setTurma('')
@@ -34,21 +36,23 @@ export const NovaTurma = () => {
         } catch (err) {
             console.error(err.message)
             Swal.fire({
-                title:'Erro',
-                text:'Ocorreu um erro ao tentar criar a nova turma',
-                icon:'error',
-                showCancelButton:false,
-                timerProgressBar:1500,
-                timer:1500                
+                title: 'Erro',
+                text: 'Ocorreu um erro ao tentar criar a nova turma',
+                icon: 'error',
+                showCancelButton: false,
+                timerProgressBar: 1500,
+                timer: 1500
             })
+        } finally {
+            setLoading(false)
         }
     }
 
     return (
         <div className="">
-            <div className="container mt-4 bg-light py-5 py-lg-0 p-0 p-lg-5 p-sm-2">
-                <h2 className="text-center">Nova Turma</h2>
-            
+            <div className="container bg-light min-vh-100 p-0 p-lg-5 my-5 rounded">
+                <h2 className="text-center my-5">Nova Turma</h2>
+
                 <form onSubmit={handleSubmit} className="mt-5 p-lg-5 p-2 border rounded shadow">
                     <div>
                         <label htmlFor="serie" className="form-label">Série ou Ano</label>
@@ -80,10 +84,18 @@ export const NovaTurma = () => {
                             value={materia}
                             onChange={e => setMateria(e.target.value)} />
                     </div>
-                    <input
-                        className="btn btn-primary mt-4 d-block w-100 fw-bold"
-                        type="submit"
-                        value="Salvar" />
+                    {!loading ?
+                        <input
+                            className="btn btn-primary mt-4 d-block w-100 fw-bold"
+                            type="submit"
+                            value="Salvar" />
+                        :
+                        <input
+                            className="btn btn-primary mt-4 d-block w-100 fw-bold"
+                            disabled
+                            data-bs-toggle="button"
+                            type="submit"
+                            value="Salvar" />}
                 </form>
             </div>
         </div>

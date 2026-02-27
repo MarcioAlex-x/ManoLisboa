@@ -4,8 +4,10 @@ import { db } from "../../firebaseConfig"
 
 export const NovaInstituicao = () => {
     const [instituicao, setInstituicao] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const handleSubmit = async (e) => {
+        setLoading(true)
         e.preventDefault()
         try {
             await addDoc(collection(db, 'instituicoes'), {
@@ -16,6 +18,8 @@ export const NovaInstituicao = () => {
         } catch (err) {
             alert('Ocorre um erro ao tentar criar a nova instituição')
             console.error(err.message)
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -34,10 +38,19 @@ export const NovaInstituicao = () => {
                     name="instituicao"
                     value={instituicao}
                     onChange={e => setInstituicao(e.target.value)} />
-                <input
-                className="btn btn-primary w-100" 
-                type="submit" 
-                value="Salvar" />
+                {!loading ?
+                    <input
+                        className="btn btn-primary w-100"
+                        type="submit"
+                        value="Salvar" />
+                    :
+                    <input
+                        className="btn btn-primary w-100"
+                        type="submit"
+                        disabled
+                        data-bs-toggle="button"
+                        value="Salvar" />
+                }
             </form>
         </div>
     )

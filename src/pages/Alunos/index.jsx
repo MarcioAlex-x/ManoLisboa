@@ -26,7 +26,11 @@ export const Alunos = () =>{
 
     return(
         <div className="container my-5 bg-light p-1 p-lg-5">
-            <h2 className="text-center my-5">Todos os Alunos</h2>
+            <h2 className="text-center mt-5 mb-0">Todos os Alunos</h2>
+            <p className="text-center mb-5">Aqui são listadas todas os alunos que você cadastrou independente da turma
+                <br />
+                Para acessar os alunos por turma acesse <b>Todas as Turmas</b> e escolha a turma desejada
+            </p>
             {alunos.map(aluno=>(
                 <div 
                 key={aluno.id}
