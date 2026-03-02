@@ -4,12 +4,14 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import { db } from "../../firebaseConfig"
 import { ArrowBigRightDash, FileCheck2, FilePlus, FileUser, Trash, UserPlus } from "lucide-react"
 import Swal from "sweetalert2"
+import { deleteByQuery } from "../../deleteByQuery"
 
 export const Turma = () => {
 
     const [atividades, setAtividades] = useState([])
     const [alunos, setAlunos] = useState([])
     const [turma, setTurma] = useState(null)
+    const [loading, setLoading] = useState(false)
 
     const { id } = useParams()
     const navigate = useNavigate()
@@ -43,7 +45,10 @@ export const Turma = () => {
         fetchData()
     }, [id])
 
-    const handleDelete = async () => {
+    const handleDelete = async () => {        
+        
+        setLoading(true)
+        
         try {
             const confirm = await Swal.fire({
                 icon: 'warning',
@@ -52,8 +57,21 @@ export const Turma = () => {
                 showConfirmButton: true
             })
             if (confirm.isConfirmed) {
-                await deleteDoc(doc(db, 'turmas', id))
                 
+                await deleteByQuery(
+                    query(collection(db,'frequencias'),where('turmaId', '==', id))
+                )
+                
+                await deleteByQuery(
+                    query(collection(db,'atividades'),where('turmaId', '==', id))
+                )
+                
+                await deleteByQuery(
+                    query(collection(db,'alunos'),where('turmaId', '==', id))
+                )
+
+                await deleteDoc(doc(db, 'turmas', id))
+
                 Swal.fire({
                     icon: 'success',
                     title: 'Sucesso',
@@ -63,7 +81,7 @@ export const Turma = () => {
                     timerProgressBar: 1500,
                 })
 
-                navigate('/turmas')
+                navigate('/painel')
             }
         } catch (err) {
             console.error(err.message)
@@ -76,6 +94,8 @@ export const Turma = () => {
                 timerProgressBar: 1500,
             })
 
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -96,11 +116,22 @@ export const Turma = () => {
                     to={`/atualizar-turma/${id}`}
                     className="btn btn-sm btn-outline-success d-flex align-items-center"><FileCheck2 size={16} />Editar Turma</Link>
 
-                <button
-                    onClick={handleDelete}
-                    className="btn btn-sm btn-outline-danger d-flex align-items-center">
-                        <Trash size={16} />
-                        Apagar Turma</button>
+                {
+                    loading ?
+                        <button
+                            onClick={handleDelete}
+                            disabled
+                            data-bs-toggle="button"
+                            className="btn btn-sm btn-outline-danger d-flex align-items-center">
+                            <Trash size={16} />
+                            Apagar Turma</button>
+                        :
+                        <button
+                            onClick={handleDelete}
+                            className="btn btn-sm btn-outline-danger d-flex align-items-center">
+                            <Trash size={16} />
+                            Apagar Turma</button>
+                }
             </div>
 
 

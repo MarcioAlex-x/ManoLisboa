@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from "react"
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom"
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, serverTimestamp, where } from 'firebase/firestore'
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, serverTimestamp, where, writeBatch } from 'firebase/firestore'
 import { db } from '../../firebaseConfig'
 import { UserContext } from "../../contexts/UserContext"
 import { Phone } from "lucide-react"
 import Chart from "chart.js/auto"
 import Swal from "sweetalert2"
+import { deleteByQuery } from "../../deleteByQuery"
 
 export const Aluno = () => {
 
@@ -23,7 +24,7 @@ export const Aluno = () => {
     const [loading, setLoading] = useState(false)
 
     const { id } = useParams()
-    const { navigate } = useNavigate()
+    const navigate = useNavigate()
     const { userData } = useContext(UserContext)
 
     // informações sobre o aluno
@@ -121,7 +122,33 @@ export const Aluno = () => {
     // apagar aluno
     const handleDelete = async () => {
         try {
-            await deleteDoc(doc(db, 'alunos', id))
+            setLoading(true)
+            const confirm = await Swal.fire({
+                icon: 'question',
+                title: 'Tem certeza?',
+                text: 'Após apagado todas as informações do aluno serão apagadas permanentemente'
+            })
+
+            if (!confirm.isConfirmed) return
+
+            const batch = writeBatch(db)
+
+            const notasRef = collection(db, 'alunos', id, 'notas')
+            const notasSnapshot = await getDocs(notasRef)
+
+            notasSnapshot.forEach(notaDoc => {
+                batch.delete(notaDoc.ref)
+            })
+
+            await deleteByQuery(
+                query(collection(db, 'frequencia'), where('alunoId', '==', id))
+            )
+
+            const alunoRef = doc(db, 'alunos', id)
+            batch.delete(alunoRef)
+
+            await batch.commit()
+
             Swal.fire({
                 title: 'Sucesso',
                 icon: 'success',
@@ -130,6 +157,9 @@ export const Aluno = () => {
                 timer: 1500,
                 timerProgressBar: 1500
             })
+
+            // gcloud firestore bulk-delete
+
             navigate('/alunos')
         } catch (err) {
             console.error(err.message)
@@ -141,6 +171,8 @@ export const Aluno = () => {
                 timer: 1500,
                 timerProgressBar: 1500
             })
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -256,9 +288,18 @@ export const Aluno = () => {
                             <p className="m-0"><b>Total de atividades: </b>{notas.length}</p>
                             <p className="m-0"><b>Soma total das notas: </b>{somaNotas}</p>
 
-                            <button
-                                onClick={handleDelete}
-                                className="btn btn-danger btn-sm m-3">Excluir aluno</button>
+                            {
+                                loading ?
+                                    <button
+                                        onClick={handleDelete}
+                                        disabled 
+                                        data-bs-toggle="button"
+                                        className="btn btn-danger btn-sm m-3">Excluir aluno</button>
+                                    : <button
+                                        onClick={handleDelete}
+                                        className="btn btn-danger btn-sm m-3">Excluir aluno</button>
+                            }
+
                             <Link
                                 to={`/atualizar-aluno/${id}`}
                                 className="btn btn-success btn-sm m-1">Editar aluno</Link>

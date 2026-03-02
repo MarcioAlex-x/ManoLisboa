@@ -1,16 +1,20 @@
-import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore"
+import { collection, deleteDoc, doc, getDoc, getDocs, query, where } from "firebase/firestore"
 import { useEffect, useState } from "react"
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { db } from "../../firebaseConfig"
-import { ArrowRight} from "lucide-react"
+import { ArrowRight } from "lucide-react"
+import Swal from "sweetalert2"
+import { deleteByQuery } from "../../deleteByQuery"
 
 export const Usuario = () => {
     const [usuario, setUsuario] = useState(null)
     const [instituicao, setInsituicao] = useState(null)
     const [alunos, setAlunos] = useState([])
     const [turmas, setTurmas] = useState([])
+    const [loading, setLoading] = useState(false)
 
     const { id } = useParams()
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -52,14 +56,77 @@ export const Usuario = () => {
         fetchData()
     }, [id])
 
+    const handleDetelete = async () => {
+        setLoading(true)
+        try {
+            const confirm = await Swal.fire({
+                icon: 'warning',
+                title: 'Tem certeza?',
+                text: 'Após apagar o usuário as informações não poderão ser recuperadas',
+                showConfirmButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Apagar',
+                cancelButtonText: 'Cancelar'
+            })
+
+            if (!confirm.isConfirmed) return
+
+            await deleteByQuery(query(collection(db, 'turmas'), where('professorId', '==', id)))
+
+            await deleteByQuery(query(collection(db, 'alunos'), where('professorId', '==', id)))
+
+            await deleteByQuery(query(collection(db, 'atividades'), where('professorId', '==', id)))
+
+            await deleteByQuery(query(collection(db, 'entregas'), where('professorId', '==', id)))
+
+            await deleteByQuery(query(collection(db, 'frequencia'), where('professorId', '==', id)))
+
+            await deleteDoc(doc(db, 'usuarios', id))
+
+            await Swal.fire({
+                icon: 'success',
+                title: 'Sucesso',
+                text: 'Professor apagado com sucesso',
+                timer: 1500,
+                timerProgressBar: 1500
+            })
+
+            navigate('/painel')
+
+        } catch (err) {
+            console.error(err.message)
+        } finally {
+            setLoading(false)
+        }
+    }
+
     return (
         <div className="container mt-5 bg-light p-lg-5 rounded ">
             <div className="p-2 border rounded p-4 shadow">
                 <h2 className="text-center my-5">Informações do Usuário</h2>
                 <h3>Nome: <span className="text-secondary">{usuario?.nome}</span></h3>
                 <h3>Instituição: <span className="text-secondary">{instituicao?.instituicao}</span></h3>
-                <p>{turmas.length} turma(s)</p>
-                <p>{alunos.length} aluno(s)</p>
+                <p className="h5 mb-0">{turmas.length} turma(s)</p>
+                <p className="h5">{alunos.length} aluno(s)</p>
+
+                <div className="d-flex justify-content-around w-75 m-auto">
+                    {
+                        loading ?
+                            <button
+                                onClick={handleDetelete}
+                                disabled
+                                data-bs-toggle="button"
+                                className="btn btn-danger">Excluir
+                            </button>
+                            :
+                            <button
+                                onClick={handleDetelete}
+                                className="btn btn-danger">Excluir
+                            </button>
+                    }
+
+                    <button className="btn btn-primary">Editar</button>
+                </div>
             </div>
             <div className="border rounded p-4 mt-4 shadow ">
                 <h2>Turmas</h2>

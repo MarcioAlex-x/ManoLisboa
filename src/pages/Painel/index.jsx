@@ -100,9 +100,9 @@ export const Painel = () => {
             <div>
 
                 <h2 className="mt-5 text-center mb-0">Atividades inativas</h2>
-                 <p className="text-center mb-4">As atividades inativas são aquelas que a data de entrega <i>já expiraram</i>
+                 <p className="text-center mb-4">As atividades inativas são aquelas que a data de entrega <b>já expiraram</b>
                     <br />
-                    Você também pode apagar caso queira manter a área limpa acessando a atividade e clicando no botão <span className="border bg-danger rounded px-4 py-2 text-light shadow">apagar</span>
+                    Você também pode apagar caso queira manter a área limpa acessando a atividade e clicando no botão <b>apagar</b>
                  </p>
                 {atividades.map(atividade => (
                     new Date(atividade.dataEntrega).toLocaleDateString('pt-BR') < new Date().toLocaleDateString('pt-BR') &&
