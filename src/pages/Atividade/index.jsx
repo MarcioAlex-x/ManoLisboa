@@ -9,9 +9,11 @@ import { UserContext } from '../../contexts/UserContext'
 export const Atividade = () => {
     const [atividade, setAtividade] = useState(null)
     const [turma, setTurma] = useState(null)
-    const { id } = useParams()
+    
     const { userData } = useContext(UserContext)
+
     const navigate = useNavigate()
+    const { id } = useParams()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -154,9 +156,9 @@ export const Atividade = () => {
                     to={`/atualizar-atividade/${id}`} > <FileCheck2 size={16}/> Atualizar</Link>
                 </div>
                 :
-                <Link to={`/entrega-atividade/${atividade?.id}`}
+                <Link to={`/entrega-atividade/${id}`}
                     className="btn btn-success d-block w-100 fw-bold"> Entregar</Link>
-            }
+                }
 
         </div>
     )

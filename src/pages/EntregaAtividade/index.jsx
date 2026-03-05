@@ -32,9 +32,9 @@ export const EntregaAtividade = () => {
 
         try {
             if (!atividade || atividade.token !== token) {
-    alert('Token inválido')
-    return
-}
+                alert('Token inválido')
+                return
+            }
 
             let arquivoUrl = null
             if (arquivo) {
@@ -112,8 +112,8 @@ export const EntregaAtividade = () => {
                             className="form-label mt-4"
                             htmlFor="texto">Texto</label>
                         <textarea
-                        rows={20}
-                        style={{resize:'none'}}
+                            rows={20}
+                            style={{ resize: 'none' }}
                             className="form-control"
                             name="texto"
                             value={texto}
@@ -153,14 +153,13 @@ export const EntregaAtividade = () => {
                             onChange={e => setToken(e.target.value)} />
                     </div>
 
-                    <input 
-                    className="btn btn-primary d-block w-100 mt-4"
-                    type="submit" 
-                    value="Enviar" />
+                    <input
+                        className="btn btn-primary d-block w-100 mt-4"
+                        type="submit"
+                        value="Enviar" />
                 </form>
 
             </div>
-
         </div>
     )
 }
