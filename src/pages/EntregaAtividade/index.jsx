@@ -31,10 +31,10 @@ export const EntregaAtividade = () => {
         e.preventDefault()
 
         try {
-            if (atividade.token !== token) {
-                alert('Token inválido')
-                return
-            }
+            if (!atividade || atividade.token !== token) {
+    alert('Token inválido')
+    return
+}
 
             let arquivoUrl = null
             if (arquivo) {
