@@ -113,6 +113,23 @@ export const Atividade = () => {
                 </div>
             }
 
+            {atividade?.arquivoUrl &&
+    <div>
+        <p>
+            <b className="fs-5">Arquivo da atividade: </b>
+            <a
+                href={atividade.arquivoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                download
+            >
+                <FileArchive  /> Baixar PDF
+            </a>
+        </p>
+        <hr />
+    </div>
+}
+
             {userData &&
                 <div>
                     <p><b className="fs-5">Token: </b> {atividade?.token}</p>

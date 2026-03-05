@@ -93,10 +93,8 @@ export const AcessoAluno = () => {
 
                     if (entrega.getTime() >= hoje.getTime()) {
                         return (
-                            <div className="d-flex">
-                                <div
-                                    className="border p-3 p-lg-5 border shadow rounded col-12 col-md-6"
-                                    key={data.id}>
+                            <div key={data.id} className="col-12 col-md-6">
+                                <div className="border p-3 p-lg-5 shadow rounded h-100">
                                     <h3 className="mb-0">{data.nome}</h3>
                                     <p className="h5 text-secondary">{turma?.serie}º {turma?.turma}</p>
                                     {
@@ -120,6 +118,10 @@ export const AcessoAluno = () => {
                                     <Link
                                         className="btn btn-primary w-100"
                                         to={`/atividade/${data.id}`}>Acessar</Link>
+
+
+
+
                                 </div>
                             </div>
                         )
