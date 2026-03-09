@@ -2,7 +2,7 @@ import { collection, deleteDoc, doc, getDoc, getDocs, orderBy, query, where } fr
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { db } from "../../firebaseConfig"
-import { ArrowBigRightDash, FileCheck2, FilePlus, FileUser, Trash, UserPlus } from "lucide-react"
+import { ArrowBigRightDash, File, FileCheck2, FilePlus, FileUser, Trash, UserPlus } from "lucide-react"
 import Swal from "sweetalert2"
 import { deleteByQuery } from "../../deleteByQuery"
 
@@ -45,10 +45,10 @@ export const Turma = () => {
         fetchData()
     }, [id])
 
-    const handleDelete = async () => {        
-        
+    const handleDelete = async () => {
+
         setLoading(true)
-        
+
         try {
             const confirm = await Swal.fire({
                 icon: 'warning',
@@ -56,23 +56,28 @@ export const Turma = () => {
                 text: 'A ação não poderá ser desfeita',
                 showConfirmButton: true
             })
+
             if (confirm.isConfirmed) {
-                
+
                 await deleteByQuery(
-                    query(collection(db,'frequencias'),where('turmaId', '==', id))
+                    query(collection(db, 'frequencias'), where('turmaId', '==', id))
                 )
-                
+
                 await deleteByQuery(
-                    query(collection(db,'atividades'),where('turmaId', '==', id))
+                    query(collection(db, 'atividades'), where('turmaId', '==', id))
                 )
-                
+
                 await deleteByQuery(
-                    query(collection(db,'alunos'),where('turmaId', '==', id))
+                    query(collection(db, 'alunos'), where('turmaId', '==', id))
+                )
+
+                await deleteByQuery(
+                    query(collection(db, 'entregas'), where('turmaId', '==', id))
                 )
 
                 await deleteDoc(doc(db, 'turmas', id))
 
-                Swal.fire({
+                await Swal.fire({
                     icon: 'success',
                     title: 'Sucesso',
                     text: 'A turma foi apagada com sucesso',
@@ -105,9 +110,33 @@ export const Turma = () => {
 
             <hr />
             <div className="d-flex justify-content-around">
-                <Link className="nav-link scale" to={`/nova-atividade/${id}`}>Nova atividade<FilePlus size={16} color="#20bf6b" /></Link>
-                <Link className="nav-link scale" to={`/novo-aluno/${id}`}>Novo aluno<UserPlus size={16} color="#8854d0" /></Link>
-                <Link className="nav-link scale" to={`/frequencia/${id}`}>Fazer chamada<FileUser size={16} color="#fa8231" /></Link>
+                <Link className="nav-link scale d-flex align-items-center text-center" to={`/nova-atividade/${id}`}>
+                    <FilePlus 
+                    className="d-none d-md-block"
+                    size={16}  color="#20bf6b" />
+                    Nova atividade
+                </Link>
+
+                <Link className="nav-link scale d-flex align-items-center text-center" to={`/novo-aluno/${id}`}>
+                    <UserPlus 
+                    className="d-none d-md-block"
+                    size={16} color="#8854d0" />
+                    Novo aluno
+                </Link>
+
+                <Link className="nav-link scale d-flex align-items-center text-center" to={`/frequencia/${id}`}>
+                    <FileUser 
+                    className="d-none d-md-block"
+                    size={16} color="#fa8231" />
+                    Fazer chamada
+                </Link>
+
+                <Link className="nav-link scale d-flex align-items-center text-center" to={`/atividades-turma/${id}`}>
+                    <File 
+                    className="d-none d-md-block"
+                    size={16} color="#c0392b" />
+                    Atividades Recebidas
+                </Link>
             </div>
             <hr />
 

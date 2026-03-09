@@ -1,29 +1,24 @@
 import { collection, getDocs, query, where } from "firebase/firestore"
-import { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
+import { Link, useParams } from "react-router-dom"
 import { db } from "../../firebaseConfig"
-import { UserContext } from "../../contexts/UserContext"
-import { Link } from "react-router-dom"
 
-export const AtividadesEntregues = () =>{
+export const AtividadesEntreguesPorTurma = () =>{
     const [atividades, setAtividades] = useState([])
-    const { userData } = useContext(UserContext)
+    
+    const { id } = useParams()
 
     useEffect(()=>{
-        const atividadesFetch = async () =>{
-            try {
-                const atividadesRef = query(collection(db, 'entregas'),where('professorId','==',userData.uid))
-                const atividadesSnapshot = await getDocs(atividadesRef)
-                const atividadesData = atividadesSnapshot.docs.map((doc)=>(
-                    {id:doc.id, ...doc.data()}
-                ))
-                setAtividades(atividadesData)
-                
-            } catch (err) {
-                console.error(err.message)
-            }
+        const fetchAtividades = async () =>{
+            const atividadesRef = query(collection(db,'entregas'),where('turmaId','==',id))
+            const atividadesSnapshot = await getDocs(atividadesRef)
+            const atividadesData = atividadesSnapshot.docs.map((doc)=>({
+                id:doc.id, ...doc.data()
+            }))
+            setAtividades(atividadesData)
         }
-        atividadesFetch()
-    },[userData])
+        fetchAtividades()
+    },[id])
 
     return(
         <div className="container bg-light p-lg-5 my-5">

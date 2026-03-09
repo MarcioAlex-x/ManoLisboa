@@ -25,6 +25,7 @@ import { Usuario } from "../pages/Usuario";
 import { AtividadesEntregues } from "../pages/AtividadesEntregues";
 import { AtividadeEntregue } from "../pages/AtividadeEntregue";
 import { AtualizarUsuario } from "../pages/AtualizarUsuario";
+import { AtividadesEntreguesPorTurma } from "../pages/AtividadesEntreguesPorTurma";
 
 export const AppRouter = createBrowserRouter([
     {
@@ -158,6 +159,13 @@ export const AppRouter = createBrowserRouter([
                 path: 'atividade-recebidas/:id', element:
                 <ProtectedRoute>
                     <AtividadeEntregue />
+                </ProtectedRoute>
+            },
+            
+            {
+                path: 'atividades-turma/:id', element:
+                <ProtectedRoute>
+                    <AtividadesEntreguesPorTurma />
                 </ProtectedRoute>
             },
             {

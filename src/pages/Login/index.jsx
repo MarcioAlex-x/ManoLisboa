@@ -56,7 +56,7 @@ export const Login = () => {
             Swal.fire({
                 icon: 'error',
                 title: 'Erro',
-                text: 'Não foi possível enviar o e-mail de redefinição'
+                text: 'Não foi possível enviar o e-mail de redefinição',
             })
         }
     }
