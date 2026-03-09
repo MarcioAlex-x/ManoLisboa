@@ -1,7 +1,10 @@
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { useEffect, useState } from "react"
 import { auth, db } from "../../firebaseConfig"
-import { setDoc, doc, collection, getDocs } from "firebase/firestore"
+import { setDoc, doc, collection, getDocs, Timestamp } from "firebase/firestore"
+import Swal from "sweetalert2"
+import { data } from "react-router-dom"
+
 
 export const Register = () => {
 
@@ -11,6 +14,8 @@ export const Register = () => {
     const [loading, setLoading] = useState(false)
     const [instituicoes, setInstituicoes] = useState([])
     const [instituicaoId, setInstituicaoId] = useState('')
+    const [ativo, setAtivo] = useState(false)
+    const [ativoAte, setAtivoAte] = useState('')
 
 
     useEffect(() => {
@@ -38,16 +43,33 @@ export const Register = () => {
             const userCredentials = await createUserWithEmailAndPassword(auth, email, senha)
             const user = userCredentials.user
 
+            const dataExpira = ativo ? Timestamp.fromDate(ativoAte) : null
+
             const novoUsuario = await setDoc(doc(db, 'usuarios', user.uid), {
                 nome,
                 tipo: 'professor',
-                instituicaoId
+                instituicaoId,
+                ativo,
+                ativoAte:dataExpira
             })
 
-            alert("Usuário criado com sucesso.")
+            Swal.fire({
+                icon: 'success',
+                title: 'Sucesso',
+                text: 'Usuário criado com sucesso',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: 1500
+            })
 
         } catch (err) {
-            alert('Erro ao tentar criar novo usuário.')
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: 'Ocorreu um erro ao tentar criar o usuário. Favor tentar novamente mais tarde.',
+                timer: 1500,
+                timerProgressBar:1500
+            })
             console.log(err.message)
         } finally {
             setLoading(false)
@@ -115,6 +137,23 @@ export const Register = () => {
                         name="senha"
                         value={senha}
                         onChange={e => setSenha(e.target.value)} />
+                </div>
+                <div>
+                    <label htmlFor="ativo">Ativo</label>
+                    <input type="checkbox"
+                        name="ativo"
+                        id="ativo"
+                        value={ativo}
+                        onChange={e => setAtivo(e.target.checked)} />
+                </div>
+                <div>
+                    <label htmlFor="ativoAte">Ativo Até</label>
+                    <input
+                        type="date"
+                        name="ativoAte"
+                        id="ativoAte"
+                        value={ativoAte}
+                        onChange={e => setAtivoAte(e.target.value)} />
                 </div>
                 <input
                     className="btn btn-primary w-100 mt-3"

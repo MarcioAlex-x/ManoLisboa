@@ -9,7 +9,7 @@ import { UserContext } from '../../contexts/UserContext'
 export const Atividade = () => {
     const [atividade, setAtividade] = useState(null)
     const [turma, setTurma] = useState(null)
-    
+
     const { userData } = useContext(UserContext)
 
     const navigate = useNavigate()
@@ -24,7 +24,7 @@ export const Atividade = () => {
                 const atividadeData = atividadeSnapshot.data()
                 setAtividade(atividadeData)
 
-                const turmaAtividadeRef = doc(db,'turmas',atividadeData.turmaId)
+                const turmaAtividadeRef = doc(db, 'turmas', atividadeData.turmaId)
                 const turmaSnapshot = await getDoc(turmaAtividadeRef)
                 setTurma(turmaSnapshot.data())
 
@@ -77,7 +77,11 @@ export const Atividade = () => {
 
     return (
         <div className="container bg-light p-lg-5 my-5">
-            {atividade?.nome ? <h2 className="mt-5 mb-0 text-center">{atividade?.nome}</h2> : <h2>Atividade sem nome</h2>}
+            {atividade?.nome ?
+                <h2 className="mt-5 mb-0 text-center">{atividade?.nome}</h2>
+                :
+                <h2 className="mt-5 mb-0 text-center">Atividade sem nome</h2>
+            }
             <h3 className="text-center mb-5 text-body-tertiary">Turma {turma?.serie}º {turma?.turma}</h3>
 
             {atividade?.peso !== null || atividade?.peso !== "" &&
@@ -116,21 +120,21 @@ export const Atividade = () => {
             }
 
             {atividade?.arquivoUrl &&
-    <div>
-        <p>
-            <b className="fs-5">Arquivo da atividade: </b>
-            <a
-                href={atividade.arquivoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                download
-            >
-                <FileArchive  /> Baixar PDF
-            </a>
-        </p>
-        <hr />
-    </div>
-}
+                <div>
+                    <p>
+                        <b className="fs-5">Arquivo da atividade: </b>
+                        <a
+                            href={atividade.arquivoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            download
+                        >
+                            <FileArchive /> Baixar PDF
+                        </a>
+                    </p>
+                    <hr />
+                </div>
+            }
 
             {userData &&
                 <div>
@@ -149,16 +153,16 @@ export const Atividade = () => {
                 <div className="d-flex justify-content-around">
                     <button
                         className="btn btn-danger d-flex align-items-center"
-                        onClick={handleDelete} > <Trash size={16}/> Excluir</button>
+                        onClick={handleDelete} > <Trash size={16} /> Excluir</button>
 
-                    <Link 
-                    className="btn btn-success d-flex align-items-center"
-                    to={`/atualizar-atividade/${id}`} > <FileCheck2 size={16}/> Atualizar</Link>
+                    <Link
+                        className="btn btn-success d-flex align-items-center"
+                        to={`/atualizar-atividade/${id}`} > <FileCheck2 size={16} /> Atualizar</Link>
                 </div>
                 :
                 <Link to={`/entrega-atividade/${id}`}
                     className="btn btn-success d-block w-100 fw-bold"> Entregar</Link>
-                }
+            }
 
         </div>
     )

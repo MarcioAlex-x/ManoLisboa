@@ -22,6 +22,9 @@ import { AtualizarTurma } from "../pages/AtualizarTurma";
 import { AtualizarAluno } from "../pages/AtualizarAluno";
 import { AtualizarAtividade } from "../pages/AtualizarAtividade";
 import { Usuario } from "../pages/Usuario";
+import { AtividadesEntregues } from "../pages/AtividadesEntregues";
+import { AtividadeEntregue } from "../pages/AtividadeEntregue";
+import { AtualizarUsuario } from "../pages/AtualizarUsuario";
 
 export const AppRouter = createBrowserRouter([
     {
@@ -139,9 +142,31 @@ export const AppRouter = createBrowserRouter([
             },
             {
                 path: 'usuario/:id', element:
+                <AdminRoute>
+                    <ProtectedRoute>
+                        <Usuario />
+                    </ProtectedRoute>
+                </AdminRoute>
+            },
+            {
+                path: 'atividades-recebidas', element:
                 <ProtectedRoute>
-                    <Usuario />
+                    <AtividadesEntregues />
                 </ProtectedRoute>
+            },
+            {
+                path: 'atividade-recebidas/:id', element:
+                <ProtectedRoute>
+                    <AtividadeEntregue />
+                </ProtectedRoute>
+            },
+            {
+                path: 'atualizar-usuario/:id', element:
+                <AdminRoute>
+                    <ProtectedRoute>
+                        <AtualizarUsuario />
+                    </ProtectedRoute>
+                </AdminRoute>
             }
         ]
     }

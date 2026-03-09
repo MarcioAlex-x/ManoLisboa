@@ -108,6 +108,9 @@ export const Usuario = () => {
                 <h3>Instituição: <span className="text-secondary">{instituicao?.instituicao}</span></h3>
                 <p className="h5 mb-0">{turmas.length} turma(s)</p>
                 <p className="h5">{alunos.length} aluno(s)</p>
+                <p className="h5" >Tipo de usuário: <span style={{textTransform:'capitalize'}}>{usuario?.tipo}</span></p>
+                <p className="h5">Status: {usuario?.ativo === true? 'Ativo' : 'Inativo'}</p>
+                <p className="h5 mb-3">Data de expiração: {usuario?.ativoAte.toDate().toLocaleDateString()}</p>
 
                 <div className="d-flex justify-content-around w-75 m-auto">
                     {
@@ -125,7 +128,9 @@ export const Usuario = () => {
                             </button>
                     }
 
-                    <button className="btn btn-primary">Editar</button>
+                    <Link 
+                    to={`/atualizar-usuario/${id}`}
+                    className="btn btn-primary">Editar</Link>
                 </div>
             </div>
             <div className="border rounded p-4 mt-4 shadow ">

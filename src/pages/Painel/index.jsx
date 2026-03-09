@@ -3,7 +3,7 @@ import { UserContext } from '../../contexts/UserContext'
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore"
 import { db } from "../../firebaseConfig"
 import { Link } from "react-router-dom"
-import { ArrowBigRightDash, AtSign, FilePenLine, Users } from "lucide-react"
+import { ArrowBigRightDash, AtSign, Calendar, File, FilePenLine, Users } from "lucide-react"
 
 export const Painel = () => {
 
@@ -11,6 +11,7 @@ export const Painel = () => {
     const [atividades, setAtividades] = useState([])
     const [turmas, setTurmas] = useState([])
     const [usuarios, setUsuarios] = useState([])
+    const [entregas, setEntregas] = useState([])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,6 +30,12 @@ export const Painel = () => {
                     id: turmas.id, ...turmas.data()
                 }))
 
+                const qe = query(collection(db,'entregas'), where('professorId','==',userData.uid))
+                const snapshotEntregas = await getDocs(qe)
+                const entregas = snapshotEntregas.docs.map(entrega=>({
+                    id:entrega.id,...entrega.data()
+                }))
+
                 const usuariosRef = await getDocs(collection(db, 'usuarios'))
                 const usuariosSnapshot = usuariosRef.docs.map(doc => (
                     { id: doc.id, ...doc.data() }
@@ -37,12 +44,13 @@ export const Painel = () => {
                 setUsuarios(usuariosSnapshot)
                 setAtividades(atividades)
                 setTurmas(turmas)
+                setEntregas(entregas)
                 
             } catch (err) {
                 console.error(err.message)
             }
         }
-        fetchData()
+        fetchData()       
 
     }, [userData?.uid])
 
@@ -77,6 +85,20 @@ export const Painel = () => {
                         )
                     )
                 }
+
+                {entregas.length == 0 ?
+                    (<p>Nenhuma atividade entregue.</p>)
+                    :
+                    (
+                        (
+                            entregas.length < 2 ?
+                                (<p className="m-0"> <Users size={16} color="#20bf6b" /> {entregas.length} atividade entregue.</p>)
+                                :
+                                (<p className="m-0"> <File size={16} color="#d31d81" /> {entregas.length} atividades entregues.</p>)
+                        )
+                    )
+                }
+                <p className="d-flex align-items-center"> <Calendar size={16} className="me-1"/> O seu acesso expira em {userData?.ativoAte.toDate().toLocaleDateString('pt-BR')}</p>
             </div>
 
             <div>

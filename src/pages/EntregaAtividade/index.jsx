@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { db, storage } from "../../firebaseConfig"
 import { addDoc, collection, doc, getDoc, serverTimestamp } from "firebase/firestore"
 import { useParams } from "react-router-dom"
+import Swal from "sweetalert2"
 
 export const EntregaAtividade = () => {
 
@@ -14,6 +15,10 @@ export const EntregaAtividade = () => {
     const [atividade, setAtividade] = useState(null)
     const [aluno, setAluno] = useState('')
     const [turma, setTurma] = useState('')
+    const [instituicaoId, setInstituicaoId] = useState('')
+    const [professorId, setProfessorId] = useState('')
+    const [turmaId, setTurmaId] = useState('')
+
 
     const { id } = useParams()
 
@@ -23,6 +28,9 @@ export const EntregaAtividade = () => {
             const atividadeSnapshot = await getDoc(atividadeRef)
             const atividadeData = atividadeSnapshot.data()
             setAtividade(atividadeData)
+            setInstituicaoId(atividadeData.instituicaoId)
+            setProfessorId(atividadeData.professorId)
+            setTurmaId(atividadeData.turmaId)
         }
         fetchData()
     }, [id])
@@ -32,7 +40,11 @@ export const EntregaAtividade = () => {
 
         try {
             if (!atividade || atividade.token !== token) {
-                alert('Token inválido')
+                Swal.fire({
+                    icon:'error',
+                    title:'Erro',
+                    text:'Token inválido, informe o token da atividade.'
+                })
                 return
             }
 
@@ -51,15 +63,36 @@ export const EntregaAtividade = () => {
                 link,
                 arquivoUrl,
                 atividadeId: id,
+                instituicaoId,
+                professorId,
+                turmaId,
                 entregueEm: serverTimestamp()
             })
-            alert('Atividade entregue')
+
+            Swal.fire({
+                icon:'success',
+                title:'Sucesso',
+                text:'Atividade enviada com sucesso',
+                showConfirmButton:false,
+                timer:1500,
+                timerProgressBar:1500
+            })
+
             setTiulo('')
             setTexto('')
             setLink('')
 
         } catch (err) {
-            alert('Erro ao tentar enviar atividade')
+
+            Swal.fire({
+                icon:'error',
+                title:'Erro',
+                text:'Ocorreu um err ao tentar enviar a atividade, tente outra vez mais tarde',
+                showConfirmButton:false,
+                timer:2000,
+                timerProgressBar:2000
+            })
+
             console.log(err.message)
         }
     }
@@ -160,6 +193,7 @@ export const EntregaAtividade = () => {
                 </form>
 
             </div>
+            {console.log(atividade?.instituicaoId)}
         </div>
     )
 }
