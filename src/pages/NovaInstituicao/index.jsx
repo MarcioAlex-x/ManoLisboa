@@ -4,6 +4,8 @@ import { db } from "../../firebaseConfig"
 
 export const NovaInstituicao = () => {
     const [instituicao, setInstituicao] = useState('')
+    const [codigo, setCodigo] = useState('')
+
     const [loading, setLoading] = useState(false)
 
     const handleSubmit = async (e) => {
@@ -11,7 +13,8 @@ export const NovaInstituicao = () => {
         e.preventDefault()
         try {
             await addDoc(collection(db, 'instituicoes'), {
-                instituicao
+                instituicao,
+                codigo:codigo.toUpperCase()
             })
             setInstituicao('')
             alert('Instituição criada com sucesso.')
@@ -32,12 +35,24 @@ export const NovaInstituicao = () => {
                 <label
                     className="form-label"
                     htmlFor="instituicao">Nova Instituição</label>
+
                 <input
                     className="form-control mb-2"
                     type="text"
                     name="instituicao"
                     value={instituicao}
                     onChange={e => setInstituicao(e.target.value)} />
+
+                <label
+                    className="form-label"
+                    htmlFor="codigo">Código</label>
+                <input
+                    className="form-control mb-2"
+                    type="text"
+                    name="codigo"
+                    value={codigo}
+                    onChange={e => setCodigo(e.target.value)} />
+
                 {!loading ?
                     <input
                         className="btn btn-primary w-100"

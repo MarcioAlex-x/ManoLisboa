@@ -160,7 +160,7 @@ export const Atividade = () => {
                         to={`/atualizar-atividade/${id}`} > <FileCheck2 size={16} /> Atualizar</Link>
                 </div>
                 :
-                <Link to={`/entrega-atividade/${id}`}
+                !atividade?.paraLeitura && <Link to={`/entrega-atividade/${id}`}
                     className="btn btn-success d-block w-100 fw-bold"> Entregar</Link>
             }
 

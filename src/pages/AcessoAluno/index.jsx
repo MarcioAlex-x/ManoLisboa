@@ -3,132 +3,75 @@ import { useEffect, useState } from "react"
 import { db } from "../../firebaseConfig"
 import { Link } from "react-router-dom"
 
-
 export const AcessoAluno = () => {
 
-    const [atividades, setAtividades] = useState([])
-    const [instituicoes, setInstituicoes] = useState([])
-    const [instituicaoId, setInstituicaoId] = useState('')
-    const [turmas, setTurmas] = useState([])
+    const [codigo, setCodigo] = useState('')
+    const [instituicao, setInstituicao] = useState([])
 
     useEffect(() => {
-        const fetchInstituicoes = async () => {
-            try {
 
-                const instituicoesRef = collection(db, 'instituicoes')
-                const instituicoesSnapshot = await getDocs(instituicoesRef)
-                const instituicoesData = instituicoesSnapshot.docs.map(doc => (
-                    { id: doc.id, ...doc.data() }
-                ))
-
-                setInstituicoes(instituicoesData)
-
-            } catch (err) {
-                console.error(err.message)
-            }
+        if (codigo === '') {
+            setInstituicao([])
+            return
         }
-        fetchInstituicoes()
-    }, [])
 
-    useEffect(() => {
-        const fetchTumas = async () => {
-            const turmasRef = collection(db, 'turmas')
-            const turmasSnapshot = await getDocs(turmasRef)
-            const turmasData = turmasSnapshot.docs.map(doc => (
-                { id: doc.id, ...doc.data() }
-            ))
-            setTurmas(turmasData)
+        const fetchInstituicao = async () => {
+
+            const instituicaoRef = query(
+                collection(db, 'instituicoes'),
+                where('codigo', '>=', codigo.toUpperCase()),
+                where('codigo', '<=', codigo.toLocaleUpperCase() + '\uf8ff'),
+
+            )
+
+            const snapshot = await getDocs(instituicaoRef)
+
+            const data = snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }))
+
+            setInstituicao(data)
         }
-        fetchTumas()
-    }, [instituicaoId])
 
+        fetchInstituicao()
 
-    useEffect(() => {
-        const fetchAtividades = async () => {
-            const atividadesRef = query(collection(db, 'atividades'), where('instituicaoId', '==', instituicaoId))
-            const atividadesSnapshot = await getDocs(atividadesRef)
-            const atividadesData = atividadesSnapshot.docs.map(doc => (
-                { id: doc.id, ...doc.data() }
-            ))
-
-            setAtividades(atividadesData)
-        }
-        fetchAtividades()
-    }, [instituicaoId])
+    }, [codigo])
 
     return (
         <div className="container mt-5 bg-light p-lg-5 rounded">
-            <h1>
-                <img
-                    className="img-fluid w-75 d-block m-auto"
-                    src="manolisboa.png"
-                    alt="Mano Lisboa" />
-            </h1>
 
-            <p className="fs-3 text-center my-5">Você está no portal do aluno Mano Lisboa, por aqui você vai receber e entregar as atividades propostas pelo seu professor.</p>
+            <h2 className="text-center mb-5">Selecione a sua instituição</h2>
 
-            <h2 className="text-center mb-5">Atividades</h2>
-            <select
-                className="form-control mb-5"
-                name="instituicao"
-                value={instituicaoId}
-                onChange={e => setInstituicaoId(e.target.value)} >
+            <div className="p-0 p-md-5 border rounded shadow mb-2">
 
-                <option value="">Selecione a instituição</option>
+                <input
+                    type="text"
+                    placeholder="Ex: UNIESP"
+                    className="form-control mb-3"
+                    value={codigo}
+                    name="codigo"
+                    onChange={e => setCodigo(e.target.value)}
+                />
 
-                {instituicoes.map(data => (
-                    <option key={data.id} value={data.id}>{data.instituicao}</option>
-                ))}
-            </select>
-
-            <div className=" row g-4">
-                {atividades.map(data => {
-
-                    const turma = turmas.find(t => t.id === data.turmaId)
-
-                    const hoje = new Date()
-                    hoje.setHours(0, 0, 0, 0)
-                    const entrega = new Date(data.dataEntrega)
-                    entrega.setHours(0, 0, 0, 0)
-
-                    if (entrega.getTime() >= hoje.getTime()) {
-                        return (
-                            <div key={data.id} className="col-12 col-md-6">
-                                <div className="border p-3 p-lg-5 shadow rounded h-100">
-                                    <h3 className="mb-0">{data.nome}</h3>
-                                    <p className="h5 text-secondary">{turma?.serie}º {turma?.turma}</p>
-                                    {
-                                        data.conteudo &&
-                                        <p style={{ whiteSpace: 'pre-wrap' }} >
-                                            <b className="fs-5">Descricao:</b>
-                                            <br />
-                                            {data.conteudo}
-                                        </p>
-                                    }
-                                    {data.orientacoes &&
-                                        <p style={{ whiteSpace: 'pre-wrap' }}>
-                                            <b className="fs-5">Orientações: </b>
-                                            <br />
-                                            {data.orientacoes}
-                                        </p>
-                                    }
-                                    {data.dataEntrega && <p> <b className="fs-5">Entregar até: </b> {new Date(data.dataEntrega).toLocaleDateString('pt-BR')}</p>}
-                                    {/* <Link className="btn btn-primary btn-sm" to={`/entrega-atividade/${data.id}`}>Entregar</Link> */}
-
-                                    <Link
-                                        className="btn btn-primary w-100"
-                                        to={`/atividade/${data.id}`}>Acessar</Link>
-
-
-
-
-                                </div>
-                            </div>
-                        )
-                    }
-                    return null
-                })}
             </div>
+
+            {
+                instituicao.length === 0 ?
+                    <p className="text-center">Se não encontrou a sua instituição ou não sabe o código entre em contato com a coordenação do seu curso</p>
+                    :
+                    <p className="text-center mt-3 h3">Selecione a sua instituição</p>
+
+            }
+
+            {
+                instituicao.map(i => (
+                    <Link
+                        className="nav-link rounded mt-2 p-2 distack-secondary"
+                        to={`/${i.codigo}`}
+                        key={i.id}>{i.codigo} - {i.instituicao}</Link>
+                ))
+            }
 
         </div>
     )

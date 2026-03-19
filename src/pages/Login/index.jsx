@@ -22,7 +22,22 @@ export const Login = () => {
             Swal.fire({
                 icon: "error",
                 title: "Acesso bloqueado",
-                text: authError
+                text: authError,
+                confirmButtonText: "Entrar em contato",
+                cancelButtonText: "Cancelar",
+                showCancelButton: true
+            }).then((res) => {
+
+                if (res.isConfirmed) {
+                    Swal.fire({
+                        icon: "info",
+                        title: "Redirecionando",
+                        text: "Você será direcionado ao suporte"
+                    })
+
+                    window.location.href = "https://wa.me/5583987657531"
+                }
+
             })
         }
 

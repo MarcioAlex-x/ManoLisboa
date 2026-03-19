@@ -25,24 +25,32 @@ import { Usuario } from "../pages/Usuario";
 import { AtividadesEntregues } from "../pages/AtividadesEntregues";
 import { AtividadeEntregue } from "../pages/AtividadeEntregue";
 import { AtualizarUsuario } from "../pages/AtualizarUsuario";
-import { AtividadesEntreguesPorTurma } from "../pages/AtividadesEntreguesPorTurma";
+import { PortalInstituicao } from "../pages/PortalInstituicao";
+import { AtividadesProfessor } from "../pages/AtividadesProfessor";
 
 export const AppRouter = createBrowserRouter([
     {
         path: '/', element: <App />, children: [
             {
                 index: true, element:
-                        <AcessoAluno />
+                    <AcessoAluno />
             },
             {
                 path: 'login', element: <Login />
             },
             {
-                path: 'novo-usuario', element:
+                path: 'atividade/:id', element:
+                    <Atividade />
+            },
+            
+            {
+                path: 'atividades-do-professor/:id', element:
+                        <AtividadesProfessor />
+            },
+            {
+                path: 'atividade-recebidas/:id', element:
                     <ProtectedRoute>
-                        <AdminRoute>
-                            <Register />
-                        </AdminRoute>
+                        <Atividade />
                     </ProtectedRoute>
             },
             {
@@ -70,10 +78,6 @@ export const AppRouter = createBrowserRouter([
                     </ProtectedRoute>
             },
             {
-                path: 'atividade/:id', element:
-                        <Atividade />
-            },
-            {
                 path: 'turmas', element:
                     <ProtectedRoute>
                         <Turmas />
@@ -87,95 +91,101 @@ export const AppRouter = createBrowserRouter([
             },
             {
                 path: 'novo-aluno/:id', element:
-                <ProtectedRoute>
-                    <NovoAluno/>
-                </ProtectedRoute>
+                    <ProtectedRoute>
+                        <NovoAluno />
+                    </ProtectedRoute>
             },
             {
                 path: 'alunos', element:
-                <ProtectedRoute>
-                    <Alunos /> 
-                </ProtectedRoute>
+                    <ProtectedRoute>
+                        <Alunos />
+                    </ProtectedRoute>
             },
             {
                 path: 'aluno/:id', element:
-                <ProtectedRoute>
-                    <Aluno />
-                </ProtectedRoute>
+                    <ProtectedRoute>
+                        <Aluno />
+                    </ProtectedRoute>
             },
             {
                 path: 'frequencia/:id', element:
-                <ProtectedRoute>
-                    <Frequencia />
-                </ProtectedRoute>
+                    <ProtectedRoute>
+                        <Frequencia />
+                    </ProtectedRoute>
             },
             {
-                path:'acesso-alunos', element: <AcessoAluno />
+                path: 'acesso-alunos', element: <AcessoAluno />
             },
             {
-                path:'entrega-atividade/:id', element: <EntregaAtividade />
+                path: 'entrega-atividade/:id', element: <EntregaAtividade />
             },
             {
-                path: 'nova-instituicao', element:
-                <ProtectedRoute>
-                    <AdminRoute>
-                        <NovaInstituicao />
-                    </AdminRoute>
-                </ProtectedRoute>
+                path: '/:codigo', element:
+                    <PortalInstituicao />
             },
             {
                 path: 'atualizar-turma/:id', element:
-                <ProtectedRoute>
-                    <AtualizarTurma />
-                </ProtectedRoute>
+                    <ProtectedRoute>
+                        <AtualizarTurma />
+                    </ProtectedRoute>
             },
             {
                 path: 'atualizar-aluno/:id', element:
-                <ProtectedRoute>
-                    <AtualizarAluno />
-                </ProtectedRoute>
+                    <ProtectedRoute>
+                        <AtualizarAluno />
+                    </ProtectedRoute>
             },
             {
                 path: 'atualizar-atividade/:id', element:
-                <ProtectedRoute>
-                    <AtualizarAtividade />
-                </ProtectedRoute>
-            },
-            {
-                path: 'usuario/:id', element:
-                <AdminRoute>
                     <ProtectedRoute>
-                        <Usuario />
+                        <AtualizarAtividade />
                     </ProtectedRoute>
-                </AdminRoute>
             },
             {
                 path: 'atividades-recebidas', element:
-                <ProtectedRoute>
-                    <AtividadesEntregues />
-                </ProtectedRoute>
+                    <ProtectedRoute>
+                        <AtividadesEntregues />
+                    </ProtectedRoute>
             },
             {
                 path: 'atividade-recebidas/:id', element:
-                <ProtectedRoute>
-                    <AtividadeEntregue />
-                </ProtectedRoute>
-            },
-            
-            {
-                path: 'atividades-turma/:id', element:
-                <ProtectedRoute>
-                    <AtividadesEntreguesPorTurma />
-                </ProtectedRoute>
+                    <ProtectedRoute>
+                        <AtividadeEntregue />
+                    </ProtectedRoute>
             },
             {
                 path: 'atualizar-usuario/:id', element:
-                <AdminRoute>
-                    <ProtectedRoute>
-                        <AtualizarUsuario />
-                    </ProtectedRoute>
-                </AdminRoute>
-            }
+                    <AdminRoute>
+                        <ProtectedRoute>
+                            <AtualizarUsuario />
+                        </ProtectedRoute>
+                    </AdminRoute>
+            },
+
+            {
+                path: 'novo-usuario', element:
+                    <AdminRoute>
+                        <ProtectedRoute>
+                            <Register />
+                        </ProtectedRoute>
+                    </AdminRoute>
+            },
+            {
+                path: 'nova-instituicao', element:
+                    <AdminRoute>
+                        <ProtectedRoute>
+                            <NovaInstituicao />
+                        </ProtectedRoute>
+                    </AdminRoute>
+            },
+            {
+                path: 'usuario/:id', element:
+                    <AdminRoute>
+                        <ProtectedRoute>
+                            <Usuario />
+                        </ProtectedRoute>
+                    </AdminRoute>
+            },
         ]
     }
 ])

@@ -1,0 +1,67 @@
+import { collection, getDocs, query, where } from "firebase/firestore"
+import { useEffect, useState } from "react"
+import { Link, useParams } from "react-router-dom"
+import { db } from "../../firebaseConfig"
+import { ArrowBigRightDash } from "lucide-react"
+
+export const PortalInstituicao = () => {
+
+    const [instituicao, setInstituicao] = useState(null)
+    const [professores, setProfessores] = useState([])
+    const { codigo } = useParams()
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const instituicaoRef = query(collection(db, 'instituicoes'),
+                where('codigo', '==', codigo)
+            )
+            const instituicaoSnapshot = await getDocs(instituicaoRef)
+            const instituicaoData = instituicaoSnapshot.docs.map((doc) => (
+                { id: doc.id, ...doc.data() }
+            ))
+            // ------------------------------------------------------------
+            const professoresRef = query(collection(db, 'usuarios'),
+                where('instituicaoId', '==', instituicaoData[0].id)
+            )
+            const professoresSnapshot = await getDocs(professoresRef)
+            const professoresData = professoresSnapshot.docs.map((doc) => (
+                { id: doc.id, ...doc.data() }
+            ))
+
+            setProfessores(professoresData)
+            setInstituicao(instituicaoData[0])
+        }
+
+        fetchData()
+
+    }, [codigo])
+    return (
+        <div className="container mt-5 bg-light p-lg-5 rounded">
+            <h1 className="text-center mb-0">{instituicao?.instituicao}</h1>
+            {professores.length === 0 ?
+            <p className="text-center mb-5">Nenhum professor encontrado nesta instituição</p>
+            :
+            <p className="text-center mb-5">Selecione o seu professor para acessar os conteúdos e atividades</p>    
+        }
+
+            <div className="row">
+                {
+                    professores.map(prof => (
+                        prof.ativo &&
+                        <div
+                            key={prof.id}
+                            className=" col-12 col-sm-6 col-md-4 p-2">
+                            <Link
+                                className="nav-link"
+                                to={`/atividades-do-professor/${prof.id}`}>
+                                <h3 className="border rounded shadow px-2 px-md-4 py-2 d-flex align-items-center justify-content-between scale">
+                                    {prof.nome} <ArrowBigRightDash />
+                                </h3>
+                            </Link>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    )
+}

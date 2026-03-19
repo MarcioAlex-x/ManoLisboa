@@ -25,6 +25,7 @@ export const NovaAtividade = () => {
     const [dataEntrega, setDataEntraga] = useState('')
     const [arquivo, setArquivo] = useState(null)
     const [token, setToken] = useState(() => gerarToken())
+    const [paraLeitura, setParaLeitura] = useState(false)
     const [loading, setLoading] = useState(false)
 
     const { userData } = useContext(UserContext)
@@ -55,15 +56,16 @@ export const NovaAtividade = () => {
                 professorId: userData.uid,
                 turmaId: id,
                 instituicaoId: userData.instituicaoId,
-                token
+                token,
+                paraLeitura
             })
             Swal.fire({
-                title:"Sucesso",
-                icon:'success',
-                text:'Atividade criada',
-                showConfirmButton:false,
-                timer:1500,
-                timerProgressBar:1500
+                title: "Sucesso",
+                icon: 'success',
+                text: 'Atividade criada',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: 1500
             })
             setNome('')
             setOrientacoes('')
@@ -75,15 +77,15 @@ export const NovaAtividade = () => {
             setToken(gerarToken())
         } catch (err) {
             Swal.fire({
-                title:"Erro",
-                icon:'error',
-                text:'Ocorreu um erro',
-                showConfirmButton:false,
-                timer:1500,
-                timerProgressBar:1500
+                title: "Erro",
+                icon: 'error',
+                text: 'Ocorreu um erro',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: 1500
             })
             console.error(err.message)
-        }finally{
+        } finally {
             setLoading(false)
         }
     }
@@ -92,9 +94,9 @@ export const NovaAtividade = () => {
         <div className="container mt-5 bg-light p-lg-5 p-0">
             <h2 className="text-center">Nova Atividade</h2>
             <p className="text-center mb-5 ">Preencha apenas os campos necessários para a sua nova atividade</p>
-            <form 
-            className="border p-lg-5 p-2 rounded shadow"
-            onSubmit={handleSubmit}>
+            <form
+                className="border p-lg-5 p-2 rounded shadow"
+                onSubmit={handleSubmit}>
                 <div>
                     <label
                         className="form-label mt-4"
@@ -189,17 +191,31 @@ export const NovaAtividade = () => {
                         onChange={e => setArquivo(e.target.files[0])} />
                 </div>
 
+                <div>
+                    <input
+                        type="checkbox"
+                        className="mt-3 me-3"
+                        autoComplete="off"
+                        name="paraLeitura"
+                        value={paraLeitura}
+                        onChange={e=>setParaLeitura(e.target.checked)} />
+                    <label
+                        htmlFor="paraLeitura"
+                        className="form-label">Atividade Para Consulta</label>
+
+                </div>
+
                 {!loading ? <input
                     className="btn btn-primary d-block w-100 mt-4"
                     type="submit"
                     value="Enviar" /> :
                     <input
-                    className="btn btn-primary d-block w-100 mt-4"
-                    disabled
-                    data-bs-toggle="button"
-                    type="submit"
-                    value="Enviar" />
-                    
+                        className="btn btn-primary d-block w-100 mt-4"
+                        disabled
+                        data-bs-toggle="button"
+                        type="submit"
+                        value="Enviar" />
+
                 }
             </form>
         </div>
