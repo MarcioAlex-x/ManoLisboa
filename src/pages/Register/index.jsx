@@ -43,7 +43,7 @@ export const Register = () => {
             const userCredentials = await createUserWithEmailAndPassword(auth, email, senha)
             const user = userCredentials.user
 
-            const dataExpira = ativo ? Timestamp.fromDate(ativoAte) : null
+            const dataExpira = ativo ? Timestamp.fromDate(new Date(ativoAte)) : null
 
             const novoUsuario = await setDoc(doc(db, 'usuarios', user.uid), {
                 nome,
@@ -54,7 +54,7 @@ export const Register = () => {
             })
 
             Swal.fire({
-                icon: 'success',
+                icon: 'success',              
                 title: 'Sucesso',
                 text: 'Usuário criado com sucesso',
                 showConfirmButton: false,
