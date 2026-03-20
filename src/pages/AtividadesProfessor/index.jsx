@@ -40,7 +40,7 @@ export const AtividadesProfessor = () => {
                 atividades.map(atividade => {
                     const dataEntrega = new Date(atividade.dataEntrega)
                     return (
-                        dataEntrega <= hoje && (
+                        dataEntrega >= hoje && (
                             <div key={atividade.id}>
                                 <Link
                                     to={`/atividade/${atividade.id}`}
