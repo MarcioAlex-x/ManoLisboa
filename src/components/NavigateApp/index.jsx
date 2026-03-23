@@ -16,7 +16,12 @@ export const NavigateApp = () => {
     return (
         <nav className="navbar navbar-expand-lg m-0 p-0">
             <div className="container-fluid">
-                <a className="navbar-brand" href="#">Mano Lisboa</a>
+                <a className="navbar-brand" href="/">
+                    <img 
+                    src="/logominigera.png" 
+                    alt="Logo GeraClass"
+                    style={{maxWidth:'50px'}} />
+                </a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>

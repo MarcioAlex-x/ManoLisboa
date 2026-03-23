@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react"
 import { auth } from "../../firebaseConfig"
 import { useNavigate } from "react-router-dom"
 import Swal from "sweetalert2"
-import { Eye, EyeClosed } from "lucide-react"
+import { Eye, EyeClosed, EyeOff } from "lucide-react"
 import { UserContext } from "../../contexts/UserContext"
 
 export const Login = () => {
@@ -150,7 +150,7 @@ export const Login = () => {
                         }}
                         onClick={handleChangePassword}
                     >
-                        {verSenha ? <Eye /> : <EyeClosed />}
+                        {verSenha ? <Eye /> : <EyeOff />}
                     </div>
                 </div>
 

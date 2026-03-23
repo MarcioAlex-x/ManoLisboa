@@ -2,6 +2,7 @@ import { collection, getDocs, query, where } from "firebase/firestore"
 import { useEffect, useState } from "react"
 import { db } from "../../firebaseConfig"
 import { Link } from "react-router-dom"
+import { Building2 } from "lucide-react"
 
 export const AcessoAluno = () => {
 
@@ -67,9 +68,12 @@ export const AcessoAluno = () => {
             {
                 instituicao.map(i => (
                     <Link
-                        className="nav-link rounded mt-2 p-2 distack-secondary"
+                        className="nav-link rounded mt-2 p-2 distack border"
                         to={`/${i.codigo}`}
-                        key={i.id}>{i.codigo} - {i.instituicao}</Link>
+                        key={i.id}>
+                            
+                        <p className="d-flex align-items-center mb-0"> <Building2/> {i.codigo} - {i.instituicao}</p>
+                    </Link>
                 ))
             }
 

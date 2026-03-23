@@ -8,14 +8,11 @@
 }
 
 .distack{
-  transition: .2s;
   border-radius: 2px;
 }
 
 .distack:hover {
   background-color: #26de81;
-  font-weight: bold;
-  
   box-shadow: 4px 4px 4px #ccc;
 }
 

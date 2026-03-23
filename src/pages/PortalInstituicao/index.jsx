@@ -27,6 +27,7 @@ export const PortalInstituicao = () => {
             const professoresData = professoresSnapshot.docs.map((doc) => (
                 { id: doc.id, ...doc.data() }
             ))
+            // -------------------------------------------------------------
 
             setProfessores(professoresData)
             setInstituicao(instituicaoData[0])
@@ -52,11 +53,12 @@ export const PortalInstituicao = () => {
                             key={prof.id}
                             className=" col-12 col-sm-6 col-md-4 p-2">
                             <Link
-                                className="nav-link"
-                                to={`/atividades-do-professor/${prof.id}`}>
-                                <h3 className="border rounded shadow px-2 px-md-4 py-2 d-flex align-items-center justify-content-between scale">
+                                className="nav-link border rounded shadow px-2 px-md-4 py-2 scale distack "
+                                to={`/turmas-do-professor/${prof.id}`}>
+                                    <p className="mb-0">Prof.</p>
+                                <h5 className="d-flex align-items-center justify-content-between">
                                     {prof.nome} <ArrowBigRightDash />
-                                </h3>
+                                </h5>
                             </Link>
                         </div>
                     ))
