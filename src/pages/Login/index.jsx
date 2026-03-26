@@ -11,6 +11,7 @@ export const Login = () => {
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
     const [verSenha, setVerSenha] = useState(false)
+    const [loadin, setLoading] = useState(false)
 
     const { authError } = useContext(UserContext)
 
@@ -81,20 +82,22 @@ export const Login = () => {
         e.preventDefault()
 
         try {
+            setLoading(true)
+            const userCredentials = await signInWithEmailAndPassword(auth, email, senha)
 
-            await signInWithEmailAndPassword(auth, email, senha)
-
-            navigate('/painel')
+            if(userCredentials.user) navigate('/painel')
 
         } catch (err) {
 
             console.error(err.message)
 
-            Swal.fire({
+            await Swal.fire({
                 title: 'Erro',
                 icon: 'error',
                 text: 'E-mail ou senha inválidos'
             })
+        }finally{
+            setLoading(false)
         }
     }
 

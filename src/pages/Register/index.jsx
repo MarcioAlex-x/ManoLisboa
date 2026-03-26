@@ -15,6 +15,8 @@ export const Register = () => {
     const [instituicoes, setInstituicoes] = useState([])
     const [instituicaoId, setInstituicaoId] = useState('')
     const [ativo, setAtivo] = useState(false)
+    const [nivel, setNivel] = useState('')
+
     const [ativoAte, setAtivoAte] = useState('')
 
 
@@ -50,11 +52,12 @@ export const Register = () => {
                 tipo: 'professor',
                 instituicaoId,
                 ativo,
-                ativoAte:dataExpira
+                nivel,
+                ativoAte: dataExpira
             })
 
             Swal.fire({
-                icon: 'success',              
+                icon: 'success',
                 title: 'Sucesso',
                 text: 'Usuário criado com sucesso',
                 showConfirmButton: false,
@@ -68,7 +71,7 @@ export const Register = () => {
                 title: 'Erro',
                 text: 'Ocorreu um erro ao tentar criar o usuário. Favor tentar novamente mais tarde.',
                 timer: 1500,
-                timerProgressBar:1500
+                timerProgressBar: 1500
             })
             console.log(err.message)
         } finally {
@@ -138,22 +141,43 @@ export const Register = () => {
                         value={senha}
                         onChange={e => setSenha(e.target.value)} />
                 </div>
-                <div>
-                    <label htmlFor="ativo">Ativo</label>
+                <div className="mt-2">
+                    <label
+                        className="form-label me-2"
+                        htmlFor="ativo">Ativo</label>
                     <input type="checkbox"
+                        className="form-check-input"
                         name="ativo"
                         id="ativo"
                         value={ativo}
                         onChange={e => setAtivo(e.target.checked)} />
                 </div>
                 <div>
-                    <label htmlFor="ativoAte">Ativo Até</label>
+                    <label
+                        className="form-label"
+                        htmlFor="ativoAte">Ativo Até</label>
                     <input
+                        className="form-control"
                         type="date"
                         name="ativoAte"
                         id="ativoAte"
                         value={ativoAte}
                         onChange={e => setAtivoAte(e.target.value)} />
+                </div>
+                <div>
+                    <label
+                        className="form-label"
+                        htmlFor="ativoAte">Nível</label>
+                    <select
+                        className="form-control"
+                        name="nivel"
+                        id="nivel"
+                        value={nivel}
+                        onChange={e => setNivel(e.target.value)}>
+                        <option value="">Selecione</option>
+                        <option value="1">Nível 1</option>
+                        <option value="2">Nível 2</option>
+                    </select>
                 </div>
                 <input
                     className="btn btn-primary w-100 mt-3"

@@ -40,7 +40,7 @@ export const Turmas = () => {
                 <tbody>
                     {turmas.map((turma) => (
                         <tr key={turma.id} >
-                        <th>{turma.serie}º</th> 
+                        <th>{turma.serie}</th> 
                         <th>{turma.turma.toUpperCase()} </th>
                         <th>{turma.materia}</th> 
                         <th>

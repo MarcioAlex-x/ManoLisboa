@@ -1,10 +1,11 @@
 import { collection, deleteDoc, doc, getDoc, getDocs, orderBy, query, where } from "firebase/firestore"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { db } from "../../firebaseConfig"
 import { ArrowBigRightDash, File, FileCheck2, FilePlus, FileUser, Trash, UserPlus } from "lucide-react"
 import Swal from "sweetalert2"
 import { deleteByQuery } from "../../deleteByQuery"
+import { UserContext } from "../../contexts/UserContext"
 
 export const Turma = () => {
 
@@ -13,6 +14,7 @@ export const Turma = () => {
     const [turma, setTurma] = useState(null)
     const [loading, setLoading] = useState(false)
 
+    const { userData } = useContext(UserContext)
     const { id } = useParams()
     const navigate = useNavigate()
 
@@ -54,7 +56,8 @@ export const Turma = () => {
                 icon: 'warning',
                 title: 'Tem certeza?',
                 text: 'A ação não poderá ser desfeita',
-                showConfirmButton: true
+                showConfirmButton: true,
+                showCancelButton: true
             })
 
             if (confirm.isConfirmed) {
@@ -106,7 +109,7 @@ export const Turma = () => {
 
     return (
         <div className="container mt-5 bg-light rounded p-lg-5 p-sm-2 min-vh-100">
-            <h2 className="text-center mb-5">{turma?.serie}º {turma?.turma} - {turma?.materia}</h2>
+            <h2 className="text-center mb-5">{turma?.serie} {turma?.turma} - {turma?.materia}</h2>
 
             <hr />
             <div className="d-flex justify-content-around">
@@ -124,12 +127,12 @@ export const Turma = () => {
                     Novo aluno
                 </Link>
 
-                <Link className="nav-link scale d-flex align-items-center text-center" to={`/frequencia/${id}`}>
+                { userData.nivel === '2' || !userData.nivel  && <Link className="nav-link scale d-flex align-items-center text-center" to={`/frequencia/${id}`}>
                     <FileUser 
                     className="d-none d-md-block"
                     size={16} color="#fa8231" />
                     Fazer chamada
-                </Link>
+                </Link>}
 
                 <Link className="nav-link scale d-flex align-items-center text-center" to={`/atividades-turma/${id}`}>
                     <File 
