@@ -7,7 +7,6 @@ import Swal from "sweetalert2"
 export const AtividadeEntregue = () => {
 
     const [atividade, setAtividade] = useState(null)
-    const [atividadeBase, setAtividadeBase] = useState(null)
     const [loading, setLoading] = useState(false)
     const { id } = useParams()
     const navigate = useNavigate()
@@ -28,19 +27,6 @@ export const AtividadeEntregue = () => {
                         id: atividadeSnapshot.id,
                         ...entregaData
                     })
-
-                    if (entregaData.atividadeId) {
-
-                        const baseRef = doc(db, 'atividades', entregaData.atividadeId)
-                        const baseSnapshot = await getDoc(baseRef)
-
-                        if (baseSnapshot.exists()) {
-                            setAtividadeBase({
-                                id: baseSnapshot.id,
-                                ...baseSnapshot.data()
-                            })
-                        }
-                    }
                 }
 
             } catch (err) {
@@ -140,43 +126,6 @@ export const AtividadeEntregue = () => {
                         onClick={handleDelete}
                         className="btn btn-sm btn-danger w-100">Remover Entrega</button>
             }
-
-
-            {
-                atividadeBase?.nome ?
-                    <h2 className="my-5 text-center mb-0">Contexto da Atividade {atividadeBase?.nome}</h2>
-                    :
-                    <h2 className="my-5 text-center mb-0">Contexto da Atividade </h2>
-            }
-            <hr />
-
-            {
-                atividadeBase?.orientacoes &&
-                <p style={{ whiteSpace: 'pre-wrap' }}><b>Orientações:</b>
-                <br />
-                {atividadeBase.orientacoes}</p>
-            }
-
-            {
-                atividadeBase?.conteudo &&
-                <p style={{ whiteSpace: 'pre-wrap' }}><b>Conteúdo:</b>
-                <br />
-                {atividadeBase?.conteudo}</p>
-            }
-
-            {
-                atividadeBase?.peso &&
-                <p><b>Peso: </b>{atividadeBase?.peso}</p>
-            }
-
-            {
-            atividadeBase?.dataEntrega &&
-            <p><i><b>Data da Entrega: </b>{new Date(atividadeBase?.dataEntrega).toLocaleDateString('pt-BR')}</i></p>
-            }
-
-            <Link 
-            to={`/atividade/${atividadeBase?.id}`}
-            className="btn btn-primary btn-sm w-100">Acessar esta atividade</Link>
 
         </div>
     )

@@ -81,14 +81,6 @@ export const Frequencia = () => {
         await Promise.all(promessas)
         setLoading(false)
 
-        Swal.fire({
-            icon: 'success',
-            title: 'Sucesso',
-            text: 'A frequência foi salva',
-            showConfirmButton: false,
-            timer: 1500
-        })
-
         let confirm = await Swal.fire({
             icon: 'question',
             title: 'Deseja salvar outra frequência para o dia de hoje?',
@@ -96,6 +88,14 @@ export const Frequencia = () => {
             confirmButtonText: 'Salvar outra',
             showCancelButton: true,
             cancelButtonText: 'Cancelar'
+        })
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Sucesso',
+            text: 'A frequência foi salva',
+            showConfirmButton: false,
+            timer: 1500
         })
 
         if (!confirm.isConfirmed) {
@@ -112,7 +112,6 @@ export const Frequencia = () => {
                 onSubmit={handleSubmit}
             >
 
-                {/* 🔹 NOVO: checkbox geral */}
                 <div className="form-check mb-3">
                     <input
                         className="form-check-input"

@@ -22,22 +22,25 @@ export const AtividadesEntreguesPorTurma = () =>{
 
     return(
         <div className="container bg-light p-lg-5 my-5">
-            <h2 className="my-5 text-center">Todas as Atividades Recebidas</h2>
+            <h2 className="my-5 text-center">Todas as Atividades Recebidas da Turma</h2>
+            <p className="text-center"><i>Esta turma entregou {atividades.length} atividades</i></p>
             {atividades.length === 0 && <p className="text-center">Não há atividades recebidas até aqui</p> }
             <div className="row">
                 {atividades.map((atividade)=>(
                     <div
-                    className="col-6 col-lg-4"
+                    className="col-12 col-lg-4 d-flex my-1"
                     key={atividade.id}>
 
-                        <div className=" p-3 border rounded d-flex flex-column">
+                        <div 
+                        style={{height:'320px'}}
+                        className=" p-3 border rounded d-flex flex-column position-relative">
                             <h4 className="mb-0">{atividade.titulo}</h4>
                             <hr className="mb-0"/>
                             <p className="mb-0"><b>Aluno:</b> {atividade.aluno}</p>
                             <p><b>Turma: </b>{atividade.turma}</p>
                             <Link 
-                            to={`/atividade-recebidas/${atividade.id}`}
-                            className="btn btn-primary btn-sm w-100">Acessar</Link>
+                            to={`/atividade-recebida/${atividade.id}`}
+                            className="btn btn-primary btn-sm position-absolute bottom-0 start-50 translate-middle w-50">Acessar</Link>
                         </div>
 
                     </div>

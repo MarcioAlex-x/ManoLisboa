@@ -46,7 +46,7 @@ export const AtividadesEntregues = () => {
                             <p className="mb-0"><b>Aluno:</b> {atividade.aluno}</p>
                             <p><b>Turma: </b>{atividade.turma}</p>
                             <Link
-                                to={`/atividade-recebidas/${atividade.id}`}
+                                to={`/atividade-recebida/${atividade.id}`}
                                 className="btn btn-primary btn-sm w-100">Acessar</Link>
                         </div>
 

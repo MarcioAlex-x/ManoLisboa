@@ -134,7 +134,7 @@ export const Turma = () => {
                     Fazer chamada
                 </Link>}
 
-                <Link className="nav-link scale d-flex align-items-center text-center" to={`/atividades-turma/${id}`}>
+                <Link className="nav-link scale d-flex align-items-center text-center" to={`/atividades-recebidas-turma/${id}`}>
                     <File 
                     className="d-none d-md-block"
                     size={16} color="#c0392b" />
