@@ -56,8 +56,6 @@ export const AtividadeEntregue = () => {
                 showConfirmButton: false
             })
 
-            navigate('/atividades-recebidas')
-
         } catch (err) {
             console.error(err.message)
 

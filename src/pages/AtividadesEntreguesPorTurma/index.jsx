@@ -33,7 +33,7 @@ export const AtividadesEntreguesPorTurma = () =>{
 
                         <div 
                         style={{height:'320px'}}
-                        className=" p-3 border rounded d-flex flex-column position-relative">
+                        className=" p-3 border rounded d-flex flex-column position-relative w-100">
                             <h4 className="mb-0">{atividade.titulo}</h4>
                             <hr className="mb-0"/>
                             <p className="mb-0"><b>Aluno:</b> {atividade.aluno}</p>
