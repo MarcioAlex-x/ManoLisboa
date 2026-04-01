@@ -5,6 +5,7 @@ import { db } from "../../firebaseConfig"
 import { FileArchive, FileCheck2, Link2, Trash } from "lucide-react"
 import Swal from "sweetalert2"
 import { UserContext } from '../../contexts/UserContext'
+import Linkify from 'linkify-react'
 
 export const Atividade = () => {
     const [atividade, setAtividade] = useState(null)
@@ -101,19 +102,27 @@ export const Atividade = () => {
             }
 
             {atividade?.orientacoes &&
-                <div>
+
+                <Linkify tagName='div'>
                     <p style={{ whiteSpace: 'pre-wrap' }}><b className="fs-5">Orientações:</b>
                         <br />
-                        {atividade?.orientacoes}</p>
+
+                        {atividade?.orientacoes}
+                    </p>
                     <hr />
-                </div>
+                </Linkify>
             }
 
             {atividade?.link &&
                 <div>
                     <p>
                         <b className="fs-5">Link do material: </b>
-                        <a target="_blank" noopener noreferer href={atividade?.link}><Link2 /></a>
+                        <a
+                            className="nav-link"
+                            target="_blank"
+                            noopener
+                            noreferer
+                            href={atividade?.link}><Link2 /></a>
                     </p>
                     <hr />
                 </div>
@@ -124,6 +133,7 @@ export const Atividade = () => {
                     <p>
                         <b className="fs-5">Arquivo da atividade: </b>
                         <a
+                            className='nav-link'
                             href={atividade.arquivoUrl}
                             target="_blank"
                             rel="noopener noreferrer"
