@@ -78,83 +78,78 @@ export const NovoAluno = () => {
     }
 
     return (
-        <div className="container mt-5 bg-light p-0 p-lg-5">
-            <h2 className="text-center mb-0 ">Novo Aluno</h2>
-            <p className="text-center mb-5 mx-auto">O aluno é criado por turma, então se acaso o mesmo aluno fizer parte de mais de uma turma o mesmo deverá ser criado novamente nas demais turmas</p>
+        <div className="mt-10">
+            <h2 className="text-center text-3xl ">Novo Aluno</h2>
+            <p
+                style={{ fontSize: '14px' }}
+                className="text-center md:w-8/12 m-auto w-full">O aluno é criado por turma, então se acaso o mesmo aluno fizer parte de mais de uma turma o mesmo deverá ser criado novamente nas demais turmas</p>
             <form
-                className="border p-lg-5 p-2 shadow rounded"
+                className=""
                 onSubmit={handleSubmit}>
-                <div>
-                    <label
-                        className="form-label mt-3"
-                        htmlFor="nome">Nome</label>
-
-                    <input
-                        className="form-control"
-                        type="text"
-                        name="nome"
-                        value={nome}
-                        onChange={e => setNome(e.target.value)} />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-10">
+                    <div className="flex flex-col">
+                        <label
+                            className="font-semibold"
+                            htmlFor="nome">Nome</label>
+                        <input
+                            className="border p-2 outline-0"
+                            type="text"
+                            name="nome"
+                            value={nome}
+                            onChange={e => setNome(e.target.value)} />
+                    </div>
+                    <div className="flex flex-col">
+                        <label
+                            className="font-semibold"
+                            htmlFor="nome">WhatsApp</label>
+                        <input
+                            className="border p-2 outline-0"
+                            type="text"
+                            name="whatsApp"
+                            value={whatsApp}
+                            onChange={e => setWhatsapp(e.target.value)} />
+                    </div>
+                    <div className="flex flex-col">
+                        <label
+                            className="font-semibold"
+                            htmlFor="nome">E-mail</label>
+                        <input
+                            className="border p-2 outline-0"
+                            type="text"
+                            name="email"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)} />
+                    </div>
                 </div>
-                <div>
-                    <label
-                        className="form-label mt-3"
-                        htmlFor="nome">WhatsApp</label>
-
-                    <input
-                        className="form-control"
-                        type="text"
-                        name="whatsApp"
-                        value={whatsApp}
-                        onChange={e => setWhatsapp(e.target.value)} />
-                </div>
-                <div>
-                    <label
-                        className="form-label mt-3"
-                        htmlFor="nome">E-mail</label>
-
-                    <input
-                        className="form-control"
-                        type="text"
-                        name="email"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)} />
-                </div>
-
                 {!loading ?
                     <input
-                        className="btn btn-primary d-block w-100 mt-4"
+                        className="cursor-pointer mt-2 mx-auto flex  w-4/12 md:w-2/12  items-center justify-center gap-1 p-2 bg-green-700 transition delay-150 ease-in-out hover:bg-green-900 font-bold"
                         type="submit"
                         value="Salvar" />
                     :
                     <input
-                        className="btn btn-primary d-block w-100 mt-4"
+                        className="cursor-pointer mt-2 mx-auto flex  w-4/12 md:w-2/12  items-center justify-center gap-1 p-2 bg-gray-700 font-bold"
                         disabled
-                        data-bs-toggle="button"
                         type="submit"
                         value="Salvar" />
                 }
-
             </form>
-            <h2 className="mt-5 text-center">Alunos desta turma</h2>
-            <div className="my-5">
-                {alunos.map(aluno => (
-                    <div className="border mb-2 py-1 px-3 d-flex align-items-center justify-content-between shadow-sm">
-                        <div
-                            key={aluno.id}
-                            className="">
-                            <p className="m-0">Nome: {aluno.nome} </p> <p> {aluno.whatsApp && <span>WhatsApp: {aluno.whatsApp} <a
-                                target="_blank"
-                                href={`https://wa.me/+55${aluno.whatsApp}`}>
-                                <Smartphone size={16} color="#20bf6b" />
-                            </a> </span>}</p>
-                        </div>
-                        <div>
-                            <Link className="nav-link" to={`/aluno/${aluno.id}`}>Ir ao aluno <ArrowBigRightDash /> </Link>
-                        </div>
-                    </div>
-                ))}
-            </div>
+            {alunos.length >0 ? 
+            (<div>
+                <h2 className="mt-10 text-center text-2xl">{alunos.length} alunos cadastrados</h2>
+                
+                <div className="my-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                    {alunos.map(aluno => (
+                        <Link key={aluno.id}
+                            className=" border border-blue-700 p-2 flex flex-col items-center transition delay-150 ease-in-out hover:bg-gray-900" to={`/aluno/${aluno.id}`}>
+                            <p className="r">{aluno.nome} </p>
+                        </Link>
+                    ))}
+                </div>
+            </div>):
+            (<div>
+                <h2 className="mt-10 text-center text-2xl">Cadastre o seu primeiro aluno</h2>
+            </div>)}
         </div>
     )
 }

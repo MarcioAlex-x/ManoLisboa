@@ -1,59 +1,100 @@
-import { useContext } from "react";
-import { NavLink } from "react-router-dom";
-import { UserContext } from "../../contexts/UserContext";
-import { signOut } from "firebase/auth";
-import { auth } from "../../firebaseConfig";
+import { useContext, useState } from "react"
+import { NavLink } from "react-router-dom"
+import { UserContext } from "../../contexts/UserContext"
+import { signOut } from "firebase/auth"
+import { auth } from "../../firebaseConfig"
 
-export const NavigateApp = () => {
-    const { userData } = useContext(UserContext)
-    const tipo = (userData?.tipo || '').toUpperCase()
-    const nome = (userData?.nome || '').toUpperCase()
+export const NavigateApp = ({ mobile }) => {
+  const { userData } = useContext(UserContext)
+  const [open, setOpen] = useState(false)
 
-    const handleSubmit = () => {
-        signOut(auth)
-    }
+  const tipo = (userData?.tipo || '').toUpperCase()
+  const nome = (userData?.nome || '').toUpperCase()
 
+  const handleSubmit = () => {
+    signOut(auth)
+  }
+
+  const Menu = () => (
+    <div className="p-2">
+      {userData ? (
+        <ul className="flex flex-col gap-1">
+          <NavLink className="p-2 rounded hover:bg-gray-800" to="/painel">Painel</NavLink>
+          <NavLink className="p-2 rounded hover:bg-gray-800" to="/nova-turma">Nova Turma</NavLink>
+          <NavLink className="p-2 rounded hover:bg-gray-800" to="/turmas">Todas as Turmas</NavLink>
+          <NavLink className="p-2 rounded hover:bg-gray-800" to="/alunos">Todos os Alunos</NavLink>
+          <NavLink className="p-2 rounded hover:bg-gray-800" to="/atividades">Todas as Atividades</NavLink>
+          <NavLink className="p-2 rounded hover:bg-gray-800" to="/atividades-recebidas">Atividades Recebidas</NavLink>
+
+          {userData.tipo === 'admin' && (
+            <>
+              <NavLink className="p-2 rounded hover:bg-gray-800" to="/nova-instituicao">Nova Instituição</NavLink>
+              <NavLink className="p-2 rounded hover:bg-gray-800" to="/novo-usuario">Novo Usuário</NavLink>
+            </>
+          )}
+        </ul>
+      ) : (
+        <ul className="flex flex-col gap-1">
+          <NavLink className="p-2 rounded hover:bg-gray-800" to="/login">Acesso Professor</NavLink>
+          <NavLink className="p-2 rounded hover:bg-gray-800" to="/acesso-alunos">Portal do Aluno</NavLink>
+        </ul>
+      )}
+
+      {userData && (
+        <div className="mt-6 border-t border-gray-700 pt-4">
+          <p className="text-sm text-gray-300">{tipo} {nome}</p>
+          <button
+            className="mt-2 w-full text-left p-2 rounded hover:bg-gray-800"
+            onClick={handleSubmit}
+          >
+            Sair
+          </button>
+        </div>
+      )}
+    </div>
+  )
+
+  if (mobile) {
     return (
-        <nav className="navbar navbar-expand-lg m-0 p-0">
-            <div className="container-fluid">
-                <a className="navbar-brand" href="/">
-                    <img 
-                    src="/logominigera.png" 
-                    alt="Logo GeraClass"
-                    style={{maxWidth:'50px'}} />
-                </a>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    {userData ?
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+      <>
+        {/* Topbar */}
+        <div className="flex items-center justify-between p-3 bg-gray-900">
+          <img src="/logominigera.png" className="w-8" />
 
-                            <NavLink className='nav-link' to='/painel'>Painel</NavLink>
-                            <NavLink className='nav-link' to='/nova-turma'>Nova Turma</NavLink>
-                            <NavLink className='nav-link' to='/turmas'>Todas as Turmas</NavLink>
-                            <NavLink className='nav-link' to='/alunos'>Todos os Alunos</NavLink>
-                            <NavLink className='nav-link' to='/atividades'>Todas as Atividades</NavLink>
-                            <NavLink className='nav-link' to='/atividades-recebidas'>Atividades Recebidas</NavLink>
-                            {userData.tipo === 'admin' && 
-                            <NavLink className='nav-link' to='/nova-instituicao'>Nova Instiuição</NavLink>}
-                            {userData.tipo === 'admin' && 
-                            <NavLink className='nav-link' to='/novo-usuario'>Novo Usuário</NavLink>}
-                        </ul>
-                        :
-                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                            <NavLink className='nav-link' to='/login' >Acesso Professor</NavLink>
-                            <NavLink className='nav-link' to='/acesso-alunos' >Portal do Aluno</NavLink>
-                        </ul>
+          <button onClick={() => setOpen(true)}>
+            ☰
+          </button>
+        </div>
 
-                    }{userData &&
-                        <div className="d-flex align-items-center">
-                            <p className="align-middle my-0 me-2">{tipo} {nome}</p>
-                            <button className="btn btn-sm btn-danger" onClick={handleSubmit}>Sair</button>
-                        </div>
-                    }
-                </div>
-            </div>
-        </nav>
+        {open && (
+          <div
+            className="fixed inset-0 bg-black/50 z-40"
+            onClick={() => setOpen(false)}
+          />
+        )}
+
+        <div className={`fixed top-0 left-0 h-full w-64 bg-gray-900 z-50 transform transition-transform ${
+          open ? "translate-x-0" : "-translate-x-full"
+        }`}>
+          <div className="p-3 flex justify-between items-center border-b border-gray-700">
+            <span className="font-bold">Menu</span>
+            <button onClick={() => setOpen(false)}>✕</button>
+          </div>
+
+          <Menu />
+        </div>
+      </>
     )
+  }
+
+  return (
+    <nav className="mt-2">
+      <img
+        className="m-auto rounded"
+        src="/logominigera.png"
+        style={{ maxWidth: '50px' }}
+      />
+      <Menu />
+    </nav>
+  )
 }

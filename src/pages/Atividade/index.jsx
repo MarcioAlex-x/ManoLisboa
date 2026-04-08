@@ -77,102 +77,98 @@ export const Atividade = () => {
     }
 
     return (
-        <div className="container bg-light p-lg-5 my-5">
+        <div className="t">
             {atividade?.nome ?
-                <h2 className="mt-5 mb-0 text-center">{atividade?.nome}</h2>
+                <h2 className="text-center mt-10 text-3xl ">{atividade?.nome}</h2>
                 :
-                <h2 className="mt-5 mb-0 text-center">Atividade sem nome</h2>
+                <h2 className="text-center mt-10 text-3xl ">Atividade sem nome</h2>
             }
-            <h3 className="text-center mb-5 text-body-tertiary">Turma {turma?.serie}º {turma?.turma}</h3>
+            <h3 className="text-center text-2xl mb-10">Turma {turma?.serie} {turma?.turma}</h3>
 
-            {atividade?.peso !== null || atividade?.peso !== "" &&
-                <div>
-                    <p><b className="fs-5">Peso:</b> {atividade?.peso}</p>
-                    <hr />
-                </div>
-            }
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                {atividade?.peso !== null || atividade?.peso !== "" &&
+                    <div >
+                        <p><b className="">Peso:</b> {atividade?.peso}</p>
+                        
+                    </div>
+                }
 
-            {atividade?.conteudo &&
-                <div>
-                    <p style={{ whiteSpace: 'pre-wrap' }}><b className="fs-5">Conteúdo:</b>
-                        <br />
-                        {atividade?.conteudo}</p>
-                    <hr />
-                </div>
-            }
-
-            {atividade?.orientacoes &&
-
-                <Linkify tagName='div'>
-                    <p style={{ whiteSpace: 'pre-wrap' }}><b className="fs-5">Orientações:</b>
-                        <br />
-
-                        {atividade?.orientacoes}
+                {atividade?.conteudo &&
+                    <div className="border p-2 border-blue-400">
+                        <p style={{ whiteSpace: 'pre-wrap' }}><b className="">Conteúdo:</b>
+                            <br />
+                            {atividade?.conteudo}</p>
+                        
+                    </div>
+                }
+                {atividade?.orientacoes &&
+                    <Linkify tagName='div' className="border p-2 border-blue-400">
+                        <p style={{ whiteSpace: 'pre-wrap' }}><b className="">Orientações:</b>
+                            <br />
+                            {atividade?.orientacoes}
+                        </p>
+                        
+                    </Linkify>
+                }
+                {atividade?.link &&
+                    <div className="border p-2 border-blue-400">
+                        <p>
+                            <b className="">Link do material: </b>
+                            <a
+                                className=""
+                                target="_blank"
+                                noopener
+                                noreferer
+                                href={atividade?.link}><Link2 /></a>
+                        </p>
+                        
+                    </div>
+                }
+                {atividade?.arquivoUrl &&
+                    <div className="border p-2 border-blue-400">
+                        <p>
+                            <b className="">Arquivo da atividade: </b>
+                            <a
+                                className=''
+                                href={atividade.arquivoUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                download
+                            >
+                                <FileArchive /> Baixar PDF
+                            </a>
+                        </p>
+                        
+                    </div>
+                }
+                {userData &&
+                    <div className="border p-2 border-blue-400">
+                        <p><b className="fs-5">Token: </b> {atividade?.token}</p>
+                        
+                    </div>
+                }
+                {atividade?.dataEntrega &&
+                    <p className="border p-2 border-blue-400"><b>Data de entrega: </b>
+                        {new Date(atividade?.dataEntrega).toLocaleDateString('pt-BR')}
                     </p>
-                    <hr />
-                </Linkify>
-            }
-
-            {atividade?.link &&
-                <div>
-                    <p>
-                        <b className="fs-5">Link do material: </b>
-                        <a
-                            className="nav-link"
-                            target="_blank"
-                            noopener
-                            noreferer
-                            href={atividade?.link}><Link2 /></a>
-                    </p>
-                    <hr />
-                </div>
-            }
-
-            {atividade?.arquivoUrl &&
-                <div>
-                    <p>
-                        <b className="fs-5">Arquivo da atividade: </b>
-                        <a
-                            className='nav-link'
-                            href={atividade.arquivoUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            download
-                        >
-                            <FileArchive /> Baixar PDF
-                        </a>
-                    </p>
-                    <hr />
-                </div>
-            }
-
-            {userData &&
-                <div>
-                    <p><b className="fs-5">Token: </b> {atividade?.token}</p>
-                    <hr />
-                </div>
-            }
-            {atividade?.dataEntrega &&
-                <p><b>Data de entrega: </b>
-                    {new Date(atividade?.dataEntrega).toLocaleDateString('pt-BR')}
-                </p>
-            }
-            <br />
-
-            {userData ?
-                <div className="d-flex justify-content-around">
-                    <button
-                        className="btn btn-danger d-flex align-items-center"
-                        onClick={handleDelete} > <Trash size={16} /> Excluir</button>
-
-                    <Link
-                        className="btn btn-success d-flex align-items-center"
-                        to={`/atualizar-atividade/${id}`} > <FileCheck2 size={16} /> Atualizar</Link>
-                </div>
-                :
-                !atividade?.paraLeitura && <Link to={`/entrega-atividade/${id}`}
-                    className="btn btn-success d-block w-100 fw-bold"> Entregar</Link>
-            }
+                }
+                <br />
+               
+            </div>
+             {userData ?
+                    <div className=" flex justify-around">
+                        <button
+                        style={{cursor:'pointer'}}
+                            className="flex w-2/12 items-center justify-center gap-1 p-2 bg-amber-700 transition delay-150 ease-in-out hover:bg-amber-900 font-bold"
+                            onClick={handleDelete} > <Trash size={16} /> Excluir</button>
+                        <Link
+                            className="flex  w-4/12 md:w-2/12  items-center justify-center gap-1 p-2 bg-green-700 transition delay-150 ease-in-out hover:bg-green-900 font-bold"
+                            to={`/atualizar-atividade/${id}`} > <FileCheck2 size={16} /> Atualizar</Link>
+                    </div>
+                    :
+                    !atividade?.paraLeitura && <Link to={`/entrega-atividade/${id}`}
+                        className="mt-2 mx-auto flex  w-4/12 md:w-2/12  items-center justify-center gap-1 p-2 bg-green-700 transition delay-150 ease-in-out hover:bg-green-900 font-bold"> Entregar</Link>
+                }
 
         </div>
     )

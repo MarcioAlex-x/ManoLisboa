@@ -106,22 +106,23 @@ export const Login = () => {
     }
 
     return (
-        <div className="container bg-light mt-5 rounded min-h-100 ">
+        <div className="mt-10">
             <form
-                className="p-lg-5 p-2 shadow rounded border"
+                className=""
                 onSubmit={handleSubmit}>
 
-                <h2 className="text-center mb-3">
+                <h2 className="text-center text-3xl ">
                     Faça login para se conectar com as suas turmas
                 </h2>
 
-                <div>
-                    <label className="form-label" htmlFor="email">
+                <div className="mt-10 flex flex-col">
+                    <label className="font-bold" 
+                    htmlFor="email">
                         E-mail
                     </label>
 
                     <input
-                        className="form-control"
+                        className="border p-2 outline-0"
                         type="email"
                         name="email"
                         value={email}
@@ -129,15 +130,17 @@ export const Login = () => {
                     />
                 </div>
 
-                <div style={{ position: 'relative' }}>
+                <div 
+                className="flex flex-col mt-2"
+                style={{ position: 'relative' }}>
                     <label
-                        className="form-label mt-3"
+                        className="font-bold"
                         htmlFor="senha">
                         Senha
                     </label>
 
                     <input
-                        className="form-control"
+                        className="border p-2 outline-0"
                         type={verSenha ? "text" : "password"}
                         name="senha"
                         value={senha}
@@ -153,12 +156,12 @@ export const Login = () => {
                         }}
                         onClick={handleChangePassword}
                     >
-                        {verSenha ? <Eye /> : <EyeOff />}
+                        {verSenha  ? <Eye className="text-blue-400" /> : <EyeOff  className="text-blue-400"/>}
                     </div>
                 </div>
 
                 <input
-                    className="btn btn-primary mt-4 d-block w-100"
+                    className="cursor-pointer mt-2 mx-auto flex items-center justify-center gap-1 p-2 bg-green-700 transition delay-150 ease-in-out hover:bg-green-900 font-bold w-4/12"
                     type="submit"
                     value="Entrar"
                 />

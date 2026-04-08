@@ -124,20 +124,20 @@ export const AtualizarUsuario = () => {
 
     return (
 
-        <div className="container bg-light my-5 p-lg-5 p-0">
+        <div className="">
 
             <form
-                className="py-lg-5 px-lg-5 py-5 px-2 border rounded shadow"
+                className=""
                 onSubmit={handleUpdate}
             >
 
-                <h2 className="text-center mb-4">Editar usuário</h2>
+                <h2 className="text-center text-3xl mt-10">Editar usuário</h2>
 
-                <div>
-                    <label className="form-label">Instituição</label>
+                <div className="flex flex-col">
+                    <label className="font-semibold">Instituição</label>
 
                     <select
-                        className="form-control"
+                        className="border p-2 outline-0"
                         value={instituicaoId}
                         onChange={e => setInstituicaoId(e.target.value)}
                     >
@@ -153,22 +153,22 @@ export const AtualizarUsuario = () => {
                     </select>
                 </div>
 
-                <div className="mt-3">
-                    <label className="form-label">Nome</label>
+                <div className="flex flex-col mt-4">
+                    <label className="font-semibold">Nome</label>
 
                     <input
                         type="text"
-                        className="form-control"
+                        className="border p-2 outline-0"
                         value={nome}
                         onChange={e => setNome(e.target.value)}
                     />
                 </div>
 
-                <div className="mt-3">
-                    <label className="form-label">Tipo</label>
+                <div className="flex flex-col mt-4">
+                    <label className="font-semibold">Tipo</label>
 
                     <select
-                        className="form-control"
+                        className="border p-2 outline-0 bg-gray-800"
                         value={tipo}
                         onChange={e => setTipo(e.target.value)}
                     >
@@ -177,8 +177,19 @@ export const AtualizarUsuario = () => {
                     </select>
                 </div>
 
-                <div className="mt-3">
-                    <label className="form-label me-2">Ativo</label>
+                <div className="flex flex-col mt-4">
+                    <label className="font-semibold">Ativo até</label>
+
+                    <input
+                        type="date"
+                        className="border p-2 outline-0"
+                        value={ativoAte || ''}
+                        onChange={e => setAtivoAte(e.target.value)}
+                    />
+                </div>
+
+                <div className="flex mt-4">
+                    <label className="font-semibold me-2">Ativo</label>
 
                     <input
                         type="checkbox"
@@ -187,19 +198,8 @@ export const AtualizarUsuario = () => {
                     />
                 </div>
 
-                <div className="mt-3">
-                    <label className="form-label">Ativo até</label>
-
-                    <input
-                        type="date"
-                        className="form-control"
-                        value={ativoAte || ''}
-                        onChange={e => setAtivoAte(e.target.value)}
-                    />
-                </div>
-
                 <input
-                    className="btn btn-primary w-100 mt-4"
+                    className="mt-4 cursor-pointer mx-auto flex  w-4/12 md:w-2/12  items-center justify-center gap-1 p-2 bg-green-700 transition delay-150 ease-in-out hover:bg-green-900 font-bold"
                     type="submit"
                     value="Atualizar"
                 />

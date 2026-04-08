@@ -108,97 +108,95 @@ export const Turma = () => {
     }
 
     return (
-        <div className="container mt-5 bg-light rounded p-lg-5 p-sm-2 min-vh-100">
-            <h2 className="text-center mb-5">{turma?.serie} {turma?.turma} - {turma?.materia}</h2>
+        <div className="mt-10">
+            <h2 className="text-center text-3xl mb-5">{turma?.serie} {turma?.turma} - {turma?.materia}</h2>
 
-            <hr />
-            <div className="d-flex justify-content-around">
-                <Link className="nav-link scale d-flex align-items-center text-center" to={`/nova-atividade/${id}`}>
-                    <FilePlus 
-                    className="d-none d-md-block"
-                    size={16}  color="#20bf6b" />
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 ">
+                <Link className="flex items-center justify-center gap-2 border border-blue-700 p-1 transition delay-150 hover:bg-gray-900" to={`/nova-atividade/${id}`}>
+                    <FilePlus
+                        className="d-none d-md-block"
+                        size={16} color="#20bf6b" />
                     Nova atividade
                 </Link>
 
-                <Link className="nav-link scale d-flex align-items-center text-center" to={`/novo-aluno/${id}`}>
-                    <UserPlus 
-                    className="d-none d-md-block"
-                    size={16} color="#8854d0" />
+                <Link className="flex items-center justify-center gap-2 border border-blue-700 p-1 transition delay-150 hover:bg-gray-900" to={`/novo-aluno/${id}`}>
+                    <UserPlus
+                        className="d-none d-md-block"
+                        size={16} color="#8854d0" />
                     Novo aluno
                 </Link>
 
-                { userData.nivel === '2' || !userData.nivel  && <Link className="nav-link scale d-flex align-items-center text-center" to={`/frequencia/${id}`}>
-                    <FileUser 
-                    className="d-none d-md-block"
-                    size={16} color="#fa8231" />
+                {userData.nivel === '2' || !userData.nivel && <Link className="flex items-center justify-center gap-2 border border-blue-700 p-1 transition delay-150 hover:bg-gray-900" to={`/frequencia/${id}`}>
+                    <FileUser
+                        className="d-none d-md-block"
+                        size={16} color="#fa8231" />
                     Fazer chamada
                 </Link>}
 
-                <Link className="nav-link scale d-flex align-items-center text-center" to={`/atividades-recebidas-turma/${id}`}>
-                
-                    <File 
-                    className="d-none d-md-block"
-                    size={16} color="#c0392b" />
+                <Link className="flex items-center justify-center gap-2 border border-blue-700 p-1 transition delay-150 hover:bg-gray-900" to={`/atividades-recebidas-turma/${id}`}>
+
+                    <File
+                        className="d-none d-md-block"
+                        size={16} color="#c0392b" />
                     Atividades Recebidas
                 </Link>
             </div>
-            <hr />
 
-            <div className="d-flex justify-content-around">
+            <div className="mt-5 flex justify-evenly">
                 <Link
                     to={`/atualizar-turma/${id}`}
-                    className="btn btn-sm btn-outline-success d-flex align-items-center"><FileCheck2 size={16} />Editar Turma</Link>
+                    className="cursor-pointer mt-2 mx-auto flex  w-4/12 md:w-2/12  items-center justify-center gap-1 p-2 bg-green-700 transition delay-150 ease-in-out hover:bg-green-900 font-bold"><FileCheck2 size={16} />Editar Turma</Link>
 
                 {
                     loading ?
                         <button
                             onClick={handleDelete}
                             disabled
-                            data-bs-toggle="button"
-                            className="btn btn-sm btn-outline-danger d-flex align-items-center">
+                            className="cursor-pointer mt-2 mx-auto flex  w-4/12 md:w-2/12  items-center justify-center gap-1 p-2 bg-gray-700 font-bold">
                             <Trash size={16} />
                             Apagar Turma</button>
                         :
                         <button
                             onClick={handleDelete}
-                            className="btn btn-sm btn-outline-danger d-flex align-items-center">
+                            className="cursor-pointer mt-2 mx-auto flex  w-4/12 md:w-2/12  items-center justify-center gap-1 p-2 bg-orange-700 transition delay-150 ease-in-out hover:bg-orange-900 font-bold">
                             <Trash size={16} />
                             Apagar Turma</button>
                 }
             </div>
 
 
-            <h3 className="my-5">Atividades desta turma</h3>
-            <div className="border p-3">
+            <h3 className="my-10 text-center text-2xl">Atividades desta turma</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2" >
                 {atividades.length > 0 ? atividades.map(atividade => (
-                    <div
-                        className="border py-2 px-4 my-2 shadow-sm d-flex justify-content-between scale bg-light"
-                        key={atividade?.id}>
-                        <p>{atividade?.nome} </p>
-                        <Link
-                            className="nav-link"
-                            to={`/atividade/${atividade?.id}`}>
-                            Ir para atividade<ArrowBigRightDash color="#20bf6b" />
-                        </Link>
-                    </div>
-                )) : <p>Você ainda não criou nenhuma atividade</p>}
+                    <Link
+                        className="border border-blue-700 hover:bg-gray-900"
+                        to={`/atividade/${atividade?.id}`}>
+                        <div
+                            className="p-2 overflow-x-hidden"
+                            key={atividade?.id}>
+                            <p>{atividade?.nome} </p>
+
+                        </div>
+                    </Link>
+                )) : <p className="text-center text-xl">Você ainda não criou nenhuma atividade</p>}
             </div>
 
             <h3 className="my-5">Alunos desta turma</h3>
-            {alunos.length > 0 ? alunos.map(aluno => (
-                <div
-                    className=""
-                    key={aluno.id}>
-                    <div className="d-flex justify-content-between border my-2 scale px-4 py-2 bg-light">
-                        <p className="m-0">Nome: {aluno.nome}</p>
-                        <p className="m-0">
-                            <Link
-                                className="nav-link"
-                                to={`/aluno/${aluno.id}`}>Ver Aluno <ArrowBigRightDash color="#2d98da" /> </Link>
-                        </p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                {alunos.length > 0 ? alunos.map(aluno => (
+                    <div
+                        className="border border-blue-700 p-2 hover:bg-gray-900 cursor-pointer"
+                        key={aluno.id}>
+                        <div className="">
+                                <Link
+                                    className="nav-link"
+                                    to={`/aluno/${aluno.id}`}>
+                            <p className="">Nome: {aluno.nome}</p>
+                            </Link>
+                        </div>
                     </div>
-                </div>
-            )) : <p>Você ainda não adicionou nenhum aluno a esta turma</p>}
+                )) : <p className="text-center text-xl">Você ainda não adicionou nenhum aluno a esta turma</p>}
+            </div>
         </div>
     )
 }

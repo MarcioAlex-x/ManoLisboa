@@ -72,47 +72,44 @@ export const AtividadeEntregue = () => {
     }
 
     return (
-        <div className="container bg-light p-lg-5 my-5">
+        <div className="mt-10">
 
             {
                 atividade?.titulo ?
-                    <h2 className="my-5 text-center mb-0">{atividade?.titulo}</h2>
+                    <h2 className="text-center text-3xl">{atividade?.titulo}</h2>
                     :
                     atividade?.aluno ?
-                        <h2 className="my-5 text-center mb-0">Atividade de {atividade?.aluno}</h2>
+                        <h2 className="text-center text-3xl">Atividade de {atividade?.aluno}</h2>
                         :
-                        <h2 className="my-5 text-center mb-0">Atividade Sem Título</h2>
+                        <h2 className="text-center text-3xl">Atividade Sem Título</h2>
             }
-
-            <hr />
 
             {
                 atividade?.aluno &&
-                <p className="mb-0"><b>Aluno: </b>{atividade?.aluno}</p>
+                <p className="text-center text-xl mt-5"><b>Aluno: </b>{atividade?.aluno}</p>
             }
 
             {
                 atividade?.turma &&
-                <p><b>Turma: </b>{atividade?.turma}</p>
+                <p className="text-center"><b>Turma: </b>{atividade?.turma}</p>
             }
 
             {
                 atividade?.link &&
-                <p><b>Link: </b><a href={atividade?.link}>Acessar</a></p>
+                <p className="border border-blue-700 p-2 mt-2"><b>Link: </b><a href={atividade?.link}>Acessar</a></p>
             }
 
             {
                 atividade?.texto &&
 
-                <div>
-                    <h5 className="mb-0">Texto:</h5>
+                <div className="border border-blue-700 p-2 mt-2">
+                    <h5 className="text-2xl mb-5">Texto:</h5>
                     <p
-                        className="p-2"
                         style={{ whiteSpace: 'pre-wrap' }}>{atividade?.texto}</p>
                 </div>
             }
 
-            <p><i>Entregue em {atividade?.entregueEm.toDate().toLocaleDateString('pt-BR')}</i></p>
+            <p className="border border-blue-700 p-2 mt-2"><i>Entregue em {atividade?.entregueEm.toDate().toLocaleDateString('pt-BR')}</i></p>
             {
                 loading ?
                     <button
@@ -122,7 +119,7 @@ export const AtividadeEntregue = () => {
                     :
                     <button
                         onClick={handleDelete}
-                        className="btn btn-sm btn-danger w-100">Remover Entrega</button>
+                        className="cursor-pointer bg-orange-700 inline-block px-3 py-1 mt-2 transition delay-75 hover:bg-orange-800 font-semibold">Remover Entrega</button>
             }
 
         </div>

@@ -101,71 +101,64 @@ export const Usuario = () => {
     }
 
     return (
-        <div className="container mt-5 bg-light p-lg-5 rounded ">
-            <div className="p-2 border rounded p-4 shadow">
-                <h2 className="text-center my-5">Informações do Usuário</h2>
-                <h3>Nome: <span className="text-secondary">{usuario?.nome}</span></h3>
-                <h3>Instituição: <span className="text-secondary">{instituicao?.instituicao}</span></h3>
+        <div className="mt-10">
+            <div className="border border-blue-700 p-4">
+                <h2 className="text-center text-3xl">Informações do Usuário</h2>
+                <h3>Nome: <span className="">{usuario?.nome}</span></h3>
+                <h3>Instituição: <span className="">{instituicao?.instituicao}</span></h3>
                 <p className="h5 mb-0">{turmas.length} turma(s)</p>
                 <p className="h5">{alunos.length} aluno(s)</p>
-                <p className="h5" >Tipo de usuário: <span style={{textTransform:'capitalize'}}>{usuario?.tipo}</span></p>
-                <p className="h5">Status: {usuario?.ativo === true? 'Ativo' : 'Inativo'}</p>
+                <p className="h5" >Tipo de usuário: <span style={{ textTransform: 'capitalize' }}>{usuario?.tipo}</span></p>
+                <p className="h5">Status: {usuario?.ativo === true ? 'Ativo' : 'Inativo'}</p>
                 <p className="h5 mb-3">Data de expiração: {usuario?.ativoAte.toDate().toLocaleDateString()}</p>
 
-                <div className="d-flex justify-content-around w-75 m-auto">
+                <div className="grid grid-cols-2">
                     {
                         loading ?
                             <button
                                 onClick={handleDetelete}
                                 disabled
                                 data-bs-toggle="button"
-                                className="btn btn-danger">Excluir
+                                className="mt-4 cursor-pointer mx-auto flex  w-4/12 md:w-2/12  items-center justify-center gap-1 p-2 bg-orange-400 transition delay-150 ease-in-out hover:bg-green-900 font-bold">Excluir
                             </button>
                             :
                             <button
                                 onClick={handleDetelete}
-                                className="btn btn-danger">Excluir
+                                className="mt-4 cursor-pointer mx-auto flex  w-4/12 md:w-2/12  items-center justify-center gap-1 p-2 bg-orange-700 transition delay-150 ease-in-out hover:bg-green-900 font-bold">Excluir
                             </button>
                     }
 
-                    <Link 
-                    to={`/atualizar-usuario/${id}`}
-                    className="btn btn-primary">Editar</Link>
+                    <Link
+                        to={`/atualizar-usuario/${id}`}
+                        className="mt-4 cursor-pointer mx-auto flex  w-4/12 md:w-2/12  items-center justify-center gap-1 p-2 bg-green-700 transition delay-150 ease-in-out hover:bg-green-900 font-bold">Editar</Link>
                 </div>
             </div>
-            <div className="border rounded p-4 mt-4 shadow ">
-                <h2>Turmas</h2>
-                <div className="d-flex flex-wrap">
+            <div className="">
+                <h2 className="text-center mt-10 text-3xl">Turmas</h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mt-5">
                     {turmas.length > 0 ?
                         turmas.map(turma => (
-                            <div
-                                key={turma.id}>
-                                <p className="border rounded shadow p-3 m-2 d-flex m-1 scale">{turma.serie}º {turma.turma}
-                                    <Link
-                                        className="nav-link ms-1"
-                                        to={`/turma/${turma.id}`}>
-                                        <ArrowRight size={16} />
-                                    </Link>
-                                </p>
-                            </div>
+                            <Link
+                                key={turma.id}
+                                className="w-12/12 border border-blue-700 p-4 hover:bg-gray-700"
+                                to={`/turma/${turma.id}`}>
+                                {turma.serie}º {turma.turma}
+                            </Link>
                         )) :
                         <p>Ainda não tem turmas cadastradas</p>
                     }
                 </div>
 
-                <h2 className="mt-4">Alunos</h2>
-                <div className="d-flex flex-wrap">
+                <h2 className="text-center text-3xl mt-10">Alunos</h2>
+                <div className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                     {alunos.length > 0 ? alunos.map(aluno => (
-                        <div
-                            key={aluno.id}>
-                            <p className="p-2 border rounded shadow d-flex m-1 scale">{aluno.nome}
-                                <Link
-                                    className="nav-link ms-1"
-                                    to={`/aluno/${aluno.id}`}>
-                                    <ArrowRight size={16} />
-                                </Link>
-                            </p>
-                        </div>
+                        
+                            <Link
+                            key={aluno.id}
+                                className="border border-blue-700 p-2 hover:bg-gray-700"
+                                to={`/aluno/${aluno.id}`}>
+                                {aluno.nome}
+                            </Link>
                     )) :
                         <p>Ainda não tem alunos cadastrados</p>
                     }

@@ -37,27 +37,31 @@ export const PortalInstituicao = () => {
 
     }, [codigo])
     return (
-        <div className="container mt-5 bg-light p-lg-5 rounded">
-            <h1 className="text-center mb-0">{instituicao?.instituicao}</h1>
+        <div className="">
+            <h1 className="text-center mb-2 mt-10 leading-0">
+                <span className="text-xl">Você está acessando</span>
+                <br />
+                <span className="text-2xl">{instituicao?.instituicao}</span>
+            </h1>
             {professores.length === 0 ?
-            <p className="text-center mb-5">Nenhum professor encontrado nesta instituição</p>
-            :
-            <p className="text-center mb-5">Selecione o seu professor para acessar os conteúdos e atividades</p>    
-        }
+                <p className="text-center mb-5">Nenhum professor encontrado nesta instituição</p>
+                :
+                <p className="text-center mb-5">Selecione o seu professor para acessar os conteúdos e atividades</p>
+            }
 
-            <div className="row">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 mt-10">
                 {
                     professores.map(prof => (
                         prof.ativo &&
                         <div
                             key={prof.id}
-                            className=" col-12 col-sm-6 col-md-4 p-2">
+                            className="border p-2 transition delay-100 duration-300 ease-in-out hover:bg-gray-950">
                             <Link
-                                className="nav-link border rounded shadow px-2 px-md-4 py-2 scale distack "
+                                className="flex"
                                 to={`/turmas-do-professor/${prof.id}`}>
-                                    <p className="mb-0">Prof.</p>
-                                <h5 className="d-flex align-items-center justify-content-between">
-                                    {prof.nome} <ArrowBigRightDash />
+                                {/* <p className="mb-0">Prof.</p> */}
+                                <h5 className="flex justify-between w-12/12 ">
+                                    <span>Prof. {prof.nome}</span> <ArrowBigRightDash className="" />
                                 </h5>
                             </Link>
                         </div>

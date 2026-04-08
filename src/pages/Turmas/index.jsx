@@ -26,28 +26,28 @@ export const Turmas = () => {
         console.log(turmas)
     }, [userData])
     return (
-        <div className="container bg-light min-vh-100 p-0 p-lg-5 my-5 rounded" >
-            <h2 className="text-center mt-5 mb-5">Todas as suas turmas</h2>
-            <table className="table table-striped table-hover">
-                <thead>
-                    <tr>
+        <div className="mt-10 " >
+            <h2 className="text-center text-3xl ">Todas as suas turmas</h2>
+            <table className="w-12/12 border border-blue-700 mt-5">
+                <thead className="bg-gray-600">
+                    <tr className="border-b-blue-700">
                         <th scope="col">Ano/Série</th>
                         <th scope="col">Turma</th>
                         <th scope="col">Matéria</th>
                         <th scope="col">Acessar</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="">
                     {turmas.map((turma) => (
-                        <tr key={turma.id} >
-                        <th>{turma.serie}</th> 
-                        <th>{turma.turma.toUpperCase()} </th>
-                        <th>{turma.materia}</th> 
-                        <th>
+                        <tr key={turma.id} className=" hover:bg-gray-500">
+                        <th className="p-1">{turma.serie}</th> 
+                        <th className="p-1">{turma.turma.toUpperCase()} </th>
+                        <th className="p-1">{turma.materia}</th> 
+                        <th className="p-1">
                             <Link 
-                                className="nav-link" 
+                                className="flex justify-center" 
                                 to={`/turma/${turma.id}`}> 
-                                    <ArrowBigRight className="scale"/>
+                                    <ArrowBigRight className="text-center"/>
                             </Link>
                         </th>
                     </tr>

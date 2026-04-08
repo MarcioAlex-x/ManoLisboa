@@ -69,48 +69,49 @@ export const AtualizarAluno = () => {
     }
 
     return (
-        <div className="container mt-5 bg-light p-lg-5 p-2 rounded">
-            <h2 className="text-center my-5">Atualizar as informações de {nome}</h2>
+        <div className="mt-10">
+            <h2 className="text-center text-3xl">Atualizar as informações de {nome}</h2>
             <form 
-            className="border p-lg-5 p-2 rounded shadow"
+            className="mt-10"
             onSubmit={handleUpdate}>
-                <div>
+                <div className="flex flex-col">
                     <label
                         htmlFor="nome"
-                        className="form-label">Nome</label>
+                        className="font-semibold">Nome</label>
                     <input
                         type="text"
-                        className="form-control"
+                        className="border p-2 outline-0"
                         name="nome"
                         value={nome}
                         onChange={e => setNome(e.target.nome)} />
                 </div>
 
-                <div>
+                <div className="flex flex-col mt-2">
                     <label
                         htmlFor="whatsApp"
-                        className="form-label">WhatsApp</label>
+                        className="font-semibold">WhatsApp</label>
                     <input
                         type="text"
-                        className="form-control" name="whatsApp"
+                        className="border p-2 outline-0" 
+                        name="whatsApp"
                         value={whatsApp}
                         onChange={e => setWhatsApp(e.target.value)} />
                 </div>
 
-                <div>
+                <div className="flex flex-col mt-2">
                     <label
                         htmlFor="email"
-                        className="form-label">E-mail</label>
+                        className="font-semibold">E-mail</label>
                     <input
                         type="text"
-                        className="form-control"
+                        className="border p-2 outline-0 "
                         name="email"
                         value={email}
                         onChange={e => setEmail(e.target.value)} />
                 </div>
 
                 <input 
-                className="btn btn-success w-100 mt-2"
+                className="cursor-pointer mt-2 mx-auto flex  w-4/12 md:w-2/12  items-center justify-center gap-1 p-2 bg-green-700 transition delay-150 ease-in-out hover:bg-green-900 font-bold "
                 type="submit" 
                 value="Atualizar" />
             </form>

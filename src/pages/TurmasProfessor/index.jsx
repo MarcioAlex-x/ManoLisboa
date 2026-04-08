@@ -24,20 +24,29 @@ export const TurmasProfessor = () => {
     }, [id])
 
     return (
-        <div className="container bg-light my-5 p-lg-5 p-0">
-            <h2 className="my-4 text-center">Turmas do Professor</h2>
+        <div className="mt-10">
+            <h2 className="text-center text-3xl mt-10 mb-5">Turmas do Professor</h2>
             {
                 turmas.length === 0 ?
-                    <p>Nenhuma turma encontrada</p> :
-                    <div className="">
-                        {turmas.map(t=>(
-                            <div key={t.id}>
-                                
-                                <Link 
-                                className="nav-link border p-2 d-flex align-items-center distack mb-2"
-                                to={`/atividades-do-professor/${t.id}`}> <Users className="me-2"/> {t.serie} - {t.turma}</Link>
-                            </div>
-                        ))}
+                    <div>
+                        <p className="text-center">Nenhuma turma encontrada</p>
+                        <img
+                            className="w-5/12 mx-auto my-10"
+                            src="/procurando.png"
+                            alt="" />
+                    </div> :
+                    <div>
+                        <p className="text-center mb-10">Selecione a sua turma</p>
+                        <div className="grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 ">
+                            {turmas.map(t => (
+                                <div key={t.id}>
+
+                                    <Link
+                                        className="flex border p-1 transition delay-150 ease-in-out duration-300 hover:bg-gray-950 "
+                                        to={`/atividades-do-professor/${t.id}`}> <Users className="me-2" /> {t.serie} - {t.turma}</Link>
+                                </div>
+                            ))}
+                        </div>
                     </div>
             }
         </div>

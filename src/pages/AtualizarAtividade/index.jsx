@@ -94,111 +94,105 @@ export const AtualizarAtividade = () => {
     }
 
     return (
-        <div className="container bg-light p-lg-5 my-5 rounded">
+        <div className="">
 
-            <h2 className="text-center">Atualizar Atividade</h2>
+            <h2 className="text-center text-3xl mt-10">Atualizar Atividade</h2>
             {nome && <h3 className="text-center"><i>{nome}</i></h3>}
 
             <form
                 onSubmit={handleUpdate}
-                className="border p-lg-5 p-2 rounded shadow mt-5">
+                className="">
 
-                <div>
+                <div className="flex flex-col">
                     <label
-                        className="form-label mt-4"
+                        className="font-semibold"
                         htmlFor="nome">Nome da atividade</label>
 
                     <input
-                        className="form-control"
+                        className="border p-2 outline-0 mt-2"
                         type="text"
                         name="nome"
                         value={nome}
                         onChange={e => setNome(e.target.value)} />
                 </div>
-
-                <div>
-                    <label
-                        className="form-label mt-4"
-                        htmlFor="orientacoes">Orientações</label>
-
-                    <textarea
-                        style={{ resize: 'none' }}
-                        className="form-control"
-                        rows={10}
-                        wrap="hard"
-                        name="orientacoes"
-                        value={orientacoes}
-                        onChange={e => setOrientacoes(e.target.value)}></textarea>
+ 
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-4">
+                    <div className="flex flex-col">
+                        <label
+                            className="font-semibold"
+                            htmlFor="orientacoes">Orientações</label>
+                        <textarea
+                            style={{ resize: 'none' }}
+                            className="border p-2 outline-0 mt-2"
+                            rows={10}
+                            wrap="hard"
+                            name="orientacoes"
+                            value={orientacoes}
+                            onChange={e => setOrientacoes(e.target.value)}></textarea>
+                    </div>
+                    <div className="flex flex-col">
+                        <label
+                            className="font-semibold"
+                            htmlFor="conteudo">Conteúdo</label>
+                        <textarea
+                            style={{ resize: 'none' }}
+                            rows={10}
+                            wrap="hard"
+                            className="border p-2 outline-0 mt-2"
+                            name="conteudo"
+                            value={conteudo}
+                            onChange={e => setConteudo(e.target.value)}></textarea>
+                    </div>
                 </div>
 
-                <div>
-                    <label
-                        className="form-label mt-4"
-                        htmlFor="conteudo">Conteúdo</label>
-
-                    <textarea
-                        style={{ resize: 'none' }}
-                        rows={10}
-                        wrap="hard"
-                        className="form-control"
-                        name="conteudo"
-                        value={conteudo}
-                        onChange={e => setConteudo(e.target.value)}></textarea>
-                </div>
-
-                <div>
-                    <label
-                        className="form-label mt-4"
-                        htmlFor="peso">Peso</label>
-
-                    <input
-                        className="form-control"
-                        type="text"
-                        name="peso"
-                        value={peso}
-                        onChange={e => setPeso(e.target.value)} />
-                </div>
-
-                <div>
-                    <label
-                        className="form-label mt-4"
-                        htmlFor="dataEntrega">Data de entrega</label>
-
-                    <input
-                        className="form-control"
-                        type="date"
-                        name="dataEntrega"
-                        value={dataEntrega}
-                        onChange={e => setDataEntraga(e.target.value)} />
-                </div>
-
-                <div>
-                    <label
-                        className="form-label mt-4"
-                        htmlFor="link">Link</label>
-
-                    <input
-                        className="form-control"
-                        type="text"
-                        name="link"
-                        value={link}
-                        onChange={e => setLink(e.target.value)} />
-                </div>
-
-                <div>
-                    <label
-                        className="form-label mt-4"
-                        htmlFor="link">Arquivo PDF</label>
-
-                    <input
-                        className="form-control"
-                        type="file"
-                        accept="application/pdf"
-                        onChange={e => setArquivo(e.target.files[0])} />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    <div className="flex flex-col mt-4">
+                        <label
+                            className="font-semibold"
+                            htmlFor="peso">Peso</label>
+                        <input
+                            className="border p-2 outline-0 mt-2"
+                            type="text"
+                            name="peso"
+                            value={peso}
+                            onChange={e => setPeso(e.target.value)} />
+                    </div>
+                    <div className="flex flex-col mt-4">
+                        <label
+                            className="font-semibold"
+                            htmlFor="dataEntrega">Data de entrega</label>
+                        <input
+                            className="border p-2 outline-0 mt-2"
+                            type="date"
+                            name="dataEntrega"
+                            value={dataEntrega}
+                            onChange={e => setDataEntraga(e.target.value)} />
+                    </div>
+                    <div className="flex flex-col mt-4">
+                        <label
+                            className="font-semibold"
+                            htmlFor="link">Link</label>
+                        <input
+                            className="border p-2 outline-0 mt-2"
+                            type="text"
+                            name="link"
+                            value={link}
+                            onChange={e => setLink(e.target.value)} />
+                    </div>
+                    <div className="flex flex-col mt-4">
+                        <label
+                            className="font-semibold"
+                            htmlFor="link">Arquivo PDF</label>
+                        <input
+                            className="border p-2 outline-0 mt-2"
+                            type="file"
+                            accept="application/pdf"
+                            onChange={e => setArquivo(e.target.files[0])} />
+                    </div>
                 </div>
 
                 <input
-                    className="btn btn-success d-block w-100 mt-4"
+                    className="mt-4 cursor-pointer mx-auto flex  w-4/12 md:w-2/12  items-center justify-center gap-1 p-2 bg-green-700 transition delay-150 ease-in-out hover:bg-green-900 font-bold"
                     type="submit"
                     value="Atualizar" />
             </form>

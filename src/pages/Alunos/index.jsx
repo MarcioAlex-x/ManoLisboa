@@ -5,44 +5,48 @@ import { db } from "../../firebaseConfig"
 import { Link } from "react-router-dom"
 import { ArrowBigRightDash } from "lucide-react"
 
-export const Alunos = () =>{
+export const Alunos = () => {
     const [alunos, setAlunos] = useState([])
     const { userData } = useContext(UserContext)
-    
-    useEffect(()=>{
-        const fetchAlunos = async() =>{
-            if(!userData) return
 
-            const alunosRef = query(collection(db,'alunos'), where('professorId', '==',userData.uid), orderBy('nome','asc'))
+    useEffect(() => {
+        const fetchAlunos = async () => {
+            if (!userData) return
+
+            const alunosRef = query(collection(db, 'alunos'), where('professorId', '==', userData.uid), orderBy('nome', 'asc'))
             const alunosSnapshot = await getDocs(alunosRef)
-            const alunosData = alunosSnapshot.docs.map(aluno=>(
-                {id:aluno.id,...aluno.data()}
+            const alunosData = alunosSnapshot.docs.map(aluno => (
+                { id: aluno.id, ...aluno.data() }
             ))
 
             setAlunos(alunosData)
         }
         fetchAlunos()
-    },[userData])
+    }, [userData])
 
-    return(
-        <div className="container my-5 bg-light p-1 p-lg-5">
-            <h2 className="text-center mt-5 mb-0">Todos os Alunos</h2>
-            <p className="text-center mb-5">Aqui são listadas todas os alunos que você cadastrou independente da turma
-                <br />
-                Para acessar os alunos por turma acesse <b>Todas as Turmas</b> e escolha a turma desejada
-            </p>
-            {alunos.map(aluno=>(
-                <div 
-                key={aluno.id}
-                className="border my-2 py-2 px-1 p-lg-x shadow-sm rounded d-flex justify-content-between align-items-center scale">
-                    <p className="m-0">Nome: {aluno.nome}</p>
-                    <p className="m-0">
-                        <Link
-                        className="nav-link" 
-                        to={`/aluno/${aluno.id}`}>Ver <ArrowBigRightDash /> </Link>
-                        </p>
-                </div>
-            ))}
+    return (
+        <div className="mt-10">
+            <h2 className="text-center text-3xl">Todos os seus alunos</h2>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-10">
+            
+                {alunos.map(aluno => (
+                    <div
+                        key={aluno.id}
+                        className="flex flex-col border border-blue-700 overflow-hidden p-2 text-center h-full transition delay-150 ease-in-out hover:bg-gray-900"
+                    >
+                        <p>{aluno.nome}</p>
+                        <div className="mt-auto">
+                            <Link
+                                className="bg-green-700 inline-block px-3 py-1 mt-2 transition delay-75 hover:bg-green-800 font-semibold"
+                                to={`/aluno/${aluno.id}`}
+                            >
+                                Acessar
+                            </Link>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }

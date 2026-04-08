@@ -40,16 +40,16 @@ export const AcessoAluno = () => {
     }, [codigo])
 
     return (
-        <div className="container mt-5 bg-light p-lg-5 rounded">
+        <div className=" w-10/12 m-auto" >
 
-            <h2 className="text-center mb-5">Selecione a sua instituição</h2>
+            <h2 className="text-center mb-8 font-bold text-3xl">Selecione a sua instituição</h2>
 
-            <div className="p-0 p-md-5 border rounded shadow mb-2">
+            <div className="w-8/12 m-auto">
 
                 <input
                     type="text"
                     placeholder="Ex: UNIESP"
-                    className="form-control mb-3"
+                    className="border w-12/12 outline-hidden mb-4"
                     value={codigo}
                     name="codigo"
                     onChange={e => setCodigo(e.target.value)}
@@ -59,20 +59,20 @@ export const AcessoAluno = () => {
 
             {
                 instituicao.length === 0 ?
-                    <p className="text-center">Se não encontrou a sua instituição ou não sabe o código entre em contato com a coordenação do seu curso</p>
+                    <p className="text-center text-lg">Se não encontrou a sua instituição ou não sabe o código, entre em contato com a coordenação do seu curso</p>
                     :
-                    <p className="text-center mt-3 h3">Selecione a sua instituição</p>
+                    <p className="text-center text-lg">Selecione a sua instituição</p>
 
             }
 
             {
                 instituicao.map(i => (
                     <Link
-                        className="nav-link rounded mt-2 p-2 distack border"
+                        className=""
                         to={`/${i.codigo}`}
                         key={i.id}>
                             
-                        <p className="d-flex align-items-center mb-0"> <Building2/> {i.codigo} - {i.instituicao}</p>
+                        <p className="flex p-2 transition delay-75 duration-300 ease-in-out hover:bg-gray-900"> <Building2 className="mr-2" /> {i.codigo} - {i.instituicao}</p>
                     </Link>
                 ))
             }

@@ -3,45 +3,40 @@ import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { db } from "../../firebaseConfig"
 
-export const AtividadesEntreguesPorTurma = () =>{
+export const AtividadesEntreguesPorTurma = () => {
     const [atividades, setAtividades] = useState([])
-    
+
     const { id } = useParams()
 
-    useEffect(()=>{
-        const fetchAtividades = async () =>{
-            const atividadesRef = query(collection(db,'entregas'),where('turmaId','==',id))
+    useEffect(() => {
+        const fetchAtividades = async () => {
+            const atividadesRef = query(collection(db, 'entregas'), where('turmaId', '==', id))
             const atividadesSnapshot = await getDocs(atividadesRef)
-            const atividadesData = atividadesSnapshot.docs.map((doc)=>({
-                id:doc.id, ...doc.data()
+            const atividadesData = atividadesSnapshot.docs.map((doc) => ({
+                id: doc.id, ...doc.data()
             }))
             setAtividades(atividadesData)
         }
         fetchAtividades()
-    },[id])
+    }, [id])
 
-    return(
-        <div className="container bg-light p-lg-5 my-5">
-            <h2 className="my-5 text-center">Todas as Atividades Recebidas da Turma</h2>
-            <p className="text-center"><i>Esta turma entregou {atividades.length} atividades</i></p>
-            {atividades.length === 0 && <p className="text-center">Não há atividades recebidas até aqui</p> }
-            <div className="row">
-                {atividades.map((atividade)=>(
+    return (
+        <div className="">
+            <h2 className="mt-10 text-center text-3xl">Todas as atividades recebidas desta turma</h2>
+            <p className="text-center"><i>{atividades.length} atividades</i></p>
+            {atividades.length === 0 && <p className="text-center">Não há atividades recebidas até aqui</p>}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-10">
+                {atividades.map((atividade) => (
                     <div
-                    className="col-12 col-lg-4 d-flex my-1"
-                    key={atividade.id}>
+                        className="border border-blue-700 p-2 flex flex-col justify-between transition delay-150 ease-in-out hover:bg-gray-900"
+                        key={atividade.id}>
 
-                        <div 
-                        style={{height:'320px'}}
-                        className=" p-3 border rounded d-flex flex-column position-relative w-100">
-                            <h4 className="mb-0">{atividade.titulo}</h4>
-                            <hr className="mb-0"/>
-                            <p className="mb-0"><b>Aluno:</b> {atividade.aluno}</p>
-                            <p><b>Turma: </b>{atividade.turma}</p>
-                            <Link 
+                        <h4 className="font-bold text-center text-xl">{atividade.titulo}</h4>
+                        <p className=""><b>Aluno:</b> {atividade.aluno}</p>
+                        <p><b>Turma: </b>{atividade.turma}</p>
+                        <Link
                             to={`/atividade-recebida/${atividade.id}`}
-                            className="btn btn-primary btn-sm position-absolute bottom-0 start-50 translate-middle w-50">Acessar</Link>
-                        </div>
+                            className="cursor-pointer mt-2 mx-auto flex items-center justify-center gap-1 p-2 bg-green-700 transition delay-150 ease-in-out hover:bg-green-900 font-bold w-full">Acessar</Link>
 
                     </div>
                 ))}

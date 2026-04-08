@@ -26,28 +26,27 @@ export const AtividadesEntregues = () => {
     }, [userData])
 
     return (
-        <div className="container bg-light p-lg-5 my-5">
-            <h2 className="my-5 text-center">Todas as Atividades Recebidas</h2>
-            {atividades.length === 0 && <p className="text-center">Não há atividades recebidas até aqui</p>}
-            <div className="row">
+        <div className="mt-10">
+            <h2 className="text-center text-3xl">Todas as Atividades Recebidas</h2>
+            {atividades.length === 0 && <p className="text-center text-3xl">Não há atividades recebidas até aqui</p>}
+            <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-2">
                 {atividades.map((atividade) => (
                     <div
-                        className="col-6 col-lg-4"
+                        className="border border-blue-700 p-2"
                         key={atividade.id}>
 
-                        <div className=" p-3 border rounded d-flex flex-column">
+                        <div className="">
                             {
                                 atividade.titulo ?
-                                    <h4 className="mb-0">{atividade.titulo}</h4>
+                                    <h4 className="font-semibold">{atividade.titulo}</h4>
                                     :
-                                    <h4 className="mb-0">Atividade de {atividade.aluno}</h4>
+                                    <h4 className="font-semibold">Atividade de {atividade.aluno}</h4>
                             }
-                            <hr className="mb-0" />
-                            <p className="mb-0"><b>Aluno:</b> {atividade.aluno}</p>
+                            <p className=""><b>Aluno:</b> {atividade.aluno}</p>
                             <p><b>Turma: </b>{atividade.turma}</p>
                             <Link
                                 to={`/atividade-recebida/${atividade.id}`}
-                                className="btn btn-primary btn-sm w-100">Acessar</Link>
+                                className="bg-green-700 inline-block px-3 py-1 mt-2 transition delay-75 hover:bg-green-800 font-semibold">Acessar</Link>
                         </div>
 
                     </div>

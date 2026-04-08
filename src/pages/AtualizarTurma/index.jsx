@@ -69,52 +69,52 @@ export const AtualizarTurma = () => {
     }
 
     return (
-        <div className="container bg-light my-5 rounded min-h-100">
+        <div className="mt-10">
 
-            <h2 className="mt-5 text-center pt-2 pt-lg-5 rounded">Editar a Turma {turmaData?.serie}º {turmaData?.turma}</h2>
+            <h2 className="text-center text-3xl">Editar a Turma {turmaData?.serie}º {turmaData?.turma}</h2>
 
             <form
-                className="px-2 px-lg-5 py-lg-5 rounded border shadow "
+                className=""
                 onSubmit={handleUpdate}>
 
-                <div className="form-container">
+                <div className="flex flex-col mt-4">
                     <label
                         htmlFor="serie"
-                        className="form-label">Série</label>
+                        className="font-semibold">Série</label>
                     <input
                         type="text"
-                        className="form-control"
+                        className="border p-2 outline-0"
                         name="serie"
                         value={serie}
                         onChange={e => setSerie(e.target.value)} />
                 </div>
 
-                <div className="form-container">
+                <div className="flex flex-col mt-4">
                     <label
                         htmlFor="turma"
-                        className="form-label">Turma</label>
+                        className="font-semibold">Turma</label>
                     <input
                         type="text"
-                        className="form-control"
+                        className="border p-2 outline-0"
                         name="turma"
                         value={turma}
                         onChange={e => setTurma(e.target.value)} />
                 </div>
 
-                <div className="form-container">
+                <div className="flex flex-col mt-4">
                     <label
                         htmlFor="materia"
-                        className="form-label">Matéria</label>
+                        className="font-semibold">Matéria</label>
                     <input
                         type="text"
-                        className="form-control"
+                        className="border p-2 outline-0"
                         name="materia"
                         value={materia}
                         onChange={e => setMateria(e.target.value)} />
                 </div>
 
                 <input
-                    className="btn btn-success btn-sm w-100 mt-2"
+                    className="mt-4 cursor-pointer mx-auto flex  w-4/12 md:w-2/12  items-center justify-center gap-1 p-2 bg-green-700 transition delay-150 ease-in-out hover:bg-green-900 font-bold"
                     type="submit"
                     value="Atualizar" />
             </form>

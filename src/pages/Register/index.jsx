@@ -79,18 +79,18 @@ export const Register = () => {
         }
     }
 
-    if (loading) return <div><p>Salvando...</p></div>
+    if (loading) return <div  className="flex flex-col"><p>Salvando...</p></div>
     return (
-        <div className="container bg-light my-5 p-lg-5 p-0">
+        <div className="mt-10">
             <form
-                className="py-lg-5 px-lg-5 py-5 px-2 border rounded shadow"
+                className=""
                 onSubmit={handleSubmit}>
-                <div>
+                <div className="flex flex-col">
                     <label
                         htmlFor="instituicao"
-                        className="form-label">Instituição</label>
+                        className="font-semibold">Instituição</label>
                     <select
-                        className="form-control"
+                        className="border p-2 outline-0"
                         name="instituicao"
                         value={instituicaoId}
                         onChange={e => setInstituicaoId(e.target.value)}
@@ -105,36 +105,36 @@ export const Register = () => {
                     </select>
 
                 </div>
-                <div>
+                <div  className="flex flex-col">
                     <label
-                        className="form-label"
+                        className="font-semibold"
                         htmlFor="nome">Nome</label>
                     <input
-                        className="form-control"
+                        className="border p-2 outline-0"
                         type="text"
                         placeholder="Informe o nome..."
                         name="nome"
                         value={nome}
                         onChange={e => setNome(e.target.value)} />
                 </div>
-                <div>
+                <div  className="flex flex-col">
                     <label
-                        className="form-label"
+                        className="font-semibold"
                         htmlFor="email">E-mail</label>
                     <input
-                        className="form-control"
+                        className="border p-2 outline-0"
                         type="email"
                         placeholder="Informe o e-mail..."
                         name="email"
                         value={email}
                         onChange={e => setEmail(e.target.value)} />
                 </div>
-                <div>
+                <div  className="flex flex-col">
                     <label
-                        className="form-label"
+                        className="font-semibold"
                         htmlFor="email">Senha</label>
                     <input
-                        className="form-control"
+                        className="border p-2 outline-0"
                         type="password"
                         placeholder="Informe a senha..."
                         name="senha"
@@ -143,7 +143,7 @@ export const Register = () => {
                 </div>
                 <div className="mt-2">
                     <label
-                        className="form-label me-2"
+                        className="font-semibold me-2"
                         htmlFor="ativo">Ativo</label>
                     <input type="checkbox"
                         className="form-check-input"
@@ -152,24 +152,24 @@ export const Register = () => {
                         value={ativo}
                         onChange={e => setAtivo(e.target.checked)} />
                 </div>
-                <div>
+                <div  className="flex flex-col">
                     <label
-                        className="form-label"
+                        className="font-semibold"
                         htmlFor="ativoAte">Ativo Até</label>
                     <input
-                        className="form-control"
+                        className="border p-2 outline-0"
                         type="date"
                         name="ativoAte"
                         id="ativoAte"
                         value={ativoAte}
                         onChange={e => setAtivoAte(e.target.value)} />
                 </div>
-                <div>
+                <div  className="flex flex-col">
                     <label
-                        className="form-label"
+                        className="font-semibold"
                         htmlFor="ativoAte">Nível</label>
                     <select
-                        className="form-control"
+                        className="border p-2 outline-0"
                         name="nivel"
                         id="nivel"
                         value={nivel}
@@ -180,7 +180,7 @@ export const Register = () => {
                     </select>
                 </div>
                 <input
-                    className="btn btn-primary w-100 mt-3"
+                    className="cursor-pointer mt-2 mx-auto flex  w-4/12 md:w-2/12  items-center justify-center gap-1 p-2 bg-green-700 transition delay-150 ease-in-out hover:bg-green-900 font-bold"
                     type="submit"
                     value="Salvar" />
             </form>

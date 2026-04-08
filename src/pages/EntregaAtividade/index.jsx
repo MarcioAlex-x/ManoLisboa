@@ -98,96 +98,102 @@ export const EntregaAtividade = () => {
     }
 
     return (
-        <div className="container mt-5 bg-light rounded p-lg-5 p-0">
-            <h2 className="text-center">Entrega de atividade</h2>
-            <p className="mb-5 text-center">Preencha os campos com atenção para assegurar a entrega da atividade</p>
+        <div className="">
+            <h2 className="mt-10 text-center text-3xl">Entrega de atividade</h2>
+            <p className="text-center text-xl">Preencha os campos com atenção para assegurar a entrega da atividade</p>
 
-            <div className="border rounded p-lg-5 p-2 shadow">
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <label
-                            className="form-label"
-                            htmlFor="titulo">Nome completo</label>
-                        <input
-                            className="form-control"
-                            type="text"
-                            name="aluno"
-                            value={aluno}
-                            onChange={e => setAluno(e.target.value)}
-                        />
+            <div className="">
+                <form 
+                onSubmit={handleSubmit}>
+                    <div className="grid grid-cols-1 gap-2 md:grid-cols-2 mt-10">
+                        <div className="flex flex-col">
+                            <label
+                                className="font-bold"
+                                htmlFor="titulo">Nome completo</label>
+                            <input
+                                className="border border-blue-400 outline-0 p-1"
+                                type="text"
+                                name="aluno"
+                                value={aluno}
+                                onChange={e => setAluno(e.target.value)}
+                            />
+                        </div>
+                        <div className="flex flex-col">
+                            <label
+                                className="font-bold"
+                                htmlFor="titulo">Turma</label>
+                            <input
+                                className="border border-blue-400 outline-0 p-1"
+                                type="text"
+                                name="turma"
+                                value={turma}
+                                onChange={e => setTurma(e.target.value)}
+                            />
+                        </div>
+                        <div className="flex flex-col">
+                            <label
+                                className="font-bold"
+                                htmlFor="titulo">Título</label>
+                            <input
+                                className="border border-blue-400 outline-0 p-1"
+                                type="text"
+                                name="titulo"
+                                value={titulo}
+                                onChange={e => setTiulo(e.target.value)}
+                            />
+                        </div>
+                        <div className="flex flex-col">
+                            <label
+                                className="font-bold"
+                                htmlFor="token">Token</label>
+                            <input
+                                className="border border-blue-400 outline-0 p-1 "
+                                type="text"
+                                name="token"
+                                value={token}
+                                onChange={e => setToken(e.target.value)} />
+                        </div>
                     </div>
-                    <div>
+                    <div className="flex flex-col">
                         <label
-                            className="form-label mt-4"
-                            htmlFor="titulo">Turma</label>
-                        <input
-                            className="form-control"
-                            type="text"
-                            name="turma"
-                            value={turma}
-                            onChange={e => setTurma(e.target.value)}
-                        />
-                    </div>
-                    <div>
-                        <label
-                            className="form-label mt-4"
-                            htmlFor="titulo">Título</label>
-                        <input
-                            className="form-control"
-                            type="text"
-                            name="titulo"
-                            value={titulo}
-                            onChange={e => setTiulo(e.target.value)}
-                        />
-                    </div>
-                    <div>
-                        <label
-                            className="form-label mt-4"
+                            className="font-bold"
                             htmlFor="texto">Texto</label>
                         <textarea
-                            rows={20}
+                            rows={10}
                             style={{ resize: 'none' }}
-                            className="form-control"
+                            className="border border-blue-400 outline-0 p-1"
                             name="texto"
                             value={texto}
                             onChange={e => setTexto(e.target.value)}></textarea>
                     </div>
-                    <div>
-                        <label
-                            className="form-label mt-4"
-                            htmlFor="link">Link</label>
-                        <input
-                            className="form-control"
-                            type="text"
-                            name="link"
-                            value={link}
-                            onChange={e => setLink(e.target.value)} />
-                    </div>
-                    <div>
-                        <label
-                            className="form-label mt-4"
-                            htmlFor="arquivo">Arquivo PDF</label>
-                        <input
-                            className="form-control"
-                            type="file"
-                            accept="application/pdf"
-                            onChange={e => setArquivo(e.target.files[0])} />
-                    </div>
-
-                    <div>
-                        <label
-                            className="form-label mt-4"
-                            htmlFor="token">Token</label>
-                        <input
-                            className="form-control"
-                            type="text"
-                            name="token"
-                            value={token}
-                            onChange={e => setToken(e.target.value)} />
+                    <div className="grid grid-cols-1 gap-2 md:grid-cols-2 mt-10">
+                        
+                        <div className="flex flex-col">
+                            <label
+                                className="font-bold"
+                                htmlFor="link">Link</label>
+                            <input
+                                className="border border-blue-400 outline-0 p-1"
+                                type="text"
+                                name="link"
+                                value={link}
+                                onChange={e => setLink(e.target.value)} />
+                        </div>
+                        <div className="flex flex-col">
+                            <label
+                                className="font-bold"
+                                htmlFor="arquivo">Arquivo PDF</label>
+                            <input
+                                className="border border-blue-400 outline-0 p-1"
+                                type="file"
+                                accept="application/pdf"
+                                onChange={e => setArquivo(e.target.files[0])} />
+                        </div>
+                        
                     </div>
 
                     <input
-                        className="btn btn-primary d-block w-100 mt-4"
+                    className="mt-2 mx-auto flex w-4/12 md:w-2/12  items-center justify-center gap-1 p-2 bg-green-700 transition delay-150 ease-in-out hover:bg-green-900 font-bold"
                         type="submit"
                         value="Enviar" />
                 </form>

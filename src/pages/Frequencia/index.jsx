@@ -104,17 +104,18 @@ export const Frequencia = () => {
     }
 
     return (
-        <div className="container rounded p-0 p-lg-5 mt-5 bg-light">
-            <h2 className="my-4 text-center">Frequência</h2>
+        <div className="">
+            <h2 className="mt-10 text-center text-2xl">Frequência</h2>
+            <p className="text-center">Os alunos marcados receberão presença</p>
 
             <form
-                className="border rounded shadow p-5"
+                className="mt-5"
                 onSubmit={handleSubmit}
             >
 
-                <div className="form-check mb-3">
+                <div className="mb-2">
                     <input
-                        className="form-check-input"
+                        className="mr-2"
                         type="checkbox"
                         id="checkTodos"
                         checked={todosMarcados}
@@ -124,34 +125,35 @@ export const Frequencia = () => {
                             marcarTodos(checked)
                         }}
                     />
-                    <label className="form-check-label" htmlFor="checkTodos">
-                        Marcar todos como presentes
+                    <label className="" htmlFor="checkTodos">
+                        <i>Marcar todos como presentes</i>
                     </label>
                 </div>
 
                 {alunos.map(aluno => (
                     <div
-                        className="border p-2 d-flex justify-content-between align-items-center mb-1 rounded"
+                        className="border border-blue-700 p-1 mb-1 flex gap-2 transition delay-150 ease-in-out hover:bg-gray-900"
                         key={aluno.id}
                     >
-                        {aluno.nome}
-
                         <input
+                        className="border border-blue-700"
                             type="checkbox"
                             checked={presencas[aluno.id] || false}
                             onChange={e =>
                                 togglePresenca(aluno.id, e.target.checked)
                             }
                         />
+                        {aluno.nome}
+
                     </div>
                 ))}
 
                 <button
-                    className="btn btn-primary btn-sm d-block w-100 mt-3"
+                    className="cursor-pointer mt-2 mx-auto flex  w-4/12 md:w-2/12  items-center justify-center gap-1 p-2 bg-green-700 transition delay-150 ease-in-out hover:bg-green-900 font-bold"
                     type="submit"
                     disabled={loading}
                 >
-                    {loading ? 'Salvando...' : 'Salvar Frequência'}
+                    {loading ? 'Salvando...' : 'Salvar'}
                 </button>
             </form>
         </div>

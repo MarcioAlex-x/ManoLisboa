@@ -50,52 +50,66 @@ export const NovaTurma = () => {
 
     return (
         <div className="">
-            <div className="container bg-light min-vh-100 p-0 p-lg-5 my-5 rounded">
-                <h2 className="text-center my-5">Nova Turma</h2>
+            <div className="mt-10">
+                <h2 className="text-center text-3xl">Nova Turma</h2>
+                <p className="text-center">Crie a sua nova turma preenchendo os campos abaixo e comfirmando no botão salvar</p>
 
-                <form onSubmit={handleSubmit} className="mt-5 p-lg-5 p-2 border rounded shadow">
-                    <div>
-                        <label htmlFor="serie" className="form-label">Série ou Ano</label>
-                        <input
-                            placeholder="Preencha apenas com números"
-                            className="form-control"
-                            type="text"
-                            name="serie"
-                            value={serie}
-                            onChange={e => setSerie(e.target.value)} />
+                <form
+                className="mt-10" 
+                onSubmit={handleSubmit}>
+                    
+                    <div  className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                        <div className="flex flex-col">
+                            <label
+                                htmlFor="serie"
+                                className="font-bold">Série ou Ano</label>
+                            <input
+                                placeholder=""
+                                className="border outline-0 p-1"
+                                type="text"
+                                name="serie"
+                                value={serie}
+                                onChange={e => setSerie(e.target.value)} />
+                        </div>
+                        <div className="flex flex-col">
+                            <label
+                                htmlFor="turma"
+                                className="font-bold">Turma</label>
+                            <input
+                                placeholder=""
+                                className="border outline-0 p-1"
+                                type="text"
+                                name="turma"
+                                value={turma}
+                                onChange={e => setTurma(e.target.value)} />
+                        </div>
+                        <div className="flex flex-col">
+                            <label
+                            htmlFor="turma"
+                            className="font-bold">Materia</label>
+                            <input
+                                placeholder=""
+                                className="border outline-0 p-1"
+                                type="text"
+                                name="materia"
+                                value={materia}
+                                onChange={e => setMateria(e.target.value)} />
+                        </div>
                     </div>
-                    <div>
-                        <label htmlFor="turma" className="form-label">Turma</label>
-                        <input
-                            placeholder="Informe a turma"
-                            className="form-control"
-                            type="text"
-                            name="turma"
-                            value={turma}
-                            onChange={e => setTurma(e.target.value)} />
+                    <div className="flex">
+                        {!loading ?
+                            <input
+                                className=" font-semibold mt-5 mx-auto p-1 w-3/12 md:w-2/12 bg-green-700 transition delay-150 ease-in-out hover:bg-green-800 cursor-pointer"
+                                type="submit"
+                                value="Salvar" />
+                            :
+                            <input
+                                className=""
+                                disabled
+                                data-bs-toggle="button"
+                                type="submit"
+                                value="Salvar" />}
                     </div>
-                    <div>
-                        <label htmlFor="turma" className="form-label">Materia</label>
-                        <input
-                            placeholder="Informe a matéria que será ministrada"
-                            className="form-control"
-                            type="text"
-                            name="materia"
-                            value={materia}
-                            onChange={e => setMateria(e.target.value)} />
-                    </div>
-                    {!loading ?
-                        <input
-                            className="btn btn-primary mt-4 d-block w-100 fw-bold"
-                            type="submit"
-                            value="Salvar" />
-                        :
-                        <input
-                            className="btn btn-primary mt-4 d-block w-100 fw-bold"
-                            disabled
-                            data-bs-toggle="button"
-                            type="submit"
-                            value="Salvar" />}
                 </form>
             </div>
         </div>

@@ -6,9 +6,6 @@ import { UserProvider } from './contexts/UserContext/index.jsx'
 import { RouterProvider } from 'react-router-dom'
 import { AppRouter } from './components/AppRouter.jsx'
 
-import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'
-
 import { registerSW } from 'virtual:pwa-register'
 
 registerSW({
