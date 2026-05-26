@@ -1,5 +1,5 @@
 import { useContext, useState } from "react"
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import { UserContext } from "../../contexts/UserContext"
 import { signOut } from "firebase/auth"
 import { auth } from "../../firebaseConfig"
@@ -7,12 +7,19 @@ import { auth } from "../../firebaseConfig"
 export const NavigateApp = ({ mobile }) => {
   const { userData } = useContext(UserContext)
   const [open, setOpen] = useState(false)
+  const navigate = useNavigate()
 
   const tipo = (userData?.tipo || '').toUpperCase()
   const nome = (userData?.nome || '').toUpperCase()
 
-  const handleSubmit = () => {
-    signOut(auth)
+  const handleSubmit = async() => {
+    try {
+      signOut(auth)
+      navigate('/login')
+      
+    } catch (err) {
+      console.error(err.message)
+    }
   }
 
   const Menu = () => (

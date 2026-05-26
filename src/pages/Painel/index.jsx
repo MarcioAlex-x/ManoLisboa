@@ -56,10 +56,10 @@ export const Painel = () => {
 
     return (
         <div className="" style={{ height: '100vh' }}>
-            <h2 className="text-center text-3xl mt-10">Painel de {userData.nome}</h2>
+            <h2 className="text-center text-3xl mt-10">Painel de {userData?.nome}</h2>
             <div className="p-2 md:flex justify-around">
                 <div>
-                    <p className="flex items-center gap-1"> <AtSign size={16} color="#3867d6" /> {userData.email}</p>
+                    <p className="flex items-center gap-1"> <AtSign size={16} color="#3867d6" /> {userData?.email}</p>
                     {atividades.length == 0 ?
                         (<p className="flex items-center gap-1">Nenhuma atividade cadastrada.</p>)
                         :
@@ -146,7 +146,7 @@ export const Painel = () => {
                 </div>
             </div>
             {
-                userData.tipo == 'admin' &&
+                userData?.tipo == 'admin' &&
                 <div className="my-10">
                     <h2 className="text-center text-3xl">Dados do Administrador</h2>
                     <p className="text-center"><b>Usuários cadastrados:</b> {usuarios.length}</p>
